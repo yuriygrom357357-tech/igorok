@@ -1,0 +1,2147 @@
+<!doctype html>
+<html lang="uk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f4aa8">
+<meta name="description" content="Ігорьок — нідерландська з нуля до B1: 36 уроків, тести, тексти з озвучкою і словник.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ігорьок">
+<title>Ігорьок</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Ігорьок: Dutch from zero. Layout: one narrow column. Home = Delft-tile hero with mascot, progress and streak, then a course map by level. Lesson = sticky stepper rule → test → text. Delft blue ink, orange (oranje) action color, marker-yellow grammar highlight. */
+:root{
+  --bg:#f4f6fb; --paper:#ffffff; --ink:#14244f; --muted:#5a6684; --line:#dde3f0;
+  --delft:#1f4aa8; --delft-soft:#e7eefc; --oranje:#f26b1d; --oranje-ink:#ffffff; --oranje-soft:#fff0e6;
+  --mark:#ffe17a; --mark-ink:#14244f;
+  --good:#1e8a52; --good-soft:#e1f5ea; --bad:#cf3b2e; --bad-soft:#fde8e6;
+  --display:"Comfortaa","Nunito",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1630; --paper:#16224a; --ink:#eaf0ff; --muted:#a3b0d6; --line:#28366a;
+  --delft:#8fb0ff; --delft-soft:#1d2c5c; --oranje:#ff8a3d; --oranje-ink:#1a0f05; --oranje-soft:#3a2312;
+  --mark:#e9c73c; --mark-ink:#141414;
+  --good:#5fd093; --good-soft:#143a28; --bad:#ff8a80; --bad-soft:#41191a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1630; --paper:#16224a; --ink:#eaf0ff; --muted:#a3b0d6; --line:#28366a;
+  --delft:#8fb0ff; --delft-soft:#1d2c5c; --oranje:#ff8a3d; --oranje-ink:#1a0f05; --oranje-soft:#3a2312;
+  --mark:#e9c73c; --mark-ink:#141414;
+  --good:#5fd093; --good-soft:#143a28; --bad:#ff8a80; --bad-soft:#41191a; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:0 72px}
+h1,h2{font-family:var(--display);font-weight:700;text-wrap:balance}
+p{max-width:65ch}
+.sub{color:var(--muted);margin:0}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.back{font:inherit;font-size:15px;font-weight:800;color:var(--delft);background:none;border:0;padding:14px 0 0;cursor:pointer}
+/* hero */
+.hero{position:relative;margin-top:16px;border-radius:24px;overflow:hidden;background:var(--delft);color:#fff;padding:20px 18px 18px}
+.hero::before{content:"";position:absolute;inset:0;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23fff' stroke-width='1.6'%3E%3Crect x='1' y='1' width='54' height='54' rx='6'/%3E%3Ccircle cx='28' cy='28' r='9'/%3E%3Cpath d='M28 6v8M28 42v8M6 28h8M42 28h8M12 12l6 6M38 38l6 6M44 12l-6 6M12 44l6-6'/%3E%3C/g%3E%3C/svg%3E");background-size:56px 56px}
+.hero > *{position:relative}
+.brand{display:flex;align-items:center;gap:14px}
+.brand svg{flex:none;width:84px;height:84px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+.brand h1{font-size:clamp(34px,9vw,46px);line-height:1;margin:0;letter-spacing:-.01em}
+.brand p{margin:6px 0 0;color:#dbe6ff;font-weight:700}
+.stats{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-top:18px}
+.stats .lbl{font-size:13px;font-weight:800;color:#dbe6ff;letter-spacing:.04em;text-transform:uppercase}
+.stats b{font-family:var(--display);font-size:24px;font-variant-numeric:tabular-nums}
+.bar{height:10px;border-radius:10px;background:rgba(255,255,255,.22);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--oranje);border-radius:10px;transition:width .5s}
+.streak{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border-radius:999px;padding:6px 12px;font-weight:800;font-size:15px;white-space:nowrap}
+.streak svg{width:18px;height:18px}
+.homebtns{display:grid;gap:8px;margin-top:16px}
+.btn{font:inherit;font-weight:800;font-size:16px;border-radius:14px;padding:14px 20px;border:0;cursor:pointer;min-height:52px;transition:transform .08s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--oranje);color:var(--oranje-ink);box-shadow:0 4px 0 color-mix(in srgb,var(--oranje) 60%,#000)}
+.btn.onhero{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.btn.ghost{background:transparent;color:var(--delft);border:2px solid var(--delft)}
+.btn.sm{padding:10px 16px;min-height:44px;font-size:15px}
+.btn.bad{background:var(--bad-soft);color:var(--bad)}
+.btn.good{background:var(--good-soft);color:var(--good)}
+.btn:disabled{opacity:.45;cursor:default}
+:focus-visible{outline:3px solid var(--oranje);outline-offset:2px}
+/* course map */
+.mod{margin-top:30px}
+.mod h2{font-size:22px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.mod h2 .lv{font-family:var(--body);font-size:13px;font-weight:800;background:var(--delft);color:var(--paper);border-radius:8px;padding:3px 8px}
+.mod .sub{font-size:15px;margin-bottom:12px}
+.list{display:flex;flex-direction:column;gap:8px;list-style:none;margin:0;padding:0}
+.lrow{width:100%;font:inherit;color:var(--ink);text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.lrow:hover{border-color:var(--delft)}
+.lrow .no{flex:none;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:15px;font-weight:800;background:var(--delft-soft);color:var(--delft);font-variant-numeric:tabular-nums}
+.lrow.done .no{background:var(--good);color:var(--paper)}
+.lrow .tx{flex:1;min-width:0}
+.lrow .tx b{display:block;font-weight:800}
+.lrow .tx small{display:block;color:var(--muted);font-size:14px;line-height:1.35}
+.lrow .st{flex:none;font-size:13px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.lrow.done .st{color:var(--good)}
+.lrow.next{border-color:var(--oranje);box-shadow:0 0 0 3px var(--oranje-soft)}
+.lrow.next .st{color:var(--oranje)}
+.lrow.mt{background:var(--oranje-soft);border-style:dashed;border-color:var(--oranje)}
+.lrow.mt .no{background:var(--paper);color:var(--oranje)}
+/* lesson */
+header.lh{padding-block:14px 4px}
+header.lh h1{font-size:clamp(26px,6.5vw,34px);line-height:1.15;margin:6px 0}
+header.lh h1 em,h1 em{font-style:normal;background:var(--mark);color:var(--mark-ink);padding:0 .2em;border-radius:6px}
+nav.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-block:12px;border-bottom:1px solid var(--line);margin-top:10px}
+.step{font:inherit;font-size:15px;font-weight:800;color:var(--muted);background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px}
+.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:var(--line);color:var(--ink);flex:none}
+.step[aria-current="step"]{border-color:var(--delft);color:var(--ink)}
+.step[aria-current="step"] .n{background:var(--delft);color:var(--paper)}
+.step.done .n{background:var(--good);color:var(--paper)}
+section{padding-block:22px 0}
+section h2{font-size:22px;margin:0 0 12px}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:26px 0 10px;font-weight:800}
+.mark{background:var(--mark);color:var(--mark-ink);border-radius:5px;padding:0 .18em;font-weight:800}
+.tw{overflow-x:auto;border-radius:14px}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1.5px solid var(--line)}
+td,th{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+th{font-size:13px;color:var(--delft);font-weight:800;background:var(--delft-soft)}
+.cs{font:inherit;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-align:left}
+.cs::before{content:"▶";flex:none;width:24px;height:24px;border-radius:50%;background:var(--oranje-soft);color:var(--oranje);font-size:9px;display:grid;place-items:center;padding-left:2px}
+.cs:hover{color:var(--delft)}
+.ex{display:flex;flex-direction:column;gap:8px}
+.say{display:flex;align-items:center;gap:12px;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;cursor:pointer;font:inherit;color:inherit;text-align:left;width:100%}
+.say:hover{border-color:var(--delft)}
+.say .en{font-weight:800}
+.say .ua{color:var(--muted);font-size:15px}
+.say > span:last-child{min-width:0}
+.play{flex:none;width:42px;height:42px;border-radius:50%;background:var(--oranje);color:var(--oranje-ink);display:grid;place-items:center;border:0;cursor:pointer}
+.play svg{width:16px;height:16px;fill:currentColor}
+.play.on{animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px var(--oranje-soft)}}
+.tip{background:var(--delft-soft);border-radius:14px;padding:12px 14px;margin-top:14px;font-size:15px;border-left:4px solid var(--delft)}
+.abc{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.tile{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.tile:hover{border-color:var(--delft)}
+.tile.hit{border-color:var(--oranje);box-shadow:0 0 0 3px var(--oranje-soft)}
+.tile .L{font-family:var(--display);font-size:24px;font-weight:700;line-height:1.1}
+.tile .L i{font-style:normal;font-weight:600;color:var(--muted);font-size:19px;margin-left:2px}
+.tile .nm{font-size:14px;font-weight:800;color:var(--delft)}
+.tile .wd{font-size:13px;color:var(--muted);overflow-wrap:anywhere;text-align:center}
+.next{display:flex;justify-content:flex-end;margin-top:26px;gap:10px;flex-wrap:wrap}
+.q{background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.q .qt{font-weight:800;margin:0 0 12px;display:flex;align-items:flex-start;gap:10px}
+.q .qt > span:last-child{flex:1;min-width:0}
+.q .qt .play{margin-top:-6px}
+.q .num{color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.q .from{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:800}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:inherit;font-weight:800;min-width:64px;min-height:46px;padding:8px 16px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;text-align:left}
+.opt:hover:not(:disabled){border-color:var(--delft)}
+.opt.right{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.fb{margin:10px 0 0;font-size:15px;color:var(--muted)}
+.fb b.ok{color:var(--good)} .fb b.no{color:var(--bad)}
+.score{display:flex;align-items:center;gap:14px;background:var(--paper);border:2px solid var(--oranje);border-radius:16px;padding:16px;margin-top:16px}
+.score b{font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums;flex:none}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{font:inherit;font-size:14px;font-weight:800;padding:8px 12px;border:0;background:var(--paper);color:var(--muted);cursor:pointer;min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--delft);color:var(--paper)}
+.sent{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;margin-bottom:8px;transition:border-color .2s,box-shadow .2s}
+.sent.active{border-color:var(--oranje);box-shadow:0 0 0 3px var(--oranje-soft)}
+.sent .idx{color:var(--muted);font-size:13px;width:18px;padding-top:10px;font-variant-numeric:tabular-nums;flex:none;font-weight:800}
+.sent .body{min-width:0;flex:1}
+.words{display:flex;flex-wrap:wrap;gap:2px;font-size:19px}
+.w{font:inherit;background:none;border:0;color:var(--ink);padding:2px 3px;border-radius:6px;cursor:pointer;font-weight:700}
+.w:hover{background:var(--delft-soft)}
+.w.g{background:var(--mark);color:var(--mark-ink);font-weight:800}
+.w.speaking{outline:2px solid var(--oranje)}
+.tr{color:var(--muted);font-size:15px;margin-top:2px}
+.legend{font-size:15px;color:var(--muted);margin:0 0 12px}
+.warn{background:var(--bad-soft);color:var(--bad);border-radius:14px;padding:12px 14px;font-size:15px;margin-top:14px}
+.vocab{margin-top:28px}
+.vhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 10px}
+.vhead h3{margin:0}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.vchip{font:inherit;color:var(--ink);text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;min-width:0}
+.vchip:hover{border-color:var(--delft)}
+.vchip b{font-weight:800;overflow-wrap:anywhere}
+.vchip span{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.vchip.known b::after{content:" ✓";color:var(--good)}
+.dtools{display:flex;flex-direction:column;gap:10px;margin-block:16px 6px}
+.search{font:inherit;width:100%;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);min-height:50px}
+.search:focus{outline:none;border-color:var(--delft)}
+.drow2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.dcount{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:700}
+.dlist{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.dword{display:flex;align-items:center;gap:10px;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:8px 10px}
+.dword .play{width:38px;height:38px}
+.dword .tx{flex:1;min-width:0}
+.dword .tx b{display:block;font-weight:800;overflow-wrap:anywhere}
+.dword .tx span{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.dword .tx small{display:block;font-size:12px;color:var(--muted);letter-spacing:.04em}
+.knowb{flex:none;font:inherit;font-size:13px;font-weight:800;border-radius:999px;padding:6px 12px;min-height:38px;border:2px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer}
+.knowb[aria-pressed="true"]{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.more{margin-top:12px;width:100%}
+.empty{color:var(--muted);text-align:center;padding:24px 0}
+.cardwrap{display:flex;flex-direction:column;gap:14px;margin-top:16px}
+.cprog{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:700}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:24px;min-height:260px;padding:24px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;cursor:pointer;font:inherit;color:var(--ink);width:100%}
+.card .front{font-family:var(--display);font-weight:700;font-size:clamp(28px,8vw,40px);line-height:1.15;overflow-wrap:anywhere}
+.card .back{font-size:20px;color:var(--muted);overflow-wrap:anywhere}
+.card .hint{font-size:13px;color:var(--muted)}
+.card.flipped{border-color:var(--oranje)}
+.card.flipped .back{color:var(--ink);font-weight:800}
+.cbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#dict.cards header .sub{display:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-weight:800;font-size:15px;z-index:20;max-width:calc(100% - 32px)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:420px){.step{gap:6px;font-size:14px}.lrow .st{display:none}.lrow.done .st,.lrow.next .st{display:block}.brand svg{width:70px;height:70px}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mascot" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="56" fill="#fff"/>
+      <circle cx="60" cy="60" r="52" fill="#f26b1d"/>
+      <path d="M30 52c2-20 17-32 30-32s28 12 30 32c-10-6-20-8-30-8s-20 2-30 8z" fill="#1f4aa8"/>
+      <circle cx="60" cy="19" r="6" fill="#ffe17a"/>
+      <ellipse cx="46" cy="66" rx="6.5" ry="8" fill="#14244f"/>
+      <ellipse cx="74" cy="66" rx="6.5" ry="8" fill="#14244f"/>
+      <circle cx="48" cy="63" r="2.2" fill="#fff"/>
+      <circle cx="76" cy="63" r="2.2" fill="#fff"/>
+      <path d="M48 82c7 7 17 7 24 0" stroke="#14244f" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <circle cx="36" cy="78" r="5" fill="#ffb08a"/>
+      <circle cx="84" cy="78" r="5" fill="#ffb08a"/>
+      <g transform="translate(92 86) rotate(18)">
+        <path d="M0 22V4" stroke="#1e8a52" stroke-width="3" stroke-linecap="round"/>
+        <path d="M-7 4c0-7 3-11 7-12 4 1 7 5 7 12-3 3-11 3-14 0z" fill="#cf3b2e"/>
+        <path d="M0 16c4-5 8-5 10-3-3 3-6 4-10 3z" fill="#1e8a52"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <div id="noVoice" class="warn" hidden>На цьому пристрої немає нідерландського голосу. Відкрийте застосунок у Google Chrome або додайте нідерландську мову в налаштуваннях озвучення телефона.</div>
+
+  <main id="home">
+    <div class="hero">
+      <div class="brand">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Ігорьок"><use href="#mascot"/></svg>
+        <div><h1>Ігорьок</h1><p>Нідерландська з нуля · <span style="white-space:nowrap">A0 → B1</span></p></div>
+      </div>
+      <div class="stats">
+        <div><div class="lbl">Пройдено уроків</div><b id="pCount">0</b><div class="bar"><i id="pBar" style="width:0"></i></div></div>
+        <div class="streak" id="streak" title="Скільки днів поспіль ви займаєтеся"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z" fill="#ffb347"/></svg><span id="streakN">0 днів</span></div>
+      </div>
+      <div class="homebtns">
+        <button class="btn primary" id="continue">Почати</button>
+        <button class="btn onhero" id="toDict">Словник</button>
+      </div>
+    </div>
+    <div id="mods"></div>
+  </main>
+
+  <main id="lesson" hidden>
+    <button class="back" data-home>← Усі уроки</button>
+    <header class="lh">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="title"></h1>
+      <p class="sub" id="lead"></p>
+    </header>
+    <nav class="steps" id="stepsNav" aria-label="Кроки уроку">
+      <button class="step" data-go="rule" id="tab-rule"><span class="n">1</span><span>Правило</span></button>
+      <button class="step" data-go="test" id="tab-test"><span class="n">2</span><span>Тест</span></button>
+      <button class="step" data-go="text" id="tab-text"><span class="n">3</span><span>Текст</span></button>
+    </nav>
+    <section id="rule"></section>
+    <section id="test" hidden>
+      <h2 id="testTitle">Тест</h2>
+      <p class="sub" id="testLead" style="margin-bottom:16px"></p>
+      <div id="quiz"></div>
+      <div id="score" class="score" hidden></div>
+      <div class="next" id="testNext">
+        <button class="btn ghost" id="retry" hidden>Пройти ще раз</button>
+        <button class="btn primary" data-go="text" id="toText">До тексту →</button>
+      </div>
+    </section>
+    <section id="text" hidden>
+      <h2 id="storyTitle"></h2>
+      <p class="legend" id="storyLegend"></p>
+      <div class="toolbar">
+        <button class="btn primary sm" id="playAll">▶ Слухати весь текст</button>
+        <div class="seg" role="group" aria-label="Швидкість">
+          <button data-rate="1" aria-pressed="true">1×</button>
+          <button data-rate="0.75" aria-pressed="false">Повільно</button>
+        </div>
+        <div class="seg"><button id="trBtn" aria-pressed="true">Переклад</button></div>
+      </div>
+      <div id="story"></div>
+      <div class="vocab" id="vocab"></div>
+      <div class="next" id="storyNext"></div>
+    </section>
+  </main>
+
+  <main id="dict" hidden>
+    <button class="back" data-home>← Усі уроки</button>
+    <header class="lh">
+      <div class="eyebrow">Словник Ігорька</div>
+      <h1 id="dTitle">Словник</h1>
+      <p class="sub">Усі слова з уроків. Шукайте нідерландською або українською. Позначайте вивчені слова, а невивчені тренуйте на картках.</p>
+    </header>
+    <div id="dListView">
+      <div class="dtools">
+        <input class="search" id="dQ" type="search" placeholder="Пошук: fiets або велосипед" autocomplete="off">
+        <div class="drow2">
+          <div class="seg" role="group" aria-label="Рівень" id="dLevel"></div>
+          <div class="seg" role="group" aria-label="Показати">
+            <button data-show="all" aria-pressed="true">Усі</button>
+            <button data-show="new" aria-pressed="false">Невивчені</button>
+          </div>
+        </div>
+        <button class="btn primary" id="dTrain">Тренувати картки</button>
+        <div class="dcount" id="dCount"></div>
+      </div>
+      <div class="dlist" id="dList"></div>
+    </div>
+    <div id="dCardView" hidden>
+      <div class="drow2" style="margin-top:16px">
+        <div class="seg" role="group" aria-label="Напрямок">
+          <button data-dir="nl" aria-pressed="true">NL → UA</button>
+          <button data-dir="ua" aria-pressed="false">UA → NL</button>
+        </div>
+        <button class="btn ghost sm" id="dStop">Завершити</button>
+      </div>
+      <div class="cardwrap" id="cardWrap"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const LESSONS = [];
+var VOCAB;
+var AUDIO = {};
+const MODS = [
+ {id:"a0", lv:"A0", name:"Старт", desc:"Алфавіт і звуки, привітання, числа, zijn, артиклі de/het, множина, присвійні слова."},
+ {id:"a1", lv:"A1", name:"Основа", desc:"hebben, er is, питальні слова, теперішній час, niet/geen, порядок слів, модальні дієслова, відокремлювані дієслова, час."},
+ {id:"a2", lv:"A2", name:"Розвиток", desc:"Минулий час, майбутнє, прикметники з -e, порівняння, zich, er, підрядні речення, ввічливість."},
+ {id:"b1", lv:"B1", name:"Впевнено", desc:"Відносні речення, om te, пасив, zou, непряма мова, «aan het»."}
+];
+const ABC = [
+ ["A","а","appel","яблуко"],["B","бе","boek","книжка"],["C","се","citroen","лимон"],["D","де","dag","день"],
+ ["E","е","eend","качка"],["F","еф","fiets","велосипед"],["G","хе","geld","гроші"],["H","га","huis","дім"],
+ ["I","і","idee","ідея"],["J","є","jas","куртка"],["K","ка","kat","кіт"],["L","ель","lamp","лампа"],
+ ["M","ем","melk","молоко"],["N","ен","neus","ніс"],["O","о","oog","око"],["P","пе","paard","кінь"],
+ ["Q","кю","quiz","вікторина"],["R","ер","regen","дощ"],["S","ес","stoel","стілець"],["T","те","tafel","стіл"],
+ ["U","ю","uil","сова"],["V","ве","vis","риба"],["W","ве","water","вода"],["X","ікс","xylofoon","ксилофон"],
+ ["Y","ей","yoghurt","йогурт"],["Z","зет","zon","сонце"]
+];
+
+/* 1 */ LESSONS.push({
+ id:"abc", mod:"a0", short:"Алфавіт", sub:"26 літер, назви і перші слова",
+ title:"Нідерландський <em>алфавіт</em>", lead:"Ті самі 26 латинських літер, але назви й звуки свої.",
+ ruleTitle:"26 літер: назва і слово",
+ blocks:[
+  {t:"p", x:"Кожна літера має ==назву==, так її читають, коли диктують по буквах (spellen). Торкніться літери: прозвучить її назва і слово, що з неї починається."},
+  {t:"abc"},
+  {t:"tip", x:"**G** — гортанний звук, як українське «х», тільки глибше в горлі: **geld** «хелт». **W** — щось середнє між «в» і «у»: **water**."},
+  {t:"h3", x:"Найважливіші відмінності"},
+  {t:"table", head:["Літера","Звучить","Приклад"], say:[2], rows:[["**g**","гортанне «х»","goed (добре)"],["**j**","«й»","ja (так)"],["**v**","майже «ф»","vis (риба)"],["**u**","«ю» з губами трубочкою","nu (зараз)"],["**ij**","«ей»","ijs (лід, морозиво)"]]},
+  {t:"h3", x:"Як диктувати"},
+  {t:"ex", items:[["Ik heet Max. M, A, X.","Мене звати Макс. Ем, а, ікс."],["Hoe spel je dat?","Як це пишеться?"]]}
+ ],
+ quiz:[
+  {say:"G.", q:"Яку літеру ви почули?", o:["G","H","K"], a:0, why:"G звучить як гортанне «хе»."},
+  {say:"J.", q:"Яку літеру ви почули?", o:["G","J","I"], a:1, why:"J — «є»."},
+  {say:"H.", q:"Яку літеру ви почули?", o:["A","H","K"], a:1, why:"H — «га»."},
+  {q:"Як звучить g у слові goed?", o:["гортанне «х»","«г» як у «гора»","«дж»"], a:0, why:"Нідерландське g — гортанне."},
+  {q:"Як читається j у слові ja?", o:["«й»","«дж»","«ж»"], a:0, why:"ja = «я»."},
+  {say:"vis", q:"З якої літери починається слово?", o:["V","F","W"], a:0, why:"vis пишеться з V, хоч звучить майже як «ф»."},
+  {q:"Як читається ij?", o:["«ей»","«ій»","«і»"], a:0, why:"ijs — «ейс»."},
+  {q:"Скільки літер у нідерландському алфавіті?", o:["26","33","28"], a:0, why:"26, як в англійській."}
+ ],
+ storyTitle:"Spellen", legend:"==Жовтим== позначено літери, які диктують по буквах.",
+ hl:["#letter"],
+ story:[
+  ["A is van appel.","A — як у слові appel (яблуко)."],
+  ["B is van boek.","B — як у слові boek (книжка)."],
+  ["G is van geld.","G — як у слові geld (гроші)."],
+  ["H is van huis.","H — як у слові huis (дім)."],
+  ["Hallo! Ik heet Max.","Привіт! Мене звати Макс."],
+  ["M, A, X.","Ем, а, ікс."],
+  ["Hoe heet jij?","А тебе як звати?"],
+  ["Ik heet Eva.","Мене звати Єва."],
+  ["E, V, A.","Е, ве, а."],
+  ["Dank je, Eva!","Дякую, Єво!"]
+ ],
+ vocab:[["appel","яблуко"],["boek","книжка"],["dag","день"],["fiets","велосипед"],["geld","гроші"],["huis","дім"],["kat","кіт"],["melk","молоко"],["water","вода"],["zon","сонце"],["spellen","писати по буквах"]]
+});
+
+/* 2 */ LESSONS.push({
+ id:"klank", mod:"a0", short:"Як читати", sub:"Довгі й короткі голосні, ui, ij, eu, oe",
+ title:"Як <em>читати</em>", lead:"Нідерландське читання дуже логічне. Кілька правил, і ви прочитаєте майже будь-яке слово.",
+ ruleTitle:"Голосні й буквосполучення",
+ blocks:[
+  {t:"h3", x:"Коротко чи довго"},
+  {t:"p", x:"Подвоєна голосна — ==довга==: **maan** (місяць). Одна голосна перед двома приголосними — ==коротка==: **man** (чоловік)."},
+  {t:"table", head:["Коротко","Довго"], say:[0,1], rows:[["man — чоловік","maan — місяць"],["vol — повний","vool → kool (капуста)"],["bed — ліжко","been — нога"]]},
+  {t:"h3", x:"Особливі пари літер"},
+  {t:"table", head:["Пишемо","Звучить","Приклад"], say:[2], rows:[["==oe==","«у»","boek (книжка)"],["==ie==","довге «і»","fiets (велосипед)"],["==ui==","«ау» з округленими губами","huis (дім)"],["==ij== / ==ei==","«ей»","ijs, trein (лід, потяг)"],["==eu==","як німецьке ö","neus (ніс)"],["==ou== / ==au==","«ау»","oud, blauw (старий, синій)"],["==sch==","«сх»","school (школа)"]]},
+  {t:"tip", x:"**ij** і **ei** звучать однаково. **ui** — найскладніший звук: скажіть «ау», округливши губи."}
+ ],
+ quiz:[
+  {say:"boek", q:"Яке слово ви почули?", o:["boek","bek","baak"], a:0, why:"oe = «у»."},
+  {q:"Як звучить oe?", o:["«у»","«ое»","«о»"], a:0, why:"boek — «бук»."},
+  {q:"У якому слові довга «а»?", o:["maan","man","mand"], a:0, why:"Подвоєна голосна — довга."},
+  {q:"ij і ei звучать…", o:["однаково, «ей»","по-різному"], a:0, why:"ijs і trein — той самий звук."},
+  {say:"huis", q:"Яке слово ви почули?", o:["huis","hoes","hees"], a:0, why:"ui — huis."},
+  {q:"Як читається sch на початку слова?", o:["«сх»","«ш»","«ск»"], a:0, why:"school — «сxол»."},
+  {q:"ie звучить як…", o:["довге «і»","«іе»","«е»"], a:0, why:"fiets — «фітс»."},
+  {q:"Як звучить ou у слові oud?", o:["«ау»","«оу»","«у»"], a:0, why:"oud — «аут»."}
+ ],
+ storyTitle:"Klanken", legend:"==Жовтим== — слова з особливими звуками.",
+ hl:["huis","boek","fiets","trein","ijs","neus","school","oud","blauw","maan","zee"],
+ story:[
+  ["Dit is mijn huis.","Це мій дім."],
+  ["Het huis is oud.","Дім старий."],
+  ["Ik lees een boek.","Я читаю книжку."],
+  ["Mijn fiets is blauw.","Мій велосипед синій."],
+  ["De trein is laat.","Потяг запізнюється."],
+  ["Ik eet een ijs.","Я їм морозиво."],
+  ["De maan is mooi.","Місяць гарний."],
+  ["Mijn neus is koud.","Мій ніс замерз."],
+  ["De school is groot.","Школа велика."],
+  ["We gaan naar zee!","Ми їдемо на море!"]
+ ],
+ vocab:[["huis","дім"],["oud","старий"],["blauw","синій"],["trein","потяг"],["ijs","лід, морозиво"],["maan","місяць"],["mooi","гарний"],["neus","ніс"],["koud","холодний"],["school","школа"],["groot","великий"],["zee","море"]]
+});
+
+/* 3 */ LESSONS.push({
+ id:"hallo", mod:"a0", short:"Привітання", sub:"Hallo, Hoe gaat het?, Ik heet…",
+ title:"Привіт: <em>Hallo!</em>", lead:"Перші фрази для будь-якої розмови. Вчіть їх цілими блоками.",
+ ruleTitle:"Знайомство",
+ blocks:[
+  {t:"h3", x:"Привітатися"},
+  {t:"table", head:["Фраза","Коли"], say:[0], rows:[["Hallo! / Hoi!","Привіт (будь-коли)"],["Goedemorgen","Доброго ранку"],["Goedemiddag","Добрий день (після 12:00)"],["Goedenavond","Добрий вечір"]]},
+  {t:"h3", x:"Познайомитися"},
+  {t:"ex", items:[["Hoe heet je?","Як тебе звати?"],["Ik heet Ihor.","Мене звати Ігор."],["Waar kom je vandaan?","Звідки ти?"],["Ik kom uit Oekraïne.","Я з України."],["Leuk je te ontmoeten!","Приємно познайомитися!"]]},
+  {t:"h3", x:"Як справи"},
+  {t:"ex", items:[["Hoe gaat het?","Як справи?"],["Goed, dank je. En met jou?","Добре, дякую. А в тебе?"]]},
+  {t:"h3", x:"Попрощатися"},
+  {t:"ex", items:[["Doei!","Бувай!"],["Tot ziens!","До побачення!"],["Tot morgen!","До завтра!"]]},
+  {t:"tip", x:"**Dank je** — дякую (другові), **dank u** — дякую (ввічливо, на «ви»). **Alsjeblieft** — будь ласка, і коли щось даєте."}
+ ],
+ quiz:[
+  {q:"Як привітатися о 9 ранку?", o:["Goedemorgen","Goedenavond","Doei"], a:0, why:"Ранок — goedemorgen."},
+  {q:"Hoe heet je? — ___", o:["Ik heet Anna.","Goed, dank je.","Tot ziens!"], a:0, why:"Питання про ім'я."},
+  {q:"Hoe gaat het? — ___", o:["Goed, dank je.","Ik heet Tom.","Doei!"], a:0, why:"Питання про справи."},
+  {q:"«Я з України»:", o:["Ik kom uit Oekraïne.","Ik heet Oekraïne.","Ik ben Oekraïne."], a:0, why:"komen uit — бути родом з."},
+  {q:"Doei означає…", o:["бувай","привіт","дякую"], a:0, why:"Розмовне «бувай»."},
+  {say:"Tot morgen!", q:"Що ви почули?", o:["До завтра!","До побачення!","Добрий ранок!"], a:0, why:"morgen — завтра."},
+  {q:"Ввічливе «дякую»:", o:["dank u","dank je","doei"], a:0, why:"u — ввічлива форма «ви»."},
+  {q:"Alsjeblieft означає…", o:["будь ласка","вибачте","добре"], a:0, why:"І прохання, і «ось, тримай»."}
+ ],
+ storyTitle:"In de klas",
+ hl:["hallo","hoi","goedemorgen","heet","hoe","goed","dank","kom","uit","leuk","doei","tot","ziens"],
+ story:[
+  ["Goedemorgen! Ik heet Ihor.","Доброго ранку! Мене звати Ігор."],
+  ["Hoi Ihor! Ik heet Sanne.","Привіт, Ігорю! Мене звати Санне."],
+  ["Waar kom je vandaan?","Звідки ти?"],
+  ["Ik kom uit Oekraïne.","Я з України."],
+  ["Leuk je te ontmoeten!","Приємно познайомитися!"],
+  ["Hoe gaat het?","Як справи?"],
+  ["Goed, dank je. En met jou?","Добре, дякую. А в тебе?"],
+  ["Ook goed!","Теж добре!"],
+  ["Tot morgen, Sanne!","До завтра, Санне!"],
+  ["Doei!","Бувай!"]
+ ],
+ vocab:[["hallo","привіт"],["goedemorgen","доброго ранку"],["goedenavond","добрий вечір"],["heten","називатися"],["hoe","як"],["goed","добре"],["dank je","дякую"],["alsjeblieft","будь ласка"],["tot ziens","до побачення"],["morgen","завтра; ранок"],["ook","теж"],["Oekraïne","Україна"]]
+});
+
+/* 4 */ LESSONS.push({
+ id:"getal", mod:"a0", short:"Числа", sub:"0–100: «один-і-двадцять»",
+ title:"Числа <em>0–100</em>", lead:"Нідерландці кажуть десятки навпаки: спочатку одиниці. Як у старій українській «один-і-двадцять».",
+ ruleTitle:"Від nul до honderd",
+ blocks:[
+  {t:"table", head:["","Слово","","Слово"], say:[1,3], rows:[["0","nul","7","zeven"],["1","een","8","acht"],["2","twee","9","negen"],["3","drie","10","tien"],["4","vier","11","elf"],["5","vijf","12","twaalf"],["6","zes","13","dertien"]]},
+  {t:"table", head:["Число","Слово"], say:[1], rows:[["20","twintig"],["30","dertig"],["40","veertig"],["50","vijftig"],["60","zestig"],["70","zeventig"],["80","tachtig"],["90","negentig"],["100","honderd"]]},
+  {t:"p", x:"Складені числа: ==одиниці + en + десятки==, разом одним словом: 21 = **eenentwintig** (один-і-двадцять), 35 = **vijfendertig**."},
+  {t:"tip", x:"Вік: **Ik ben twintig (jaar).** — Мені двадцять. Ціна: **Het kost vijf euro.** — Це коштує п'ять євро."}
+ ],
+ quiz:[
+  {say:"acht", q:"Яке число ви почули?", o:["8","18","80"], a:0, why:"acht — 8."},
+  {q:"21 — це…", o:["eenentwintig","twintigeen","twintig een"], a:0, why:"Спочатку одиниці: een-en-twintig."},
+  {q:"12 — це…", o:["twaalf","tweetien","twintig"], a:0, why:"12 — twaalf."},
+  {q:"«Мені 30 років»:", o:["Ik ben dertig.","Ik heb dertig.","Ik ben dertien."], a:0, why:"Вік — через ben (бути)."},
+  {say:"tachtig", q:"Яке число ви почули?", o:["80","8","18"], a:0, why:"tachtig — 80."},
+  {q:"45 — це…", o:["vijfenveertig","veertigvijf","vierenvijftig"], a:0, why:"5 + en + 40."},
+  {q:"«Скільки це коштує?»:", o:["Hoeveel kost het?","Hoe oud ben je?","Hoe heet het?"], a:0, why:"kosten — коштувати."},
+  {q:"100 — це…", o:["honderd","duizend","tien"], a:0, why:"honderd — сто."}
+ ],
+ storyTitle:"Hoe oud ben je?", legend:"==Жовтим== позначено числа.",
+ hl:["elf","vijftien","tweeënveertig","negenendertig","achttien","nul","zes","zeven","drie","twee","vier","tien","twintig","dertig","veertig","vijf","honderd"],
+ story:[
+  ["Ik heet Ben.","Мене звати Бен."],
+  ["Ik ben elf jaar.","Мені одинадцять років."],
+  ["Mijn zus is vijftien.","Моїй сестрі п'ятнадцять."],
+  ["Mijn vader is tweeënveertig.","Моєму татові сорок два."],
+  ["Mijn moeder is negenendertig.","Мамі тридцять дев'ять."],
+  ["Ons huis is nummer achttien.","Наш будинок — номер вісімнадцять."],
+  ["Mijn nummer is nul, zes, zeven, drie.","Мій номер: нуль, шість, сім, три."],
+  ["Twee en twee is vier.","Два плюс два — чотири."],
+  ["Een ijsje kost twee euro.","Морозиво коштує два євро."],
+  ["Tien, twintig, dertig, veertig!","Десять, двадцять, тридцять, сорок!"]
+ ],
+ vocab:[["een","один"],["twee","два"],["drie","три"],["tien","десять"],["twaalf","дванадцять"],["twintig","двадцять"],["honderd","сто"],["jaar","рік"],["zus","сестра"],["vader","тато"],["moeder","мама"],["kosten","коштувати"],["hoeveel","скільки"]]
+});
+
+/* 5 */ LESSONS.push({
+ id:"zijn", mod:"a0", short:"Я, ти + zijn", sub:"ik ben, jij bent, hij is",
+ title:"Займенники і <em>zijn</em>", lead:"zijn — «бути». Найважливіше дієслово нідерландської.",
+ ruleTitle:"Хто? + ben / bent / is / zijn",
+ blocks:[
+  {t:"table", head:["Хто","zijn","Переклад"], say:[1], rows:[["ik","==ben==","я є"],["jij / je","==bent==","ти є"],["u","==bent==","ви є (ввічливо)"],["hij / zij / het","==is==","він / вона / воно є"],["wij / we","==zijn==","ми є"],["jullie","==zijn==","ви є (кілька)"],["zij / ze","==zijn==","вони є"]]},
+  {t:"p", x:"Як і в англійській, дієслово «бути» не пропускаємо: **Ik ben student.** — Я студент."},
+  {t:"tip", x:"У питанні дієслово йде на початок, а **jij bent** стає **ben jij**, без -t: **Ben jij moe?** — Ти втомився?"},
+  {t:"ex", items:[["Ik ben Ihor.","Я Ігор."],["Zij is mijn zus.","Вона моя сестра."],["Wij zijn vrienden.","Ми друзі."],["Het is koud.","Холодно."]]}
+ ],
+ quiz:[
+  {q:"Ik ___ student.", o:["ben","bent","is"], a:0, why:"ik → ben."},
+  {q:"Jij ___ mijn vriend.", o:["bent","ben","zijn"], a:0, why:"jij → bent."},
+  {q:"Zij ___ dokter. (вона)", o:["is","zijn","ben"], a:0, why:"zij (вона) → is."},
+  {q:"Wij ___ in Amsterdam.", o:["zijn","is","bent"], a:0, why:"wij → zijn."},
+  {q:"Ввічливе «ви»:", o:["u","jij","jullie"], a:0, why:"u — до старших і незнайомих."},
+  {q:"«Ти втомився?»:", o:["Ben jij moe?","Bent jij moe?","Jij ben moe?"], a:0, why:"У питанні -t зникає: ben jij."},
+  {q:"jullie — це…", o:["ви (кілька людей)","вони","ми"], a:0, why:"jullie — ви, множина."},
+  {q:"Het ___ koud.", o:["is","zijn","ben"], a:0, why:"het → is."}
+ ],
+ storyTitle:"Mijn familie", legend:"==Жовтим== позначено займенники і форми zijn.",
+ hl:["ik","ben","jij","bent","hij","zij","is","wij","we","zijn","het"],
+ story:[
+  ["Hallo! Ik ben Anna.","Привіт! Я Анна."],
+  ["Ik ben twintig jaar.","Мені двадцять років."],
+  ["Ik ben student.","Я студентка."],
+  ["Mijn broer is dokter.","Мій брат лікар."],
+  ["Hij is heel aardig.","Він дуже добрий."],
+  ["Mijn moeder is lerares.","Моя мама вчителька."],
+  ["Zij is vandaag op school.","Вона сьогодні в школі."],
+  ["Mijn ouders zijn blij.","Мої батьки щасливі."],
+  ["Wij zijn een grote familie.","Ми велика родина."],
+  ["Onze hond is klein, maar hij is heel snel.","Наш пес маленький, але дуже швидкий."]
+ ],
+ vocab:[["ik","я"],["jij","ти"],["hij","він"],["zij","вона; вони"],["wij","ми"],["jullie","ви (кілька)"],["broer","брат"],["dokter","лікар"],["aardig","добрий, милий"],["ouders","батьки"],["blij","щасливий, радий"],["familie","родина"],["hond","собака"],["snel","швидкий"]]
+});
+
+/* 6 */ LESSONS.push({
+ id:"zijn2", mod:"a0", short:"Не і чи?", sub:"niet; питання з дієсловом на початку",
+ title:"<em>Niet</em> і питання", lead:"Як сказати «я не…» і як запитати «чи ти…?».",
+ ruleTitle:"Заперечення і питання",
+ blocks:[
+  {t:"h3", x:"Заперечення: niet"},
+  {t:"p", x:"Слово ==niet== ставимо після дієслова: **Ik ben niet moe.** — Я не втомився."},
+  {t:"ex", items:[["Ik ben niet moe.","Я не втомився."],["Hij is niet thuis.","Його немає вдома."],["Het is niet duur.","Це недорого."]]},
+  {t:"h3", x:"Питання: дієслово на початок"},
+  {t:"p", x:"**Jij bent** moe. → ==Ben jij== moe? Допоміжних слів, як do в англійській, немає."},
+  {t:"ex", items:[["Ben je klaar?","Ти готовий?"],["Is zij lerares?","Вона вчителька?"],["Zijn jullie thuis?","Ви вдома?"]]},
+  {t:"tip", x:"Відповіді: **Ja.** — так. **Nee.** — ні. **Nee, ik ben niet klaar.** — Ні, я не готовий."}
+ ],
+ quiz:[
+  {q:"«Я не втомився»:", o:["Ik ben niet moe.","Ik niet ben moe.","Niet ik ben moe."], a:0, why:"niet після дієслова."},
+  {q:"«Ти готовий?»:", o:["Ben je klaar?","Bent je klaar?","Je bent klaar?"], a:0, why:"Дієслово на початок, без -t."},
+  {q:"Is zij thuis? — Nee, zij is ___ thuis.", o:["niet","nee","geen"], a:0, why:"niet — не."},
+  {q:"«Ви вдома?» (кілька людей):", o:["Zijn jullie thuis?","Is jullie thuis?","Bent jullie thuis?"], a:0, why:"jullie → zijn."},
+  {q:"nee означає…", o:["ні","так","не (у реченні)"], a:0, why:"Окрема відповідь «ні»."},
+  {q:"Het is niet duur означає…", o:["це недорого","це дорого","це дешево?"], a:0, why:"niet duur — недорого."},
+  {q:"Is hij leraar? — Ja, hij ___ leraar.", o:["is","ben","zijn"], a:0, why:"hij → is."},
+  {q:"thuis означає…", o:["вдома","на роботі","на вулиці"], a:0, why:"thuis — вдома."}
+ ],
+ storyTitle:"Vragen",
+ hl:["ben","is","zijn","bent","niet","nee","ja"],
+ story:[
+  ["Ben jij student?","Ти студент?"],
+  ["Nee, ik ben chauffeur.","Ні, я водій."],
+  ["Is je auto nieuw?","Твоя машина нова?"],
+  ["Nee, hij is niet nieuw. Hij is oud.","Ні, вона не нова. Вона стара."],
+  ["Zijn je vrienden uit Kyiv?","Твої друзі з Києва?"],
+  ["Ja, ze zijn uit Kyiv.","Так, вони з Києва."],
+  ["Is het koud vandaag?","Сьогодні холодно?"],
+  ["Nee, het is niet koud. Het is warm.","Ні, не холодно. Тепло."],
+  ["Ik ben niet moe.","Я не втомився."],
+  ["Wij zijn niet laat!","Ми не спізнюємося!"]
+ ],
+ vocab:[["niet","не"],["nee","ні"],["ja","так"],["moe","втомлений"],["thuis","вдома"],["klaar","готовий"],["duur","дорогий"],["chauffeur","водій"],["auto","машина"],["nieuw","новий"],["warm","теплий"],["laat","пізно"]]
+});
+
+/* 7 */ LESSONS.push({
+ id:"dehet", mod:"a0", short:"de / het / een", sub:"Артиклі: два «the» і один «a»",
+ title:"Артиклі <em>de, het, een</em>", lead:"У нідерландській два означені артиклі. Кожне слово вчимо разом із ним.",
+ ruleTitle:"de-слова і het-слова",
+ blocks:[
+  {t:"table", head:["Артикль","Коли","Приклад"], say:[2], rows:[
+   ["==de==","більшість слів (≈ 2/3)","de man, de tafel"],
+   ["==het==","решта слів; усі зменшувальні на -je","het huis, het meisje"],
+   ["==een==","«якийсь», однина","een man, een huis"],
+   ["==de== у множині","завжди de","de huizen"]]},
+  {t:"tip", x:"Правила підказують, але не завжди: **het** — у зменшувальних (-je), у словах на -ment, у назвах мов (het Nederlands). Найнадійніше: вчіть слово разом з артиклем."},
+  {t:"ex", items:[["de fiets","велосипед"],["het boek","книжка"],["het meisje","дівчинка"],["een kopje koffie","чашечка кави"]]}
+ ],
+ quiz:[
+  {q:"___ huis", o:["het","de","een de"], a:0, why:"het huis."},
+  {q:"___ man", o:["de","het"], a:0, why:"de man."},
+  {q:"Зменшувальні на -je завжди…", o:["het","de"], a:0, why:"het meisje, het kopje."},
+  {q:"У множині артикль завжди…", o:["de","het","een"], a:0, why:"de huizen, de boeken."},
+  {q:"«Якась книжка»:", o:["een boek","het boek","de boek"], a:0, why:"een — неозначений."},
+  {q:"___ Nederlands (мова)", o:["het","de"], a:0, why:"Назви мов — het."},
+  {q:"___ fiets", o:["de","het"], a:0, why:"de fiets."},
+  {q:"Як найкраще вчити артиклі?", o:["разом зі словом","за правилом завжди","не вчити"], a:0, why:"de/het треба запам'ятовувати."}
+ ],
+ storyTitle:"Een klein dorp",
+ hl:["de","het","een"],
+ story:[
+  ["Dit is een klein dorp.","Це маленьке село."],
+  ["Het dorp is oud en stil.","Село старе і тихе."],
+  ["Er is een school en een kerk.","Тут є школа і церква."],
+  ["De kerk is wit.","Церква біла."],
+  ["Hier is een molen.","Тут є вітряк."],
+  ["De molen is heel oud.","Вітряк дуже старий."],
+  ["Het meisje heeft een rode fiets.","У дівчинки червоний велосипед."],
+  ["De fiets staat bij het huis.","Велосипед стоїть біля будинку."],
+  ["Mijn vriend is een kunstenaar.","Мій друг — художник."],
+  ["Hij woont in een groot huis.","Він живе у великому будинку."]
+ ],
+ vocab:[["de man","чоловік"],["het huis","дім"],["het meisje","дівчинка"],["de fiets","велосипед"],["het dorp","село"],["stil","тихий"],["de kerk","церква"],["wit","білий"],["de molen","вітряк"],["rood","червоний"],["de kunstenaar","художник"],["wonen","жити"]]
+});
+
+/* 8 */ LESSONS.push({
+ id:"meerv", mod:"a0", short:"Множина", sub:"-en, -s і винятки",
+ title:"Множина: <em>-en</em> і <em>-s</em>", lead:"Одне слово — boek, багато — boeken. Є два основні закінчення.",
+ ruleTitle:"Як утворити множину",
+ blocks:[
+  {t:"table", head:["Правило","Однина → множина"], say:[1], rows:[
+   ["Більшість: ==+en==","boek → boeken, fiets → fietsen"],
+   ["Довга голосна зберігає звук: одна літера","maan → manen, boom → bomen"],
+   ["Коротка голосна: подвоюємо приголосну","kat → katten, bed → bedden"],
+   ["Слова на -el, -er, -em, -en, -je: ==+s==","tafel → tafels, kopje → kopjes"],
+   ["Слова на голосну: ==+'s==","auto → auto's, foto → foto's"]]},
+  {t:"h3", x:"Винятки"},
+  {t:"table", head:["Однина","Множина","Переклад"], say:[0,1], rows:[["kind","kinderen","дитина"],["ei","eieren","яйце"],["stad","steden","місто"],["huis","huizen","дім (s → z)"]]},
+  {t:"tip", x:"У множині артикль завжди **de**: het boek → **de** boeken."}
+ ],
+ quiz:[
+  {q:"Множина: boek →", o:["boeken","boeks","boekken"], a:0, why:"+en."},
+  {q:"Множина: kat →", o:["katten","katen","kats"], a:0, why:"Коротка голосна — подвоєння."},
+  {q:"Множина: boom →", o:["bomen","boomen","booms"], a:0, why:"Довгий звук зберігаємо однією o."},
+  {q:"Множина: tafel →", o:["tafels","tafelen","tafel's"], a:0, why:"-el → +s."},
+  {q:"Множина: auto →", o:["auto's","autos","autoen"], a:0, why:"На голосну: 's."},
+  {q:"Множина: kind →", o:["kinderen","kinden","kinds"], a:0, why:"Виняток."},
+  {q:"Множина: huis →", o:["huizen","huisen","huissen"], a:0, why:"s → z."},
+  {q:"het boek → ___ boeken", o:["de","het"], a:0, why:"Множина — завжди de."}
+ ],
+ storyTitle:"Mijn straat",
+ hl:["huizen","bomen","kinderen","fietsen","auto's","katten","bloemen","mensen","tulpen"],
+ story:[
+  ["Mijn straat is lang.","Моя вулиця довга."],
+  ["De huizen zijn rood.","Будинки червоні."],
+  ["De bomen zijn hoog.","Дерева високі."],
+  ["De kinderen spelen buiten.","Діти граються надворі."],
+  ["Er staan veel fietsen.","Тут стоїть багато велосипедів."],
+  ["Er zijn weinig auto's.","Машин мало."],
+  ["Twee katten slapen in de zon.","Два коти сплять на сонці."],
+  ["Overal staan bloemen.","Скрізь стоять квіти."],
+  ["De tulpen zijn geel en oranje.","Тюльпани жовті й помаранчеві."],
+  ["De mensen zijn vriendelijk.","Люди привітні."]
+ ],
+ vocab:[["de straat","вулиця"],["lang","довгий"],["de boom","дерево"],["hoog","високий"],["het kind","дитина"],["spelen","гратися"],["buiten","надворі"],["veel","багато"],["weinig","мало"],["slapen","спати"],["de bloem","квітка"],["de tulp","тюльпан"],["geel","жовтий"],["vriendelijk","привітний"]]
+});
+
+/* 9 */ LESSONS.push({
+ id:"dit", mod:"a0", short:"dit / dat / deze / die", sub:"Цей, той — з урахуванням de і het",
+ title:"<em>Dit</em> чи <em>dat</em>?", lead:"Цей чи той — і ще залежить, de це слово чи het.",
+ ruleTitle:"Близько і далеко",
+ blocks:[
+  {t:"table", head:["","Близько","Далеко"], say:[1,2], rows:[["het-слова","==dit== boek","==dat== boek"],["de-слова і множина","==deze== fiets","==die== fiets"]]},
+  {t:"p", x:"Як окреме слово «це / то» — завжди **dit** і **dat**: **Dit is mijn tas.** — Це моя сумка. **Dat zijn mijn sleutels.** — То мої ключі."},
+  {t:"ex", items:[["Wat is dit?","Що це?"],["Deze appel is lekker.","Це яблуко смачне."],["Die mensen zijn aardig.","Ті люди привітні."]]}
+ ],
+ quiz:[
+  {q:"___ boek (близько; het boek)", o:["dit","deze","die"], a:0, why:"het-слово близько — dit."},
+  {q:"___ fiets (близько; de fiets)", o:["deze","dit","dat"], a:0, why:"de-слово близько — deze."},
+  {q:"___ huis (далеко; het huis)", o:["dat","die","deze"], a:0, why:"het-слово далеко — dat."},
+  {q:"___ bomen (далеко, множина)", o:["die","dat","dit"], a:0, why:"Множина далеко — die."},
+  {q:"«Що це?»:", o:["Wat is dit?","Wat is deze?","Wat is die?"], a:0, why:"Окремо — dit."},
+  {q:"___ zijn mijn sleutels.", o:["Dat","Die","Deze"], a:0, why:"Окреме «то» навіть з множиною — dat."},
+  {q:"___ appel is lekker. (de appel, близько)", o:["Deze","Dit","Dat"], a:0, why:"de appel → deze."},
+  {q:"lekker означає…", o:["смачний","гарний","великий"], a:0, why:"lekker — смачний, приємний."}
+ ],
+ storyTitle:"Mijn kamer",
+ hl:["dit","dat","deze","die"],
+ story:[
+  ["Welkom in mijn kamer!","Ласкаво просимо до моєї кімнати!"],
+  ["Dit is mijn bed.","Це моє ліжко."],
+  ["Deze boeken zijn van mij.","Ці книжки мої."],
+  ["Dat is mijn bureau.","Он там мій стіл."],
+  ["Die foto's zijn uit Oekraïne.","Ті фото з України."],
+  ["Wat is dit?","Що це?"],
+  ["Dit is een gitaar.","Це гітара."],
+  ["En wat is dat?","А то що?"],
+  ["Dat is mijn nieuwe koptelefoon.","То мої нові навушники."],
+  ["Deze kamer is klein, maar gezellig.","Ця кімната маленька, але затишна."]
+ ],
+ vocab:[["de kamer","кімната"],["het bed","ліжко"],["het bureau","письмовий стіл"],["de foto","фото"],["de gitaar","гітара"],["de koptelefoon","навушники"],["de tas","сумка"],["de sleutel","ключ"],["lekker","смачний"],["gezellig","затишний, приємний"],["welkom","ласкаво просимо"]]
+});
+
+/* 10 */ LESSONS.push({
+ id:"mijn", mod:"a0", short:"mijn, jouw, van", sub:"Присвійні слова: чиє?",
+ title:"Чиє? <em>mijn, jouw</em>", lead:"Як сказати «мій», «її», «наш» і «машина Тома».",
+ ruleTitle:"Присвійні слова",
+ blocks:[
+  {t:"table", head:["Хто","Чий","Приклад"], say:[1,2], rows:[["ik","==mijn==","mijn fiets"],["jij","==jouw== (je)","jouw naam"],["u","==uw==","uw paspoort"],["hij","==zijn==","zijn auto"],["zij (вона)","==haar==","haar ogen"],["wij","==ons== / ==onze==","ons huis / onze hond"],["jullie","==jullie==","jullie kinderen"],["zij (вони)","==hun==","hun tuin"]]},
+  {t:"tip", x:"**ons** — з het-словами в однині (ons huis), **onze** — з de-словами і множиною (onze hond, onze kinderen)."},
+  {t:"h3", x:"Чий саме: van"},
+  {t:"ex", items:[["de fiets van Tom","велосипед Тома"],["Dat is van mij.","Це моє."],["Annas tas","сумка Анни"]]}
+ ],
+ quiz:[
+  {q:"Dit is ___ boek. (я)", o:["mijn","jouw","haar"], a:0, why:"ik → mijn."},
+  {q:"Zij heeft een broer. ___ broer heet Jan.", o:["Haar","Zijn","Hun"], a:0, why:"zij (вона) → haar."},
+  {q:"___ huis is groot. (ми; het huis)", o:["Ons","Onze"], a:0, why:"het-слово в однині — ons."},
+  {q:"___ hond is lief. (ми; de hond)", o:["Onze","Ons"], a:0, why:"de-слово — onze."},
+  {q:"«Велосипед Тома»:", o:["de fiets van Tom","Tom fiets","de Tom fiets"], a:0, why:"van — чий."},
+  {q:"«Це моє»:", o:["Dat is van mij.","Dat is mijn.","Dat is mij van."], a:0, why:"van mij — мій, моє."},
+  {q:"hun означає…", o:["їхній","її","наш"], a:0, why:"zij (вони) → hun."},
+  {q:"Ввічливе «ваш»:", o:["uw","jouw","jullie"], a:0, why:"u → uw."}
+ ],
+ storyTitle:"Een familiefoto",
+ hl:["mijn","jouw","zijn","haar","ons","onze","hun","van"],
+ story:[
+  ["Dit is een foto van mijn familie.","Це фото моєї родини."],
+  ["Mijn vader heet Ivan.","Мого тата звати Іван."],
+  ["Zijn werk is interessant.","Його робота цікава."],
+  ["Mijn moeder heet Olena.","Маму звати Олена."],
+  ["Haar ogen zijn blauw.","Її очі блакитні."],
+  ["Ons huis staat bij de rivier.","Наш дім стоїть біля річки."],
+  ["Mijn opa en oma zijn er ook.","Дідусь і бабуся теж тут."],
+  ["Hun tuin is prachtig.","Їхній сад чудовий."],
+  ["Onze kat heet Moertsjyk.","Нашого кота звати Мурчик."],
+  ["Is jouw familie groot?","А твоя родина велика?"]
+ ],
+ vocab:[["mijn","мій"],["jouw","твій"],["zijn","його"],["haar","її"],["ons / onze","наш"],["hun","їхній"],["het werk","робота"],["interessant","цікавий"],["de ogen","очі"],["de rivier","річка"],["opa en oma","дідусь і бабуся"],["de tuin","сад"],["prachtig","чудовий"]]
+});
+
+/* 11 */ LESSONS.push({
+ id:"hebben", mod:"a1", short:"hebben", sub:"У мене є: ik heb, hij heeft",
+ title:"У мене є: <em>hebben</em>", lead:"Як сказати «у мене є брат», «у неї є кіт».",
+ ruleTitle:"hebben — мати",
+ blocks:[
+  {t:"table", head:["Хто","hebben"], say:[1], rows:[["ik","==heb=="],["jij / u","==hebt== (heb jij?)"],["hij / zij / het","==heeft=="],["wij / jullie / zij","==hebben=="]]},
+  {t:"p", x:"Українською «у мене є», нідерландською — «я маю»: **Ik heb een zus.**"},
+  {t:"ex", items:[["Ik heb een broer.","У мене є брат."],["Zij heeft blauwe ogen.","У неї блакитні очі."],["Heb jij een auto?","У тебе є машина?"],["We hebben geen tijd.","У нас немає часу."]]},
+  {t:"tip", x:"**Ik heb honger** — я голодний, **ik heb dorst** — хочу пити, **ik heb het koud** — мені холодно. Нідерландці кажуть «маю голод»."}
+ ],
+ quiz:[
+  {q:"Ik ___ een kat.", o:["heb","heeft","hebt"], a:0, why:"ik → heb."},
+  {q:"Zij ___ twee kinderen. (вона)", o:["heeft","heb","hebben"], a:0, why:"zij (вона) → heeft."},
+  {q:"Wij ___ een tuin.", o:["hebben","heeft","heb"], a:0, why:"wij → hebben."},
+  {q:"«У тебе є ручка?»:", o:["Heb jij een pen?","Hebt jij een pen?","Jij heb een pen?"], a:0, why:"У питанні: heb jij."},
+  {q:"«Я голодний»:", o:["Ik heb honger.","Ik ben honger.","Ik heb hongerig."], a:0, why:"honger hebben."},
+  {q:"Jij ___ gelijk. (ти маєш рацію)", o:["hebt","heeft","hebben"], a:0, why:"jij → hebt."},
+  {q:"Het huis ___ een tuin.", o:["heeft","hebt","heb"], a:0, why:"het → heeft."},
+  {q:"«Мені холодно»:", o:["Ik heb het koud.","Ik ben het koud.","Mij is koud."], a:0, why:"Стала фраза."}
+ ],
+ storyTitle:"Wat heb jij?",
+ hl:["heb","hebt","heeft","hebben"],
+ story:[
+  ["Ik heb een grote familie.","У мене велика родина."],
+  ["Ik heb twee broers en een zus.","У мене два брати і сестра."],
+  ["Mijn zus heeft lang haar.","У моєї сестри довге волосся."],
+  ["Mijn broers hebben elk een fiets.","У кожного з братів є велосипед."],
+  ["Wij hebben geen auto.","У нас немає машини."],
+  ["Maar we hebben wel een hond.","Зате в нас є собака."],
+  ["Hij heeft grote oren.","У нього великі вуха."],
+  ["Heb jij een huisdier?","У тебе є домашня тварина?"],
+  ["Mijn vriendin heeft drie vissen.","У моєї подруги три рибки."],
+  ["Ik heb honger. Wie heeft er koekjes?","Я голодний. У кого є печиво?"]
+ ],
+ vocab:[["hebben","мати"],["het haar","волосся"],["elk","кожен"],["het oor / de oren","вухо / вуха"],["het huisdier","домашня тварина"],["de vriendin","подруга"],["de vis","риба"],["de honger","голод"],["de dorst","спрага"],["de tijd","час"],["het koekje","печиво"]]
+});
+
+/* 12 */ LESSONS.push({
+ id:"eris", mod:"a1", short:"er is / er zijn", sub:"Є, знаходиться",
+ title:"<em>Er is</em>, <em>er zijn</em>", lead:"Як сказати, що десь щось є: «у місті є парк».",
+ ruleTitle:"Що де є",
+ blocks:[
+  {t:"table", head:["","Однина","Множина"], say:[1,2], rows:[["Ствердження","==Er is== een park.","==Er zijn== twee parken."],["Заперечення","Er is ==geen== lift.","Er zijn ==geen== winkels."],["Питання","==Is er== een bank?","==Zijn er== cafés?"]]},
+  {t:"p", x:"Місце можна поставити на початок, тоді дієслово йде другим: **In de stad is er een park** або простіше **In de stad is een park.**"},
+  {t:"ex", items:[["Er is een bakker in mijn straat.","На моїй вулиці є пекарня."],["Er zijn drie slaapkamers.","Тут три спальні."],["Is er hier een supermarkt?","Тут є супермаркет?"]]}
+ ],
+ quiz:[
+  {q:"___ een kat op de bank.", o:["Er is","Er zijn","Het is"], a:0, why:"Одна кішка — er is."},
+  {q:"Er ___ twee ramen.", o:["zijn","is","ben"], a:0, why:"Множина — er zijn."},
+  {q:"«Тут є банк?»:", o:["Is er een bank?","Er is een bank?","Zijn er een bank?"], a:0, why:"Питання: is er."},
+  {q:"«Ліфта немає»:", o:["Er is geen lift.","Er is niet lift.","Er geen is lift."], a:0, why:"Перед іменником — geen."},
+  {q:"Er ___ veel mensen.", o:["zijn","is"], a:0, why:"mensen — множина."},
+  {q:"de bakker — це…", o:["пекар, пекарня","банк","кав'ярня"], a:0, why:"bakker — пекар."},
+  {q:"Zijn er cafés? — Ja, er ___ veel cafés.", o:["zijn","is","heeft"], a:0, why:"Множина."},
+  {q:"de winkel — це…", o:["магазин","вікно","вулиця"], a:0, why:"winkel — магазин."}
+ ],
+ storyTitle:"Mijn stad",
+ hl:["er","is","zijn","geen"],
+ story:[
+  ["Welkom in mijn stad!","Ласкаво просимо до мого міста!"],
+  ["Er is een groot plein in het centrum.","У центрі є велика площа."],
+  ["Er zijn veel winkels en cafés.","Тут багато магазинів і кав'ярень."],
+  ["Er is een gracht bij het park.","Біля парку є канал."],
+  ["Er zijn tien bruggen.","Тут десять мостів."],
+  ["Er is geen bioscoop.","Кінотеатру немає."],
+  ["Er zijn geen hoge gebouwen.","Високих будівель немає."],
+  ["Is er een museum?","Тут є музей?"],
+  ["Ja, er is een oud museum.","Так, є старий музей."],
+  ["Zijn er goede restaurants? Natuurlijk!","Тут є гарні ресторани? Звісно!"]
+ ],
+ vocab:[["de stad","місто"],["het plein","площа"],["het centrum","центр"],["de winkel","магазин"],["de gracht","канал"],["de brug","міст"],["de bioscoop","кінотеатр"],["het gebouw","будівля"],["het museum","музей"],["de bakker","пекар, пекарня"],["natuurlijk","звісно"]]
+});
+
+/* 13 */ LESSONS.push({
+ id:"vraag", mod:"a1", short:"Питальні слова", sub:"wat, wie, waar, wanneer, waarom, hoe",
+ title:"<em>Wat? Waar? Waarom?</em>", lead:"Слова, з яких починається майже кожне питання.",
+ ruleTitle:"Питальні слова",
+ blocks:[
+  {t:"table", head:["Слово","Значення","Приклад"], say:[0,2], rows:[["==wat==","що","Wat is dit?"],["==wie==","хто","Wie is dat?"],["==waar==","де","Waar woon je?"],["==waar… vandaan==","звідки","Waar kom je vandaan?"],["==wanneer==","коли","Wanneer begint de les?"],["==waarom==","чому","Waarom ben je laat?"],["==hoe==","як","Hoe gaat het?"],["==hoeveel==","скільки","Hoeveel kost het?"],["==welk / welke==","який","Welke kleur?"]]},
+  {t:"p", x:"Питальне слово → дієслово → підмет: **Waar ==woon== je?** На Waarom відповідаємо **Omdat…** (тому що)."}
+ ],
+ quiz:[
+  {q:"___ woon je? — In Utrecht.", o:["Waar","Wanneer","Wie"], a:0, why:"Місце — waar."},
+  {q:"___ begint de film? — Om acht uur.", o:["Wanneer","Waar","Wat"], a:0, why:"Час — wanneer."},
+  {q:"___ is zij? — Mijn tante.", o:["Wie","Wat","Hoe"], a:0, why:"Людина — wie."},
+  {q:"___ ben je laat? — Omdat de trein laat was.", o:["Waarom","Hoe","Waar"], a:0, why:"Причина — waarom."},
+  {q:"___ oud ben je?", o:["Hoe","Wat","Wie"], a:0, why:"Вік — hoe oud."},
+  {q:"«Звідки ти?»:", o:["Waar kom je vandaan?","Waar woon je?","Wanneer kom je?"], a:0, why:"waar… vandaan — звідки."},
+  {q:"Відповідь на waarom починається з…", o:["omdat","dus","toen"], a:0, why:"omdat — тому що."},
+  {q:"___ kleur is je fiets?", o:["Welke","Wie","Waar"], a:0, why:"Який — welke."}
+ ],
+ storyTitle:"Een interview",
+ hl:["wat","wie","waar","wanneer","waarom","hoe","omdat","welke"],
+ story:[
+  ["Hoe heet je?","Як тебе звати?"],
+  ["Ik heet Kateryna.","Мене звати Катерина."],
+  ["Waar kom je vandaan?","Звідки ти?"],
+  ["Ik kom uit Poltava.","Я з Полтави."],
+  ["Waar woon je nu?","Де ти зараз живеш?"],
+  ["Ik woon in Den Haag.","Я живу в Гаазі."],
+  ["Wanneer ben je jarig?","Коли в тебе день народження?"],
+  ["In juni.","У червні."],
+  ["Wie is je beste vriend?","Хто твій найкращий друг?"],
+  ["Waarom leer je Nederlands? Omdat ik hier woon!","Чому ти вчиш нідерландську? Бо я тут живу!"]
+ ],
+ vocab:[["wat","що"],["wie","хто"],["waar","де"],["wanneer","коли"],["waarom","чому"],["hoe","як"],["omdat","тому що"],["welke","який"],["jarig zijn","мати день народження"],["leren","вчити, вчитися"],["nu","зараз"],["de kleur","колір"]]
+});
+
+/* 14 */ LESSONS.push({
+ id:"tt", mod:"a1", short:"Теперішній час", sub:"ik werk, jij werkt, wij werken",
+ title:"Теперішній час: <em>ik werk</em>", lead:"Один час на «зараз», «завжди» і навіть «скоро».",
+ ruleTitle:"Основа + закінчення",
+ blocks:[
+  {t:"p", x:"Беремо інфінітив (**werken**), відкидаємо **-en** — маємо основу **werk**."},
+  {t:"table", head:["Хто","Форма","Приклад"], say:[2], rows:[["ik","основа","ik ==werk=="],["jij / u / hij / zij","основа + ==t==","jij ==werkt==, hij ==werkt=="],["wij / jullie / zij","інфінітив","wij ==werken=="]]},
+  {t:"tip", x:"Правопис основи: довгий звук зберігаємо — **wonen → ik woon**, **slapen → ik slaap**. Подвоєна приголосна скорочується — **zitten → ik zit**. Основа не закінчується на z/v: **lezen → ik lees**, **leven → ik leef**."},
+  {t:"tip", x:"У питанні з jij -t зникає: **jij werkt → Werk jij?**"},
+  {t:"ex", items:[["Ik woon in Rotterdam.","Я живу в Роттердамі."],["Zij werkt in een ziekenhuis.","Вона працює в лікарні."],["Wij spreken Oekraïens.","Ми говоримо українською."],["Lees jij veel?","Ти багато читаєш?"]]}
+ ],
+ quiz:[
+  {q:"ik ___ (werken)", o:["werk","werkt","werken"], a:0, why:"ik — основа."},
+  {q:"hij ___ (werken)", o:["werkt","werk","werken"], a:0, why:"hij — основа + t."},
+  {q:"wij ___ (wonen)", o:["wonen","woont","woon"], a:0, why:"Множина — інфінітив."},
+  {q:"ik ___ (wonen)", o:["woon","won","woont"], a:0, why:"Довгий звук: oo."},
+  {q:"ik ___ (lezen)", o:["lees","leez","lez"], a:0, why:"z → s, довгий звук ee."},
+  {q:"«Ти працюєш?»:", o:["Werk jij?","Werkt jij?","Jij werk?"], a:0, why:"У питанні -t зникає."},
+  {q:"zij ___ (вона, zitten)", o:["zit","zitt","zitten"], a:0, why:"Основа zit + t → zit (одна t)."},
+  {q:"jullie ___ Nederlands. (spreken)", o:["spreken","spreekt","spreek"], a:0, why:"jullie — інфінітив."}
+ ],
+ storyTitle:"Mijn dag",
+ hl:["woon","sta","drink","fiets","werk","geeft","werkt","gaat","speelt","eten","leest","kijk"],
+ story:[
+  ["Ik heet Mark en ik woon in Utrecht.","Мене звати Марк, я живу в Утрехті."],
+  ["Ik sta elke dag om zeven uur op.","Я встаю щодня о сьомій."],
+  ["Ik drink koffie en fiets naar mijn werk.","Я п'ю каву і їду на роботу велосипедом."],
+  ["Ik werk bij een IT-bedrijf.","Я працюю в IT-компанії."],
+  ["Mijn vrouw geeft muziekles.","Моя дружина викладає музику."],
+  ["Zij werkt op een school.","Вона працює в школі."],
+  ["Onze zoon gaat naar de opvang.","Наш син ходить у садочок."],
+  ["Hij speelt de hele dag met vriendjes.","Він увесь день грається з друзями."],
+  ["'s Avonds eten we samen.","Увечері ми вечеряємо разом."],
+  ["Mijn vrouw leest en ik kijk een film.","Дружина читає, а я дивлюся фільм."]
+ ],
+ vocab:[["wonen","жити"],["werken","працювати"],["drinken","пити"],["fietsen","їздити велосипедом"],["het bedrijf","компанія"],["de vrouw","жінка; дружина"],["de zoon","син"],["eten","їсти"],["samen","разом"],["lezen","читати"],["kijken","дивитися"],["spreken","говорити"]]
+});
+
+/* 15 */ LESSONS.push({
+ id:"geen", mod:"a1", short:"niet чи geen", sub:"Два способи сказати «не»",
+ title:"<em>Niet</em> чи <em>geen</em>?", lead:"Нідерландська має два заперечення, і вибір між ними простий.",
+ ruleTitle:"niet і geen",
+ blocks:[
+  {t:"table", head:["Слово","Коли","Приклад"], say:[2], rows:[["==geen==","замість een або перед іменником без артикля","Ik heb geen auto."],["==niet==","усі інші випадки: дієслова, прикметники, de/het-слова, імена","Ik werk niet. Het is niet duur."]]},
+  {t:"ex", items:[["Ik heb een fiets. → Ik heb geen fiets.","У мене є велосипед. → У мене немає велосипеда."],["Ik drink koffie. → Ik drink geen koffie.","Я п'ю каву. → Я не п'ю каву."],["Ik zie de bus. → Ik zie de bus niet.","Я бачу автобус. → Я не бачу автобуса."]]},
+  {t:"tip", x:"**niet** часто стоїть у кінці речення: **Ik ken hem niet.** — Я його не знаю."}
+ ],
+ quiz:[
+  {q:"Ik heb ___ tijd.", o:["geen","niet"], a:0, why:"Іменник без артикля — geen."},
+  {q:"Ik werk vandaag ___.", o:["niet","geen"], a:0, why:"Дієслово — niet."},
+  {q:"Het is ___ koud.", o:["niet","geen"], a:0, why:"Прикметник — niet."},
+  {q:"Ik heb een broer. → Ik heb ___ broer.", o:["geen","niet een","niet"], a:0, why:"een → geen."},
+  {q:"Ik zie de bus ___.", o:["niet","geen"], a:0, why:"de-слово — niet."},
+  {q:"Zij drinkt ___ alcohol.", o:["geen","niet"], a:0, why:"Іменник без артикля."},
+  {q:"«Я його не знаю»:", o:["Ik ken hem niet.","Ik ken geen hem.","Ik niet ken hem."], a:0, why:"niet у кінці."},
+  {q:"Dat is ___ goed idee.", o:["geen","niet"], a:0, why:"een goed idee → geen goed idee."}
+ ],
+ storyTitle:"Een rustige zondag",
+ hl:["niet","geen"],
+ story:[
+  ["Vandaag is het zondag.","Сьогодні неділя."],
+  ["Ik werk vandaag niet.","Сьогодні я не працюю."],
+  ["Ik heb geen haast.","Я нікуди не поспішаю."],
+  ["Ik drink geen koffie, maar thee.","Я п'ю не каву, а чай."],
+  ["Het regent niet.","Дощу немає."],
+  ["Het is niet warm, maar ook niet koud.","Не тепло, але й не холодно."],
+  ["Mijn buurman heeft geen tuin.","У мого сусіда немає саду."],
+  ["Dus hij zit graag in onze tuin.","Тож він любить сидіти в нашому."],
+  ["We hebben geen plannen.","У нас немає планів."],
+  ["Perfect, toch?","Ідеально, правда?"]
+ ],
+ vocab:[["geen","жодного, не"],["vandaag","сьогодні"],["de zondag","неділя"],["de haast","поспіх"],["de thee","чай"],["regenen","іти (про дощ)"],["de buurman","сусід"],["graag","охоче, любити (робити)"],["het plan","план"],["kennen","знати (когось)"],["toch","ж, адже, правда?"]]
+});
+
+/* 16 */ LESSONS.push({
+ id:"v2", mod:"a1", short:"Порядок слів", sub:"Дієслово завжди друге",
+ title:"Дієслово — <em>друге</em>", lead:"Головне правило нідерландського речення: дієслово стоїть на другому місці.",
+ ruleTitle:"Правило другого місця",
+ blocks:[
+  {t:"p", x:"У звичайному реченні ==дієслово завжди друге==. Якщо на першому місці час чи місце, підмет переходить після дієслова."},
+  {t:"table", head:["1","2 (дієслово)","Решта"], rows:[["Ik","==ga==","morgen naar Amsterdam."],["Morgen","==ga==","ik naar Amsterdam."],["In Amsterdam","==woont==","mijn zus."]]},
+  {t:"ex", items:[["Ik werk vandaag thuis.","Я сьогодні працюю вдома."],["Vandaag werk ik thuis.","Сьогодні я працюю вдома."],["Om acht uur begint de les.","О восьмій починається урок."]]},
+  {t:"tip", x:"Порядок «час — спосіб — місце»: **Ik ga morgen met de trein naar Gent.** — Завтра їду потягом до Гента."}
+ ],
+ quiz:[
+  {q:"Morgen ___ naar school.", o:["ga ik","ik ga","gaan ik"], a:0, why:"Дієслово друге, підмет після нього."},
+  {q:"Правильне речення:", o:["Vandaag werk ik thuis.","Vandaag ik werk thuis.","Werk vandaag ik thuis."], a:0, why:"Дієслово друге."},
+  {q:"In de zomer ___ wij naar zee.", o:["gaan","wij gaan","gaat"], a:0, why:"Дієслово друге: gaan wij."},
+  {q:"Om negen uur ___ de winkel open.", o:["gaat","de winkel gaat","gaan"], a:0, why:"gaat + підмет."},
+  {q:"Порядок обставин:", o:["час — спосіб — місце","місце — час — спосіб","спосіб — місце — час"], a:0, why:"morgen — met de trein — naar Gent."},
+  {q:"Ik ___ morgen met de bus naar Leiden.", o:["ga","gaat","gaan"], a:0, why:"ik ga."},
+  {q:"Правильне речення:", o:["Gisteren was ik ziek.","Gisteren ik was ziek.","Was ik gisteren ziek."], a:0, why:"Дієслово друге (питання — інша справа)."},
+  {q:"Hier ___ mijn opa.", o:["woont","mijn opa woont","wonen"], a:0, why:"Місце першим, дієслово друге."}
+ ],
+ storyTitle:"Een week in Nederland",
+ hl:["ga","fiets","begint","eet","speel","drinken","bezoeken","sta","kijk","ben"],
+ story:[
+  ["Op maandag ga ik naar mijn werk.","У понеділок я йду на роботу."],
+  ["Meestal fiets ik door het park.","Зазвичай я їду велосипедом через парк."],
+  ["Om negen uur begint mijn dag.","О дев'ятій починається мій день."],
+  ["Om twaalf uur eet ik een broodje.","О дванадцятій я їм бутерброд."],
+  ["Op woensdag speel ik voetbal.","У середу я граю у футбол."],
+  ["Op vrijdag drinken we iets met collega's.","У п'ятницю ми з колегами йдемо щось випити."],
+  ["In het weekend bezoeken we mijn ouders.","На вихідних ми провідуємо моїх батьків."],
+  ["Op zondag sta ik laat op.","У неділю я встаю пізно."],
+  ["'s Avonds kijk ik een serie.","Увечері я дивлюся серіал."],
+  ["Zo ben ik altijd tevreden.","Так я завжди задоволений."]
+ ],
+ vocab:[["maandag","понеділок"],["woensdag","середа"],["vrijdag","п'ятниця"],["meestal","зазвичай"],["het broodje","булочка, бутерброд"],["voetbal","футбол"],["de collega","колега"],["bezoeken","відвідувати"],["het weekend","вихідні"],["altijd","завжди"],["tevreden","задоволений"]]
+});
+
+/* 17 */ LESSONS.push({
+ id:"modaal", mod:"a1", short:"kunnen, willen, moeten", sub:"Можу, хочу, мушу, можна",
+ title:"Можу і хочу: <em>kunnen, willen</em>", lead:"Модальні дієслова: друге місце для них, інфінітив — у кінець речення.",
+ ruleTitle:"Модальні дієслова",
+ blocks:[
+  {t:"table", head:["","kunnen (могти)","willen (хотіти)","moeten (мусити)","mogen (можна)"], say:[1,2,3,4], rows:[["ik","kan","wil","moet","mag"],["jij","kunt / kan","wilt / wil","moet","mag"],["hij / zij","kan","wil","moet","mag"],["wij / zij","kunnen","willen","moeten","mogen"]]},
+  {t:"p", x:"Модальне дієслово друге, а основне — ==інфінітивом у кінці==: **Ik ==kan== goed ==zwemmen==.**"},
+  {t:"ex", items:[["Ik wil Nederlands leren.","Я хочу вчити нідерландську."],["Je moet hier stoppen.","Тут треба зупинитися."],["Mag ik binnenkomen?","Можна увійти?"],["Kun je me helpen?","Можеш мені допомогти?"]]},
+  {t:"tip", x:"**niet moeten** — не обов'язково, **niet mogen** — заборонено: **Je mag hier niet roken.** — Тут не можна палити."}
+ ],
+ quiz:[
+  {q:"Ik ___ goed zwemmen.", o:["kan","kunnen","kunt"], a:0, why:"ik kan."},
+  {q:"Wij ___ naar huis.", o:["willen","wil","wilt"], a:0, why:"Множина — willen."},
+  {q:"Правильне речення:", o:["Ik wil een ijsje kopen.","Ik wil kopen een ijsje.","Ik kopen wil een ijsje."], a:0, why:"Інфінітив у кінці."},
+  {q:"«Можна увійти?»:", o:["Mag ik binnenkomen?","Kan ik binnenkomen moet?","Wil ik binnenkomen?"], a:0, why:"mogen — дозвіл."},
+  {q:"Hij ___ morgen werken. (мусить)", o:["moet","moeten","mag"], a:0, why:"hij moet."},
+  {q:"«Тут не можна палити»:", o:["Je mag hier niet roken.","Je moet hier niet roken.","Je kunt hier roken niet."], a:0, why:"Заборона — niet mogen."},
+  {q:"«Можеш допомогти?»:", o:["Kun je me helpen?","Kan je helpen me?","Kunnen je me helpen?"], a:0, why:"kun je + … + helpen."},
+  {q:"willen означає…", o:["хотіти","могти","мусити"], a:0, why:"willen — хотіти."}
+ ],
+ storyTitle:"Wat kun je?",
+ hl:["kan","kun","kunnen","wil","wilt","willen","moet","moeten","mag","mogen"],
+ story:[
+  ["Mijn broertje is zeven jaar.","Моєму молодшому братові сім років."],
+  ["Hij kan al lezen en schrijven.","Він уже вміє читати й писати."],
+  ["Hij kan heel snel fietsen.","Він дуже швидко їздить велосипедом."],
+  ["Maar hij kan nog niet zwemmen.","Але плавати ще не вміє."],
+  ["Hij wil het deze zomer leren.","Він хоче навчитися цього літа."],
+  ["Hij moet elke week naar zwemles.","Він мусить щотижня ходити на плавання."],
+  ["Na de les mag hij een ijsje.","Після уроку йому можна морозиво."],
+  ["Kun jij zwemmen?","А ти вмієш плавати?"],
+  ["Ik wil ook beter leren zwemmen.","Я теж хочу краще плавати."],
+  ["Zullen we samen gaan? Dat moeten we doen!","Підемо разом? Так і зробимо!"]
+ ],
+ vocab:[["kunnen","могти, вміти"],["willen","хотіти"],["moeten","мусити"],["mogen","мати дозвіл"],["schrijven","писати"],["zwemmen","плавати"],["al","вже"],["nog niet","ще не"],["de zomer","літо"],["helpen","допомагати"],["roken","палити"],["binnenkomen","входити"]]
+});
+
+/* 18 */ LESSONS.push({
+ id:"scheid", mod:"a1", short:"Відокремлювані дієслова", sub:"opbellen: ik bel je op",
+ title:"Розпад: <em>ik bel je op</em>", lead:"Деякі дієслова розпадаються на дві частини, і префікс тікає в кінець.",
+ ruleTitle:"Відокремлювані дієслова",
+ blocks:[
+  {t:"p", x:"Дієслова з префіксами **op-, aan-, uit-, mee-, terug-, af-** розпадаються: дієслово ==друге==, префікс ==у кінці==."},
+  {t:"table", head:["Інфінітив","Значення","Речення"], say:[0,2], rows:[["opbellen","дзвонити","Ik bel je morgen op."],["opstaan","вставати","Ik sta om zeven uur op."],["aankomen","прибувати","De trein komt om drie uur aan."],["meenemen","брати з собою","Neem je paraplu mee!"],["uitgaan","виходити (розважатися)","We gaan vanavond uit."],["terugkomen","повертатися","Wanneer kom je terug?"]]},
+  {t:"tip", x:"З модальним дієсловом інфінітив знову цілий: **Ik moet je ==opbellen==.**"}
+ ],
+ quiz:[
+  {q:"opstaan: Ik ___ om zeven uur ___.", o:["sta … op","opsta … —","sta op … —"], a:0, why:"Префікс у кінець."},
+  {q:"«Я тобі завтра подзвоню»:", o:["Ik bel je morgen op.","Ik opbel je morgen.","Ik bel op je morgen."], a:0, why:"bel … op."},
+  {q:"De trein ___ om drie uur ___.", o:["komt … aan","aankomt … —","komt aan … —"], a:0, why:"aankomen → komt … aan."},
+  {q:"З модальним дієсловом:", o:["Ik moet je opbellen.","Ik moet je bellen op.","Ik moet op je bellen."], a:0, why:"Інфінітив цілий у кінці."},
+  {q:"meenemen означає…", o:["брати з собою","зустрічати","повертатися"], a:0, why:"mee — разом."},
+  {q:"«Візьми парасольку!»:", o:["Neem je paraplu mee!","Meeneem je paraplu!","Neem mee je paraplu!"], a:0, why:"Наказ: neem … mee."},
+  {q:"Wanneer ___ je ___?", o:["kom … terug","terugkom … —","kom terug … —"], a:0, why:"terugkomen."},
+  {q:"uitgaan означає…", o:["виходити розважитися","прибирати","вставати"], a:0, why:"uitgaan — піти в кафе, клуб."}
+ ],
+ storyTitle:"Een drukke dag",
+ hl:["op","aan","mee","uit","terug","af"],
+ story:[
+  ["Ik sta om half zeven op.","Я встаю о пів на сьому."],
+  ["Ik neem mijn lunch mee.","Беру з собою обід."],
+  ["Mijn trein komt om acht uur aan.","Мій потяг прибуває о восьмій."],
+  ["Mijn baas belt me om negen uur op.","О дев'ятій мені дзвонить керівник."],
+  ["Ik maak mijn werk om vijf uur af.","О п'ятій я закінчую роботу."],
+  ["Dan kom ik terug naar huis.","Потім повертаюся додому."],
+  ["Ik ruim de keuken op.","Прибираю кухню."],
+  ["Mijn vrienden nodigen me uit.","Друзі мене запрошують."],
+  ["We gaan vanavond uit.","Сьогодні ввечері ми йдемо гуляти."],
+  ["Ik zie er echt naar uit!","Я справді на це чекаю!"]
+ ],
+ vocab:[["opstaan","вставати"],["meenemen","брати з собою"],["aankomen","прибувати"],["opbellen","дзвонити"],["afmaken","закінчувати"],["terugkomen","повертатися"],["opruimen","прибирати"],["uitnodigen","запрошувати"],["uitgaan","піти розважатися"],["de baas","начальник"],["de keuken","кухня"],["de paraplu","парасолька"]]
+});
+
+/* 19 */ LESSONS.push({
+ id:"voorz", mod:"a1", short:"in, op, aan, naar", sub:"Прийменники місця і напрямку",
+ title:"<em>In, op, aan, naar</em>", lead:"Маленькі слова, що кажуть, де і куди.",
+ ruleTitle:"Прийменники",
+ blocks:[
+  {t:"table", head:["","Значення","Приклад"], say:[2], rows:[["==in==","у, всередині","in de doos, in Amsterdam"],["==op==","на (горизонтально)","op de tafel"],["==aan==","на (вертикально), біля","aan de muur"],["==naar==","до, у (напрямок)","naar school, naar huis"],["==bij==","біля; у когось","bij mijn oma"],["==onder==","під","onder het bed"],["==naast==","поруч","naast de bank"],["==tussen==","між","tussen de huizen"]]},
+  {t:"tip", x:"**op het werk**, **op school** — на роботі, у школі. **thuis** — вдома (без прийменника). **naar huis** — додому."},
+  {t:"ex", items:[["De sleutels liggen op de tafel.","Ключі лежать на столі."],["Het schilderij hangt aan de muur.","Картина висить на стіні."],["Ik ga naar de supermarkt.","Я йду до супермаркету."]]}
+ ],
+ quiz:[
+  {q:"Het boek ligt ___ de tafel.", o:["op","in","aan"], a:0, why:"На поверхні — op."},
+  {q:"De kat zit ___ de doos.", o:["in","op","naar"], a:0, why:"Всередині — in."},
+  {q:"De klok hangt ___ de muur.", o:["aan","op","in"], a:0, why:"На вертикальній поверхні — aan."},
+  {q:"Ik ga ___ huis.", o:["naar","in","op"], a:0, why:"Напрямок — naar."},
+  {q:"Ik ben ___ mijn oma.", o:["bij","naar","aan"], a:0, why:"У когось — bij."},
+  {q:"De schoenen staan ___ het bed.", o:["onder","op","aan"], a:0, why:"Під — onder."},
+  {q:"«У школі»:", o:["op school","in school naar","aan school"], a:0, why:"Стале: op school."},
+  {q:"naast означає…", o:["поруч","між","під"], a:0, why:"naast — поруч."}
+ ],
+ storyTitle:"Waar is mijn telefoon?",
+ hl:["in","op","aan","naar","bij","onder","naast","tussen"],
+ story:[
+  ["Waar is mijn telefoon?","Де мій телефон?"],
+  ["Hij ligt niet op de tafel.","На столі його немає."],
+  ["Hij zit ook niet in mijn tas.","І в сумці теж немає."],
+  ["Misschien ligt hij onder de bank?","Може, під диваном?"],
+  ["Nee, daar ligt alleen de kat.","Ні, там тільки кіт."],
+  ["Mijn jas hangt aan de deur.","Моя куртка висить на дверях."],
+  ["De telefoon zit in mijn jas!","Телефон у куртці!"],
+  ["Nu ga ik snel naar mijn werk.","Тепер швидко на роботу."],
+  ["Mijn kantoor is naast het station.","Мій офіс поруч зі станцією."],
+  ["Het staat tussen een bakker en een bank.","Він між пекарнею і банком."]
+ ],
+ vocab:[["in","у"],["op","на"],["aan","на, біля"],["naar","до, у"],["bij","біля; у когось"],["onder","під"],["naast","поруч"],["tussen","між"],["de muur","стіна"],["de doos","коробка"],["de jas","куртка"],["het kantoor","офіс"],["misschien","можливо"]]
+});
+
+/* 20 */ LESSONS.push({
+ id:"tijd", mod:"a1", short:"Котра година", sub:"half drie = 2:30!, дні тижня",
+ title:"Котра година? <em>Hoe laat?</em>", lead:"Нідерландське «half drie» — це 2:30, а не 3:30. Вчимо час без пасток.",
+ ruleTitle:"Час і дні",
+ blocks:[
+  {t:"table", head:["Час","Нідерландською"], say:[1], rows:[["3:00","drie uur"],["3:15","kwart over drie"],["2:30","==half drie== (пів до трьох!)"],["2:45","kwart voor drie"],["3:10","tien over drie"],["2:20","tien voor half drie"]]},
+  {t:"tip", x:"**half drie** — «половина на шляху до трьох», тобто 2:30. Як українське «пів на третю»."},
+  {t:"table", head:["День","Нідерландською"], say:[1], rows:[["Пн","maandag"],["Вт","dinsdag"],["Ср","woensdag"],["Чт","donderdag"],["Пт","vrijdag"],["Сб","zaterdag"],["Нд","zondag"]]},
+  {t:"p", x:"**om** + час: **om acht uur** — о восьмій. **op** + день: **op maandag** — у понеділок. **van … tot …** — з … до …"}
+ ],
+ quiz:[
+  {q:"half vier — це…", o:["3:30","4:30","4:00"], a:0, why:"Пів на четверту — 3:30."},
+  {q:"kwart over twee — це…", o:["2:15","1:45","2:45"], a:0, why:"over — після."},
+  {q:"kwart voor zes — це…", o:["5:45","6:15","5:15"], a:0, why:"voor — до."},
+  {q:"«О восьмій»:", o:["om acht uur","op acht uur","in acht uur"], a:0, why:"Точний час — om."},
+  {q:"«У понеділок»:", o:["op maandag","om maandag","in maandag"], a:0, why:"День — op."},
+  {say:"donderdag", q:"Який день ви почули?", o:["четвер","вівторок","неділя"], a:0, why:"donderdag — четвер."},
+  {q:"«Котра година?»:", o:["Hoe laat is het?","Hoeveel uur?","Wat is de tijd laat?"], a:0, why:"Hoe laat is het?"},
+  {q:"van negen ___ vijf", o:["tot","naar","om"], a:0, why:"van … tot — з … до."}
+ ],
+ storyTitle:"Mijn rooster",
+ hl:["om","op","van","tot","half","kwart","over","voor"],
+ story:[
+  ["Hoe laat is het?","Котра година?"],
+  ["Het is half acht.","Пів на восьму."],
+  ["Ik sta elke dag om zes uur op.","Я щодня встаю о шостій."],
+  ["Om kwart over zeven ga ik de deur uit.","О чверть на восьму виходжу з дому."],
+  ["Ik werk van negen tot vijf.","Працюю з дев'ятої до п'ятої."],
+  ["Op maandag en donderdag heb ik Nederlandse les.","У понеділок і четвер у мене урок нідерландської."],
+  ["De les begint om kwart voor zeven.","Урок починається за чверть сьома."],
+  ["Op zaterdag ben ik vrij.","У суботу я вільний."],
+  ["Op zondag bel ik mijn moeder.","У неділю дзвоню мамі."],
+  ["Om elf uur ga ik slapen.","Об одинадцятій лягаю спати."]
+ ],
+ vocab:[["het uur","година"],["half","половина"],["het kwart","чверть"],["over","після (про час)"],["voor","до (про час)"],["hoe laat","котра година"],["dinsdag","вівторок"],["donderdag","четвер"],["zaterdag","субота"],["zondag","неділя"],["vrij","вільний"],["de les","урок"]]
+});
+
+/* 21 */ LESSONS.push({
+ id:"perf1", mod:"a2", short:"Минуле: heb gewerkt", sub:"Perfectum з hebben, 't kofschip",
+ title:"Минуле: <em>ik heb gewerkt</em>", lead:"Найуживаніший минулий час у розмові: hebben + ge…t/d.",
+ ruleTitle:"hebben + дієприкметник",
+ blocks:[
+  {t:"p", x:"**hebben** (друге місце) + дієприкметник ==у кінці==: **Ik ==heb== gisteren lang ==gewerkt==.**"},
+  {t:"table", head:["Правило","Приклад"], say:[1], rows:[["ge + основа + ==t==, якщо основа закінчується на т, к, ф, с, х, п (слово 't kofschip)","werken → gewerkt, fietsen → gefietst"],["ge + основа + ==d== у решті випадків","spelen → gespeeld, wonen → gewoond"],["Основа вже на t/d — нічого не додаємо","praten → gepraat, antwoorden → geantwoord"],["Префікси be-, ge-, ver-, her-, ont- — без ge-","betalen → betaald, vertellen → verteld"]]},
+  {t:"tip", x:"Запам'ятовуємо приголосні в слові **'t kofschip**: t, k, f, s, ch, p. Якщо основа закінчується на одну з них — пишемо **-t**."},
+  {t:"ex", items:[["Ik heb gisteren gewerkt.","Учора я працював."],["Wij hebben voetbal gespeeld.","Ми грали у футбол."],["Heb je al betaald?","Ти вже заплатив?"]]}
+ ],
+ quiz:[
+  {q:"werken → ik heb ___", o:["gewerkt","gewerkd","werkt"], a:0, why:"k є в 't kofschip → -t."},
+  {q:"spelen → wij hebben ___", o:["gespeeld","gespeelt","gespeelen"], a:0, why:"l немає в 't kofschip → -d."},
+  {q:"fietsen → ik heb ___", o:["gefietst","gefietsd","fietsen"], a:0, why:"s → -t."},
+  {q:"betalen → ik heb ___", o:["betaald","gebetaald","betaalt"], a:0, why:"Префікс be- — без ge-."},
+  {q:"Правильне речення:", o:["Ik heb gisteren gewerkt.","Ik heb gewerkt gisteren.","Ik gewerkt heb gisteren."], a:0, why:"Дієприкметник у кінці."},
+  {q:"wonen → hij heeft ___", o:["gewoond","gewoont","gewonen"], a:0, why:"n → -d."},
+  {q:"«Ти вже заплатив?»:", o:["Heb je al betaald?","Ben je al betaald?","Heb je al gebetaald?"], a:0, why:"hebben + betaald."},
+  {q:"Звідки береться -t або -d?", o:["з останнього звуку основи","з артикля","з підмета"], a:0, why:"Правило 't kofschip."}
+ ],
+ storyTitle:"Vorige zomer",
+ hl:["heb","hebben","heeft","gelogeerd","gewerkt","geholpen","gepraat","gelachen","gekookt","gespeeld","genoten","gefietst","gehuild"],
+ story:[
+  ["Vorige zomer heb ik bij mijn oom gelogeerd.","Минулого літа я гостював у дядька."],
+  ["We hebben elke dag in de tuin gewerkt.","Ми щодня працювали в саду."],
+  ["Ik heb hem met de appels geholpen.","Я допомагав йому з яблуками."],
+  ["'s Avonds hebben we gepraat en gelachen.","Увечері ми розмовляли й сміялися."],
+  ["Mijn oom heeft vis gekookt.","Дядько готував рибу."],
+  ["Een keer heeft het de hele dag geregend.","Одного разу цілий день ішов дощ."],
+  ["Toen hebben we kaart gespeeld.","Тоді ми грали в карти."],
+  ["We hebben ook veel gefietst.","Ще ми багато їздили на велосипедах."],
+  ["Ik heb echt genoten.","Я справді отримав задоволення."],
+  ["Op de laatste dag heb ik een beetje gehuild.","Останнього дня я трохи поплакав."]
+ ],
+ vocab:[["vorige zomer","минулого літа"],["logeren","гостювати"],["de oom","дядько"],["helpen","допомагати"],["praten","розмовляти"],["lachen","сміятися"],["koken","готувати"],["een keer","одного разу"],["toen","тоді"],["genieten","насолоджуватися"],["huilen","плакати"],["betalen","платити"]]
+});
+
+/* 22 */ LESSONS.push({
+ id:"perf2", mod:"a2", short:"Минуле: ben gegaan", sub:"zijn + рух; неправильні дієслова",
+ title:"Минуле: <em>ik ben gegaan</em>", lead:"Дієслова руху й зміни стану беруть zijn, а найчастіші дієслова мають неправильні форми.",
+ ruleTitle:"zijn + дієприкметник і неправильні дієслова",
+ blocks:[
+  {t:"p", x:"З **zijn** утворюють минулий час дієслова ==руху до мети і зміни стану==: gaan, komen, vertrekken, blijven, worden, beginnen: **Ik ==ben== naar huis ==gegaan==.**"},
+  {t:"table", head:["Дієслово","Perfectum","Переклад"], say:[0,1], rows:[["gaan","ben ==gegaan==","йти"],["komen","ben ==gekomen==","приходити"],["blijven","ben ==gebleven==","лишатися"],["eten","heb ==gegeten==","їсти"],["drinken","heb ==gedronken==","пити"],["zien","heb ==gezien==","бачити"],["doen","heb ==gedaan==","робити"],["schrijven","heb ==geschreven==","писати"],["lezen","heb ==gelezen==","читати"],["zijn","ben ==geweest==","бути"],["hebben","heb ==gehad==","мати"]]},
+  {t:"tip", x:"Неправильні дієслова закінчуються на **-en** і часто змінюють голосну: drinken → gedr**o**nken. Їх вчать напам'ять."}
+ ],
+ quiz:[
+  {q:"gaan → ik ___ gegaan", o:["ben","heb"], a:0, why:"Рух до мети — zijn."},
+  {q:"eten → ik heb ___", o:["gegeten","geëet","geeten"], a:0, why:"Неправильне: gegeten."},
+  {q:"zien → wij hebben ___", o:["gezien","gezient","gezeen"], a:0, why:"zien → gezien."},
+  {q:"komen → zij ___ gekomen", o:["is","heeft"], a:0, why:"komen — з zijn."},
+  {q:"zijn → ik ben ___", o:["geweest","gezijnd","gewezen"], a:0, why:"zijn → geweest."},
+  {q:"drinken → ik heb ___", o:["gedronken","gedrinkt","gedrunken"], a:0, why:"i → o."},
+  {q:"«Я лишився вдома»:", o:["Ik ben thuis gebleven.","Ik heb thuis gebleven.","Ik ben thuis geblijfd."], a:0, why:"blijven — з zijn."},
+  {q:"doen → ik heb ___", o:["gedaan","gedoen","gedoed"], a:0, why:"doen → gedaan."}
+ ],
+ storyTitle:"Een dagje Amsterdam",
+ hl:["ben","zijn","heb","hebben","gegaan","vertrokken","gezien","gedronken","gegeten","gekocht","geschreven","gekomen","geslapen","gelopen"],
+ story:[
+  ["Vorig weekend ben ik naar Amsterdam gegaan.","Минулих вихідних я їздив до Амстердама."],
+  ["Ik ben om zeven uur vertrokken.","Я виїхав о сьомій."],
+  ["Ik heb het Rijksmuseum gezien.","Я побачив Рейксмузеум."],
+  ["Daarna hebben we langs de grachten gelopen.","Потім ми гуляли вздовж каналів."],
+  ["We hebben koffie gedronken op een terras.","Ми пили каву на терасі."],
+  ["Ik heb haring gegeten. Lekker!","Я їв оселедець. Смачно!"],
+  ["Ik heb een boek over Amsterdam gekocht.","Я купив книжку про Амстердам."],
+  ["'s Avonds heb ik een kaartje aan mijn moeder geschreven.","Увечері я написав мамі листівку."],
+  ["Ik ben pas laat thuisgekomen.","Додому я повернувся пізно."],
+  ["En ik heb als een baby geslapen.","І спав як немовля."]
+ ],
+ vocab:[["gaan","йти, їхати"],["vertrekken","виїжджати"],["zien","бачити"],["lopen","ходити"],["het terras","тераса"],["de haring","оселедець"],["kopen","купувати"],["het kaartje","листівка"],["pas","лише, аж"],["thuiskomen","приходити додому"],["daarna","потім"],["blijven","лишатися"]]
+});
+
+/* 23 */ LESSONS.push({
+ id:"imperf", mod:"a2", short:"Минуле: ik werkte", sub:"Imperfectum для розповідей",
+ title:"Розповідь: <em>ik werkte, ik ging</em>", lead:"Простий минулий час — для історій, казок і описів того, як було.",
+ ruleTitle:"Imperfectum",
+ blocks:[
+  {t:"table", head:["Тип","Однина","Множина"], say:[1,2], rows:[["Правильні, 't kofschip","ik ==werkte==","wij ==werkten=="],["Правильні, решта","ik ==speelde==","wij ==speelden=="],["Неправильні","ik ==ging==, ik ==zag==","wij ==gingen==, wij ==zagen=="]]},
+  {t:"table", head:["Інфінітив","Однина","Множина"], say:[1,2], rows:[["zijn","was","waren"],["hebben","had","hadden"],["gaan","ging","gingen"],["komen","kwam","kwamen"],["zien","zag","zagen"],["eten","at","aten"],["doen","deed","deden"]]},
+  {t:"tip", x:"У розмові частіше **perfectum** (ik heb gewerkt). **Imperfectum** — у розповідях, а також для zijn і hebben: **Het was koud. Ik had geen tijd.**"}
+ ],
+ quiz:[
+  {q:"werken → ik ___", o:["werkte","werkde","werkten"], a:0, why:"k → -te."},
+  {q:"spelen → wij ___", o:["speelden","speelten","speelde"], a:0, why:"Множина: -den."},
+  {q:"zijn → het ___ koud", o:["was","waren","is geweest"], a:0, why:"Однина — was."},
+  {q:"hebben → ik ___ geen tijd", o:["had","hadden","hebte"], a:0, why:"hebben → had."},
+  {q:"gaan → wij ___", o:["gingen","gaanden","ging"], a:0, why:"Неправильне: gingen."},
+  {q:"zien → zij (вона) ___", o:["zag","zagen","ziede"], a:0, why:"zag."},
+  {q:"Коли частіше imperfectum?", o:["у розповідях","у питаннях про майбутнє","ніколи"], a:0, why:"Для історій і описів."},
+  {q:"komen → hij ___", o:["kwam","koomde","kwamen"], a:0, why:"komen → kwam."}
+ ],
+ storyTitle:"Er was eens…",
+ hl:["was","woonde","had","werkte","ging","zag","kwam","vroeg","zei","waren","lachten","bleven","speelde"],
+ story:[
+  ["Er was eens een kleine molenaar.","Жив-був маленький мірошник."],
+  ["Hij woonde in een oude molen bij de zee.","Він жив у старому вітряку біля моря."],
+  ["Hij had een kat en een hond.","У нього були кіт і собака."],
+  ["Elke dag werkte hij hard.","Щодня він тяжко працював."],
+  ["Op een dag ging hij naar de markt.","Одного дня він пішов на ринок."],
+  ["Daar zag hij een meisje met rode tulpen.","Там він побачив дівчину з червоними тюльпанами."],
+  ["Ze kwam naar hem toe en vroeg: 'Hoeveel kost je meel?'","Вона підійшла і спитала: «Скільки коштує твоє борошно?»"],
+  ["Hij zei: 'Voor jou is het gratis!'","Він сказав: «Для тебе безкоштовно!»"],
+  ["Ze lachten allebei.","Вони обоє засміялися."],
+  ["En ze bleven altijd goede vrienden.","І назавжди лишилися добрими друзями."]
+ ],
+ vocab:[["er was eens","жив-був"],["de molenaar","мірошник"],["de markt","ринок"],["het meel","борошно"],["vragen","питати"],["zeggen","казати"],["gratis","безкоштовно"],["allebei","обоє"],["hard","тяжко, сильно"],["op een dag","одного дня"],["toe","до (у naar … toe)"]]
+});
+
+/* 24 */ LESSONS.push({
+ id:"toek", mod:"a2", short:"Майбутнє: gaan, zullen", sub:"Ik ga koken; ik zal helpen",
+ title:"Майбутнє: <em>ik ga</em> і <em>ik zal</em>", lead:"Два способи сказати про майбутнє і ще один секрет: часто вистачає теперішнього часу.",
+ ruleTitle:"gaan + інфінітив, zullen + інфінітив",
+ blocks:[
+  {t:"table", head:["Форма","Значення","Приклад"], say:[2], rows:[["==gaan== + інфінітив","план, намір","Ik ga morgen koken."],["==zullen== + інфінітив","обіцянка, офіційно, прогноз","Ik zal je helpen."],["Теперішній + слово часу","майбутнє в розмові","Morgen werk ik thuis."]]},
+  {t:"table", head:["","zullen"], say:[1], rows:[["ik","zal"],["jij","zult / zal"],["hij / zij","zal"],["wij / zij","zullen"]]},
+  {t:"tip", x:"**Zullen we…?** — «Давай…?»: **Zullen we naar het strand gaan?** — Підемо на пляж?"}
+ ],
+ quiz:[
+  {q:"«Завтра я буду готувати» (план):", o:["Morgen ga ik koken.","Morgen koken ik ga.","Morgen ik ga koken."], a:0, why:"gaan + інфінітив у кінці."},
+  {q:"«Я тобі допоможу» (обіцянка):", o:["Ik zal je helpen.","Ik zul je helpen.","Ik zal helpen je."], a:0, why:"ik zal."},
+  {q:"«Давай підемо в кіно?»:", o:["Zullen we naar de film gaan?","Gaan we zullen film?","Zal we naar film?"], a:0, why:"Zullen we…?"},
+  {q:"wij ___ het proberen.", o:["zullen","zal","zult"], a:0, why:"Множина — zullen."},
+  {q:"Чи можна сказати майбутнє теперішнім часом?", o:["так, зі словом часу","ні"], a:0, why:"Morgen werk ik thuis."},
+  {q:"Het ___ morgen regenen. (прогноз)", o:["zal","zullen","gaat zal"], a:0, why:"het zal."},
+  {q:"«Я збираюся купити велосипед»:", o:["Ik ga een fiets kopen.","Ik zal kopen een fiets.","Ik ga kopen een fiets."], a:0, why:"Інфінітив у кінці."},
+  {q:"jij ___ het zien. (zullen)", o:["zult","zullen","zalt"], a:0, why:"jij zult (або zal)."}
+ ],
+ storyTitle:"Plannen voor de zomer",
+ hl:["ga","gaan","gaat","zal","zullen","zult"],
+ story:[
+  ["Deze zomer ga ik naar Zeeland.","Цього літа я поїду в Зеландію."],
+  ["We gaan een huisje aan zee huren.","Ми знімемо будиночок біля моря."],
+  ["Mijn broer gaat ook mee.","Мій брат теж поїде."],
+  ["We gaan elke dag zwemmen.","Ми щодня плаватимемо."],
+  ["Ik ga leren surfen!","Я навчуся серфінгу!"],
+  ["Ik zal veel foto's maken.","Я зроблю багато фото."],
+  ["Het zal vast mooi weer zijn.","Погода напевно буде гарною."],
+  ["Zullen we samen fietsen huren?","Візьмемо разом велосипеди напрокат?"],
+  ["Ik beloof het: ik zal je een kaartje sturen.","Обіцяю: надішлю тобі листівку."],
+  ["Jij zult het geweldig vinden!","Тобі сподобається!"]
+ ],
+ vocab:[["zullen","бути (майбутнє), обіцяти"],["huren","наймати, брати напрокат"],["het huisje","будиночок"],["meegaan","їхати разом"],["surfen","займатися серфінгом"],["vast","напевно"],["het weer","погода"],["beloven","обіцяти"],["sturen","надсилати"],["geweldig","чудовий"],["het strand","пляж"]]
+});
+
+/* 25 */ LESSONS.push({
+ id:"bijv", mod:"a2", short:"Прикметники: -e", sub:"een mooi huis, de mooie auto",
+ title:"Прикметник з <em>-e</em>", lead:"Коли прикметник стоїть перед іменником, він майже завжди отримує -e. Майже.",
+ ruleTitle:"Коли додаємо -e",
+ blocks:[
+  {t:"table", head:["Ситуація","Форма","Приклад"], say:[2], rows:[["de-слово","==-e==","de mooie auto, een mooie auto"],["het-слово з de/het/dit/dat","==-e==","het mooie huis"],["het-слово з een / geen / без артикля","==без -e==","een mooi huis"],["Множина","==-e==","mooie huizen"],["Після дієслова","без -e","Het huis is mooi."]]},
+  {t:"tip", x:"Єдиний випадок без -e: **een / geen + het-слово в однині**: een groot huis, een klein kind."},
+  {t:"tip", x:"Правопис: **groot → grote** (довгий звук: одна o), **wit → witte** (короткий: подвоюємо)."}
+ ],
+ quiz:[
+  {q:"een ___ huis (mooi)", o:["mooi","mooie"], a:0, why:"een + het-слово — без -e."},
+  {q:"het ___ huis (mooi)", o:["mooie","mooi"], a:0, why:"З het — з -e."},
+  {q:"een ___ auto (snel; de auto)", o:["snelle","snel"], a:0, why:"de-слово — -e, короткий звук → ll."},
+  {q:"___ bloemen (rood, множина)", o:["rode","rood","roode"], a:0, why:"Множина — -e, oo → o."},
+  {q:"Het huis is ___.", o:["groot","grote"], a:0, why:"Після дієслова — без -e."},
+  {q:"een ___ kind (klein; het kind)", o:["klein","kleine"], a:0, why:"een + het-слово."},
+  {q:"de ___ kat (zwart)", o:["zwarte","zwart"], a:0, why:"de-слово — -e."},
+  {q:"groot + e =", o:["grote","groote","grotte"], a:0, why:"Довгий звук, відкритий склад: одна o."}
+ ],
+ storyTitle:"Ons nieuwe huis",
+ hl:["nieuwe","oud","grote","kleine","mooie","witte","groen","rode","lichte","gezellige","oude"],
+ story:[
+  ["We hebben een nieuw huis.","У нас новий дім."],
+  ["Het is een oud huis met een grote tuin.","Це старий дім із великим садом."],
+  ["De voordeur is groen.","Вхідні двері зелені."],
+  ["In de tuin staan rode tulpen.","У саду ростуть червоні тюльпани."],
+  ["De keuken is klein, maar licht.","Кухня маленька, але світла."],
+  ["Mijn kamer heeft witte muren.","У моїй кімнаті білі стіни."],
+  ["Ik heb een mooie, grote kast.","У мене гарна велика шафа."],
+  ["Mijn zusje heeft de kleine kamer.","Молодша сестра має маленьку кімнату."],
+  ["De oude buurvrouw is heel lief.","Літня сусідка дуже мила."],
+  ["Het is een gezellige straat.","Це затишна вулиця."]
+ ],
+ vocab:[["nieuw","новий"],["oud","старий"],["groot","великий"],["klein","маленький"],["groen","зелений"],["licht","світлий"],["de voordeur","вхідні двері"],["de kast","шафа"],["het zusje","молодша сестра"],["de buurvrouw","сусідка"],["lief","милий"],["zwart","чорний"]]
+});
+
+/* 26 */ LESSONS.push({
+ id:"vergel", mod:"a2", short:"groter, grootst", sub:"Порівняння прикметників",
+ title:"Більший і найбільший: <em>groter, grootst</em>", lead:"Порівнюємо як в англійській, тільки -er / -st і dan.",
+ ruleTitle:"Ступені порівняння",
+ blocks:[
+  {t:"table", head:["Звичайний","Вищий (+er)","Найвищий (+st)"], say:[0,1,2], rows:[["groot","groter","grootst"],["klein","kleiner","kleinst"],["dik","dikker","dikst"],["duur","duurder","duurst"],["mooi","mooier","mooist"]]},
+  {t:"h3", x:"Винятки"},
+  {t:"table", head:["","",""], say:[0,1,2], rows:[["goed","beter","best"],["veel","meer","meest"],["weinig","minder","minst"],["graag","liever","liefst"]]},
+  {t:"p", x:"Порівнюємо через ==dan==: **Amsterdam is groter dan Utrecht.** Найвищий ступінь — з **het** або **de … -ste**: **het grootst**, **de grootste stad**."},
+  {t:"tip", x:"Після r додаємо **-der**: duur → duur**der**, ver → ver**der**."}
+ ],
+ quiz:[
+  {q:"klein → ___", o:["kleiner","meer klein","kleinder"], a:0, why:"+er."},
+  {q:"goed → ___", o:["beter","goeder","meer goed"], a:0, why:"Виняток."},
+  {q:"duur → ___", o:["duurder","duurer","duurst"], a:0, why:"Після r: -der."},
+  {q:"Amsterdam is groter ___ Utrecht.", o:["dan","als","van"], a:0, why:"Порівняння — dan."},
+  {q:"«Найбільше місто»:", o:["de grootste stad","de groter stad","de meest groot stad"], a:0, why:"-ste перед іменником."},
+  {q:"graag → liever означає…", o:["охочіше, краще","більше","менше"], a:0, why:"Ik drink liever thee — я радше питиму чай."},
+  {q:"veel → ___", o:["meer","veeler","meest"], a:0, why:"Виняток: meer."},
+  {q:"dik → ___", o:["dikker","diker","dikster"], a:0, why:"Короткий звук — подвоєння."}
+ ],
+ storyTitle:"Twee honden",
+ hl:["ouder","kleiner","sneller","rustiger","grappigste","grootste","langer","beter","beste","liefst","dan"],
+ story:[
+  ["Dit zijn mijn honden, Rex en Bim.","Це мої собаки, Рекс і Бім."],
+  ["Rex is ouder dan Bim.","Рекс старший за Біма."],
+  ["Bim is kleiner, maar sneller.","Бім менший, але швидший."],
+  ["Rex is rustiger dan Bim.","Рекс спокійніший за Біма."],
+  ["Bim is de grappigste hond van de straat.","Бім — найкумедніший пес на вулиці."],
+  ["Rex is de grootste hond van de straat.","Рекс — найбільший пес на вулиці."],
+  ["De oren van Bim zijn langer.","Вуха в Біма довші."],
+  ["Wie is beter? Moeilijke vraag!","Хто кращий? Складне питання!"],
+  ["Voor mij zijn het de beste honden van de wereld.","Для мене вони найкращі собаки у світі."],
+  ["Maar mijn kat vindt zichzelf het liefst.","Але моя кішка найбільше любить себе."]
+ ],
+ vocab:[["ouder","старший"],["snel","швидкий"],["rustig","спокійний"],["grappig","кумедний"],["beter","кращий"],["best","найкращий"],["meer","більше"],["minder","менше"],["liever","охочіше"],["dan","ніж"],["moeilijk","складний"],["de wereld","світ"]]
+});
+
+/* 27 */ LESSONS.push({
+ id:"zich", mod:"a2", short:"zich: me, je, zich", sub:"Зворотні дієслова: ik was me",
+ title:"Себе: <em>ik was me</em>", lead:"Українське «-ся» в нідерландській — окреме слово: me, je, zich.",
+ ruleTitle:"Зворотні дієслова",
+ blocks:[
+  {t:"table", head:["Хто","zich wassen (митися)"], say:[1], rows:[["ik","was ==me=="],["jij","wast ==je=="],["u","wast ==zich== / ==u=="],["hij / zij","wast ==zich=="],["wij","wassen ==ons=="],["jullie","wassen ==je=="],["zij","wassen ==zich=="]]},
+  {t:"table", head:["Дієслово","Значення"], say:[0], rows:[["zich voelen","почуватися"],["zich haasten","поспішати"],["zich vergissen","помилятися"],["zich herinneren","згадувати"],["zich vervelen","нудьгувати"],["zich verheugen op","радісно чекати"]]},
+  {t:"ex", items:[["Ik voel me goed.","Я почуваюся добре."],["Hij vergist zich.","Він помиляється."],["Wij haasten ons.","Ми поспішаємо."]]}
+ ],
+ quiz:[
+  {q:"Ik voel ___ ziek.", o:["me","zich","je"], a:0, why:"ik → me."},
+  {q:"Hij vergist ___.", o:["zich","me","ons"], a:0, why:"hij → zich."},
+  {q:"Wij haasten ___.", o:["ons","zich","je"], a:0, why:"wij → ons."},
+  {q:"«Ти нудьгуєш?»:", o:["Verveel je je?","Verveel jij zich?","Verveelt je me?"], a:0, why:"jij → je (двічі!)."},
+  {q:"zich herinneren означає…", o:["згадувати","забувати","поспішати"], a:0, why:"herinneren — згадувати."},
+  {q:"Zij (вони) wassen ___.", o:["zich","hen","ze"], a:0, why:"zij → zich."},
+  {q:"«Я почуваюся добре»:", o:["Ik voel me goed.","Ik voel goed.","Ik voel mij zich goed."], a:0, why:"zich voelen."},
+  {q:"Jullie vergissen ___.", o:["je","zich","jullie"], a:0, why:"jullie → je."}
+ ],
+ storyTitle:"Een rustige ochtend",
+ hl:["me","je","zich","ons"],
+ story:[
+  ["Ik word om zeven uur wakker.","Я прокидаюся о сьомій."],
+  ["Ik voel me vandaag heel goed.","Сьогодні я почуваюся дуже добре."],
+  ["Ik was me en kleed me aan.","Я вмиваюся й одягаюся."],
+  ["Mijn broer haast zich, want hij is laat.","Брат поспішає, бо запізнюється."],
+  ["Hij vergist zich in de tijd.","Він помилився з часом."],
+  ["Het is pas half acht!","Ще тільки пів на восьму!"],
+  ["We lachen en ontspannen ons.","Ми сміємося і розслабляємося."],
+  ["Herinner je je ons eerste ontbijt hier?","Пам'ятаєш наш перший сніданок тут?"],
+  ["Ik verheug me op het weekend.","Я радісно чекаю на вихідні."],
+  ["Niemand verveelt zich in dit huis!","У цьому домі ніхто не нудьгує!"]
+ ],
+ vocab:[["zich voelen","почуватися"],["zich wassen","митися"],["zich aankleden","одягатися"],["zich haasten","поспішати"],["zich vergissen","помилятися"],["zich ontspannen","розслаблятися"],["zich herinneren","згадувати"],["zich verheugen op","радісно чекати"],["zich vervelen","нудьгувати"],["wakker worden","прокидатися"],["het ontbijt","сніданок"],["niemand","ніхто"]]
+});
+
+/* 28 */ LESSONS.push({
+ id:"omdat", mod:"a2", short:"omdat, dat, als", sub:"Підрядні речення: дієслово в кінець",
+ title:"Бо: <em>omdat</em> — дієслово в кінець", lead:"Після omdat, dat, als, wanneer дієслово тікає в кінець речення.",
+ ruleTitle:"Підрядні речення",
+ blocks:[
+  {t:"p", x:"У підрядному реченні ==дієслово стоїть у кінці==: **Ik blijf thuis, omdat ik ziek ==ben==.**"},
+  {t:"table", head:["Сполучник","Значення","Приклад"], say:[2], rows:[["omdat","бо, тому що","…omdat het regent."],["dat","що","Ik denk dat hij komt."],["als","якщо; коли","Als het mooi weer is, gaan we fietsen."],["wanneer","коли","Bel me wanneer je thuis bent."],["of","чи","Ik weet niet of hij komt."],["terwijl","поки","Hij leest terwijl ik kook."]]},
+  {t:"tip", x:"Якщо підрядне йде першим, головне речення починається з дієслова: **Als het regent, ==blijf== ik thuis.**"},
+  {t:"tip", x:"Порівняйте: **want** (бо) не змінює порядок: …want ik ==ben== ziek. **omdat** змінює: …omdat ik ziek ==ben==."}
+ ],
+ quiz:[
+  {q:"Ik blijf thuis, omdat ik ziek ___.", o:["ben","ben ik","is"], a:0, why:"Дієслово в кінці."},
+  {q:"Ik denk dat hij morgen ___.", o:["komt","komt hij","kom"], a:0, why:"Після dat — дієслово в кінці."},
+  {q:"Als het regent, ___ ik thuis.", o:["blijf","ik blijf","blijft"], a:0, why:"Після підрядного — дієслово першим."},
+  {q:"…want ik ___ moe.", o:["ben","moe ben","is"], a:0, why:"want не змінює порядок."},
+  {q:"Ik weet niet ___ hij komt.", o:["of","dat of","als"], a:0, why:"чи — of."},
+  {q:"Правильне речення:", o:["Ik leer Nederlands, omdat ik hier woon.","Ik leer Nederlands, omdat ik woon hier.","Ik leer Nederlands, omdat woon ik hier."], a:0, why:"woon — у кінець."},
+  {q:"terwijl означає…", o:["поки, тоді як","тому що","якщо"], a:0, why:"terwijl — поки."},
+  {q:"Bel me wanneer je thuis ___.", o:["bent","ben","bent je"], a:0, why:"Дієслово в кінці."}
+ ],
+ storyTitle:"Waarom Nederlands?",
+ hl:["omdat","dat","als","wanneer","of","terwijl","want"],
+ story:[
+  ["Ik leer Nederlands, omdat ik in Nederland woon.","Я вчу нідерландську, бо живу в Нідерландах."],
+  ["Ik denk dat het een mooie taal is.","Я думаю, що це гарна мова."],
+  ["Als ik Nederlands spreek, lachen de mensen.","Коли я говорю нідерландською, люди усміхаються."],
+  ["Ze zeggen dat ik een leuk accent heb.","Кажуть, що в мене кумедний акцент."],
+  ["Ik luister naar podcasts terwijl ik fiets.","Я слухаю подкасти, поки їду велосипедом."],
+  ["Wanneer ik een woord niet ken, vraag ik het.","Коли я не знаю слова, я питаю."],
+  ["Soms weet ik niet of ik het goed zeg.","Іноді не знаю, чи правильно кажу."],
+  ["Maar dat is niet erg, want ik leer elke dag.","Але це не страшно, бо я вчуся щодня."],
+  ["Mijn buurvrouw zegt dat ik snel beter word.","Сусідка каже, що я швидко покращуюся."],
+  ["Als je oefent, lukt het altijd!","Якщо тренуватися, все вийде!"]
+ ],
+ vocab:[["omdat","бо, тому що"],["want","бо"],["dat","що"],["als","якщо, коли"],["of","чи"],["terwijl","поки"],["de taal","мова"],["denken","думати"],["luisteren naar","слухати"],["soms","іноді"],["erg","погано, страшно; дуже"],["oefenen","тренуватися"],["lukken","вдаватися"]]
+});
+
+/* 29 */ LESSONS.push({
+ id:"er", mod:"a2", short:"Маленьке слово er", sub:"er = там; ervan, ermee, er … twee",
+ title:"Чарівне <em>er</em>", lead:"Коротке слово, яке нідерландці вставляють скрізь. Розберемо чотири головні значення.",
+ ruleTitle:"Чотири значення er",
+ blocks:[
+  {t:"table", head:["Значення","Приклад","Переклад"], say:[1], rows:[
+   ["Місце (там)","Ik woon er al jaren.","Я живу там уже багато років."],
+   ["er is / er zijn","Er is een probleem.","Є проблема."],
+   ["Кількість","Ik heb er twee.","У мене їх двоє."],
+   ["er + прийменник (про річ)","Ik denk erover na. / Ik schrijf ermee.","Я подумаю про це. / Я пишу цим."]]},
+  {t:"tip", x:"Про речі не кажемо **met het** / **over het**, а **ermee**, **erover**: **Wat doe je met die pen? — Ik schrijf ermee.**"},
+  {t:"tip", x:"**met → mee**, **tot → toe**: ermee, ertoe."}
+ ],
+ quiz:[
+  {q:"Hoeveel broers heb je? — Ik heb ___ twee.", o:["er","het","ze"], a:0, why:"Кількість — er."},
+  {q:"«Я подумаю про це»:", o:["Ik denk erover na.","Ik denk over het na.","Ik denk het over na."], a:0, why:"over + het → erover."},
+  {q:"met + er =", o:["ermee","ermet","metter"], a:0, why:"met → mee."},
+  {q:"Ben je in Gent geweest? — Ja, ik ben ___ geweest.", o:["er","het","daar er"], a:0, why:"er — там."},
+  {q:"___ is een probleem.", o:["Er","Het","Daar"], a:0, why:"er is — є."},
+  {q:"Wat doe je met die schaar? — Ik knip ___.", o:["ermee","met het","mee het"], a:0, why:"Про річ — ermee."},
+  {q:"Ik heb ___ geen zin in.", o:["er","het","dat"], a:0, why:"zin hebben in → er … in."},
+  {q:"Скільки головних значень er?", o:["чотири","одне","десять"], a:0, why:"Місце, er is, кількість, er + прийменник."}
+ ],
+ storyTitle:"Een nieuwe fiets",
+ hl:["er","ervan","ermee","erop","eraan","erover","erin"],
+ story:[
+  ["Ik heb een nieuwe fiets. Ik ben er heel blij mee.","У мене новий велосипед. Я дуже ним задоволений."],
+  ["Mijn oude fiets? Ik heb er tien jaar op gereden.","Мій старий велосипед? Я їздив на ньому десять років."],
+  ["In Nederland zijn er meer fietsen dan mensen.","У Нідерландах більше велосипедів, ніж людей."],
+  ["Hoeveel fietsen heb jij? Ik heb er twee.","Скільки в тебе велосипедів? У мене два."],
+  ["Mijn fietsenmaker woont om de hoek. Ik ga er vaak heen.","Мій майстер живе за рогом. Я часто туди ходжу."],
+  ["Hij weet er alles van.","Він знає про це все."],
+  ["Een goed slot is belangrijk. Denk eraan!","Хороший замок — це важливо. Пам'ятай про це!"],
+  ["Mijn tas past er ook op.","Моя сумка теж на нього поміщається."],
+  ["Ik heb er zin in om naar het strand te fietsen.","Мені хочеться поїхати на пляж велосипедом."],
+  ["Praat je er graag over? Ik wel!","Ти любиш про це говорити? Я так!"]
+ ],
+ vocab:[["er","там; їх; це"],["blij met","задоволений чимось"],["rijden","їхати"],["de fietsenmaker","веломайстер"],["om de hoek","за рогом"],["vaak","часто"],["heen","туди"],["het slot","замок"],["belangrijk","важливий"],["denken aan","пам'ятати про"],["zin hebben in","мати бажання"],["passen","поміщатися; пасувати"]]
+});
+
+/* 30 */ LESSONS.push({
+ id:"gebied", mod:"a2", short:"Накази і ввічливість", sub:"Kom binnen! Wilt u…? Zou je…?",
+ title:"Ввічливо: <em>Wilt u…?</em>", lead:"Як попросити, запропонувати і сказати ввічливо.",
+ ruleTitle:"Наказовий спосіб і ввічливі прохання",
+ blocks:[
+  {t:"p", x:"Наказ — це ==основа дієслова==: komen → **Kom!**, luisteren → **Luister!**, binnenkomen → **Kom binnen!**"},
+  {t:"table", head:["Як","Приклад","Наскільки ввічливо"], say:[1], rows:[["Основа + even / maar","Kom maar binnen.","дружньо"],["Wil je…?","Wil je het raam opendoen?","нормально"],["Wilt u…?","Wilt u hier tekenen?","ввічливо"],["Zou je… kunnen?","Zou je me kunnen helpen?","дуже ввічливо"],["Mag ik…?","Mag ik de rekening?","прохання для себе"]]},
+  {t:"tip", x:"**even** і **maar** роблять наказ м'якшим: **Wacht even.** — Хвилинку. **Ga maar zitten.** — Сідайте, будь ласка."}
+ ],
+ quiz:[
+  {q:"Наказ від komen:", o:["Kom!","Komt!","Komen!"], a:0, why:"Основа дієслова."},
+  {q:"«Заходьте» (дружньо):", o:["Kom maar binnen.","Komt binnen maar.","Binnenkom maar."], a:0, why:"Відокремлюване дієслово розпадається."},
+  {q:"Найввічливіше прохання:", o:["Zou je me kunnen helpen?","Help me!","Help even."], a:0, why:"zou… kunnen — дуже ввічливо."},
+  {q:"«Можна рахунок?»:", o:["Mag ik de rekening?","Wil de rekening?","Rekening mag?"], a:0, why:"Mag ik…?"},
+  {q:"Wilt u hier ___? (підписати)", o:["tekenen","tekent","teken"], a:0, why:"Інфінітив у кінці."},
+  {q:"Wacht even означає…", o:["хвилинку","йди геть","поспішай"], a:0, why:"even — на хвилинку."},
+  {q:"Ввічливе «ви» в проханні:", o:["Wilt u…?","Wil jij…?","Willen jij…?"], a:0, why:"u wilt."},
+  {q:"Наказ від luisteren:", o:["Luister!","Luisteren!","Luistert!"], a:0, why:"Основа: luister."}
+ ],
+ storyTitle:"In het café",
+ hl:["kom","ga","wilt","wil","zou","mag","even","maar"],
+ story:[
+  ["Goedemiddag! Kom maar binnen.","Добрий день! Заходьте."],
+  ["Ga maar zitten, hoor.","Сідайте, будь ласка."],
+  ["Wat wilt u drinken?","Що будете пити?"],
+  ["Mag ik een cappuccino, alstublieft?","Можна капучино, будь ласка?"],
+  ["Wil je ook iets eten?","А ти щось будеш їсти?"],
+  ["Ja, graag een tosti.","Так, тост із сиром, будь ласка."],
+  ["Wacht even, ik pak de menukaart.","Хвилинку, візьму меню."],
+  ["Zou u het raam dicht kunnen doen?","Чи не могли б ви зачинити вікно?"],
+  ["Mag ik de rekening?","Можна рахунок?"],
+  ["Dank u wel en tot ziens!","Щиро дякую, до побачення!"]
+ ],
+ vocab:[["even","на хвилинку"],["maar","ж (пом'якшує)"],["zitten","сидіти"],["alstublieft","будь ласка (ввічливо)"],["graag","охоче, будь ласка"],["de tosti","тост із сиром"],["pakken","брати"],["de menukaart","меню"],["het raam","вікно"],["dichtdoen","зачиняти"],["de rekening","рахунок"],["tekenen","підписувати; малювати"]]
+});
+
+/* 31 */ LESSONS.push({
+ id:"betr", mod:"b1", short:"die, dat, waar", sub:"Відносні речення",
+ title:"Який? <em>die, dat, waar</em>", lead:"Як сказати «жінка, яка…», «будинок, де…».",
+ ruleTitle:"Відносні займенники",
+ blocks:[
+  {t:"table", head:["Слово","Коли","Приклад"], say:[2], rows:[["==die==","de-слова і множина","de man die naast ons woont"],["==dat==","het-слова","het huis dat ik heb gekocht"],["==waar==","місце","de stad waar ik woon"],["==wie==","люди після прийменника","de vrouw met wie ik werk"],["==waar + прийменник==","речі після прийменника","de pen waarmee ik schrijf"]]},
+  {t:"p", x:"Відносне речення — підрядне, тому ==дієслово в кінці==: **de man die naast ons ==woont==**."}
+ ],
+ quiz:[
+  {q:"de man ___ naast ons woont", o:["die","dat","wat"], a:0, why:"de-слово — die."},
+  {q:"het boek ___ ik lees", o:["dat","die","waar"], a:0, why:"het-слово — dat."},
+  {q:"de stad ___ ik woon", o:["waar","die","dat"], a:0, why:"Місце — waar."},
+  {q:"de vrouw met ___ ik werk", o:["wie","die","waar"], a:0, why:"Людина після прийменника — wie."},
+  {q:"de pen ___ ik schrijf", o:["waarmee","met die","met wie"], a:0, why:"Річ + met → waarmee."},
+  {q:"de kinderen ___ buiten spelen", o:["die","dat"], a:0, why:"Множина — die."},
+  {q:"Правильне речення:", o:["Het huis dat ik heb gekocht is oud.","Het huis dat ik heb oud gekocht is.","Het huis die ik heb gekocht is oud."], a:0, why:"het huis → dat."},
+  {q:"У відносному реченні дієслово…", o:["у кінці","друге","перше"], a:0, why:"Це підрядне речення."}
+ ],
+ storyTitle:"Mijn buurt",
+ hl:["die","dat","waar","wie","waarmee","waarin"],
+ story:[
+  ["Ik woon in een buurt die heel gezellig is.","Я живу в районі, який дуже затишний."],
+  ["Mijn buurvrouw is een vrouw die viool speelt.","Моя сусідка — жінка, яка грає на скрипці."],
+  ["Ze heeft een zoon die piloot wil worden.","У неї є син, який хоче стати пілотом."],
+  ["Op de hoek is een bakker waar ik elke ochtend brood koop.","На розі є пекарня, де я щоранку купую хліб."],
+  ["De bakker die daar werkt, lacht altijd.","Пекар, який там працює, завжди усміхається."],
+  ["Hij maakt taarten die op kunstwerken lijken.","Він пече торти, схожі на витвори мистецтва."],
+  ["Er is ook een park waar kinderen voetballen.","Ще є парк, де діти грають у футбол."],
+  ["Het bankje dat onder de oude boom staat, is mijn favoriete plek.","Лавка, що стоїть під старим деревом, — моє улюблене місце."],
+  ["Mijn vriend, met wie ik daar vaak zit, woont ernaast.","Мій друг, з яким я часто там сиджу, живе поруч."],
+  ["Is er een plek waar jij graag bent?","А є місце, де ти любиш бувати?"]
+ ],
+ vocab:[["de buurt","район"],["de viool","скрипка"],["de piloot","пілот"],["worden","ставати"],["de hoek","ріг, кут"],["het brood","хліб"],["de taart","торт"],["het kunstwerk","витвір мистецтва"],["lijken op","бути схожим на"],["het bankje","лавка"],["favoriet","улюблений"],["de plek","місце"]]
+});
+
+/* 32 */ LESSONS.push({
+ id:"omte", mod:"b1", short:"om … te", sub:"Щоб: Ik ga naar de winkel om brood te kopen",
+ title:"Щоб: <em>om … te</em>", lead:"Як сказати мету: «я йду, щоб купити».",
+ ruleTitle:"om + … + te + інфінітив",
+ blocks:[
+  {t:"p", x:"**om** на початку, **te + інфінітив** у кінці: **Ik ga naar de winkel ==om== brood ==te kopen==.** — щоб купити хліб."},
+  {t:"table", head:["Конструкція","Значення","Приклад"], say:[2], rows:[["om … te","щоб","Ik leer om te werken."],["te + інфінітив після деяких дієслів","—","Ik probeer te slapen."],["het is + прикм. + om te","це … (робити)","Het is leuk om te fietsen."],["vergeten / beginnen / proberen + te","—","Vergeet niet te bellen!"]]},
+  {t:"tip", x:"Відокремлювані дієслова: **te** стає всередині: **op te bellen**, **mee te nemen**."}
+ ],
+ quiz:[
+  {q:"Ik ga naar de winkel ___ melk te kopen.", o:["om","voor","dat"], a:0, why:"Мета — om … te."},
+  {q:"Ik probeer ___ slapen.", o:["te","om","—"], a:0, why:"proberen + te."},
+  {q:"Het is leuk om ___ fietsen.", o:["te","—","om"], a:0, why:"om … te."},
+  {q:"«Не забудь подзвонити»:", o:["Vergeet niet te bellen!","Vergeet niet bellen!","Vergeet niet om bellen!"], a:0, why:"vergeten + te."},
+  {q:"opbellen з te:", o:["op te bellen","te opbellen","opbellen te"], a:0, why:"te між префіксом і дієсловом."},
+  {q:"Ik spaar geld ___ een auto te kopen.", o:["om","voor te","dat"], a:0, why:"щоб — om."},
+  {q:"Правильне речення:", o:["Ik leer Nederlands om hier te werken.","Ik leer Nederlands om te werken hier.","Ik leer Nederlands te om hier werken."], a:0, why:"te + інфінітив у кінці."},
+  {q:"meenemen з te:", o:["mee te nemen","te meenemen","meenemen te"], a:0, why:"mee-te-nemen."}
+ ],
+ storyTitle:"Een nieuwe hobby",
+ hl:["om","te"],
+ story:[
+  ["Vorig jaar besloot ik iets nieuws te proberen.","Минулого року я вирішив спробувати щось нове."],
+  ["Ik ging naar een muziekschool om gitaar te leren spelen.","Я пішов до музичної школи, щоб навчитися грати на гітарі."],
+  ["In het begin was het moeilijk om de akkoorden te onthouden.","Спочатку було важко запам'ятати акорди."],
+  ["Mijn vingers deden pijn, maar ik bleef proberen te oefenen.","Пальці боліли, але я не кидав вправлятися."],
+  ["Mijn leraar zei: vergeet niet elke dag te spelen.","Вчитель сказав: не забувай грати щодня."],
+  ["Nu is het leuk om met vrienden te spelen.","Тепер грати з друзями — суцільне задоволення."],
+  ["Ik spaar geld om een betere gitaar te kopen.","Я відкладаю гроші, щоб купити кращу гітару."],
+  ["Ik hoop op mijn verjaardag iets te spelen.","Сподіваюся щось зіграти на свій день народження."],
+  ["Ik denk erover na om in een band te gaan.","Думаю про те, щоб піти в гурт."],
+  ["Heb jij ooit geprobeerd een instrument te leren?","А ти колись пробував навчитися грати на інструменті?"]
+ ],
+ vocab:[["besluiten","вирішувати"],["proberen","пробувати"],["het akkoord","акорд"],["onthouden","запам'ятати"],["de vinger","палець"],["pijn doen","боліти"],["vergeten","забувати"],["sparen","заощаджувати"],["hopen","сподіватися"],["de verjaardag","день народження"],["ooit","колись"],["het instrument","інструмент"]]
+});
+
+/* 33 */ LESSONS.push({
+ id:"passief", mod:"b1", short:"Пасив: wordt gemaakt", sub:"worden / zijn + дієприкметник",
+ title:"Пасив: <em>wordt gebouwd</em>", lead:"Коли важливо, що відбувається, а не хто це робить.",
+ ruleTitle:"worden + дієприкметник",
+ blocks:[
+  {t:"table", head:["Час","Форма","Приклад"], say:[2], rows:[["Теперішній","wordt / worden + дієприкм.","Het huis wordt gebouwd."],["Минулий (розповідь)","werd / werden + дієприкм.","Het huis werd in 1900 gebouwd."],["Perfectum","is / zijn + дієприкм.","Het huis is in 1900 gebouwd."]]},
+  {t:"p", x:"Виконавця додаємо через ==door==: **Het boek is geschreven ==door== Annie M.G. Schmidt.**"},
+  {t:"tip", x:"Без підмета нідерландці кажуть **er wordt**: **Er wordt hier veel gefietst.** — Тут багато їздять велосипедом."}
+ ],
+ quiz:[
+  {q:"Het huis ___ gebouwd. (зараз будують)", o:["wordt","is","heeft"], a:0, why:"Теперішній пасив — wordt."},
+  {q:"De brug ___ in 1920 gebouwd. (розповідь)", o:["werd","wordt","heeft"], a:0, why:"Минулий — werd."},
+  {q:"Виконавець: geschreven ___ Schmidt", o:["door","van","bij"], a:0, why:"door — ким."},
+  {q:"De auto's ___ in Duitsland gemaakt.", o:["worden","wordt","zijn worden"], a:0, why:"Множина — worden."},
+  {q:"«Тут багато їздять велосипедом»:", o:["Er wordt hier veel gefietst.","Hier is veel fietsen.","Er fietst hier veel."], a:0, why:"Безособовий пасив."},
+  {q:"Perfectum пасиву:", o:["Het is gebouwd.","Het heeft gebouwd.","Het wordt geworden gebouwd."], a:0, why:"zijn + дієприкметник."},
+  {q:"Mijn fiets ___ gestolen! (щойно вкрали)", o:["is","heeft","wordt geworden"], a:0, why:"Perfectum: is gestolen."},
+  {q:"Het eten ___ om zes uur geserveerd.", o:["wordt","worden","werd zijn"], a:0, why:"Однина — wordt."}
+ ],
+ storyTitle:"Amsterdam",
+ hl:["werd","wordt","worden","werden","is","zijn","door","gebouwd","gesticht","bezocht","gemaakt","gefietst","genoemd","geopend","geschilderd"],
+ story:[
+  ["Amsterdam werd in de dertiende eeuw gesticht.","Амстердам заснували в тринадцятому столітті."],
+  ["De stad is genoemd naar een dam in de rivier de Amstel.","Місто назвали на честь дамби на річці Амстел."],
+  ["In de zeventiende eeuw werden de grachten gegraven.","У сімнадцятому столітті викопали канали."],
+  ["Veel huizen werden door rijke handelaren gebouwd.","Багато будинків збудували заможні купці."],
+  ["Het Rijksmuseum werd in 1885 geopend.","Рейксмузеум відкрили 1885 року."],
+  ["De Nachtwacht is door Rembrandt geschilderd.","«Нічну варту» написав Рембрандт."],
+  ["De stad wordt elk jaar door miljoenen toeristen bezocht.","Щороку місто відвідують мільйони туристів."],
+  ["Er wordt hier meer gefietst dan gereden.","Тут більше їздять велосипедом, ніж машиною."],
+  ["Stroopwafels worden overal verkocht.","Строопвафлі продають скрізь."],
+  ["Er wordt gezegd dat Amsterdam nooit slaapt.","Кажуть, що Амстердам ніколи не спить."]
+ ],
+ vocab:[["de eeuw","століття"],["stichten","засновувати"],["noemen","називати"],["graven","копати"],["rijk","багатий"],["de handelaar","купець"],["openen","відкривати"],["schilderen","малювати фарбами"],["bezoeken","відвідувати"],["de toerist","турист"],["verkopen","продавати"],["nooit","ніколи"]]
+});
+
+/* 34 */ LESSONS.push({
+ id:"zou", mod:"b1", short:"Якби: zou", sub:"Als ik rijk was, zou ik…",
+ title:"Якби: <em>ik zou…</em>", lead:"Уявні ситуації і ввічливі побажання.",
+ ruleTitle:"zou / zouden + інфінітив",
+ blocks:[
+  {t:"table", head:["Хто","zullen → zou"], say:[1], rows:[["ik / jij / hij","==zou=="],["wij / jullie / zij","==zouden=="]]},
+  {t:"p", x:"**Als** + минулий час, **zou** + інфінітив: **Als ik rijk ==was==, ==zou== ik een boot ==kopen==.**"},
+  {t:"ex", items:[["Als ik meer tijd had, zou ik piano leren.","Якби я мав більше часу, я б учився грати на піаніно."],["Ik zou graag een koffie willen.","Я б хотів кави."],["Wat zou jij doen?","Що б ти зробив?"]]},
+  {t:"tip", x:"**Ik zou graag… willen** — найввічливіше «я б хотів». **Als ik jou was…** — на твоєму місці…"}
+ ],
+ quiz:[
+  {q:"Als ik rijk ___, zou ik reizen.", o:["was","ben","zou zijn"], a:0, why:"Після als — минулий час."},
+  {q:"Als ik tijd had, ___ ik helpen.", o:["zou","zal","zouden"], a:0, why:"ik zou."},
+  {q:"Wij ___ graag komen.", o:["zouden","zou","zullen"], a:0, why:"Множина — zouden."},
+  {q:"«Я б хотів кави» (ввічливо):", o:["Ik zou graag een koffie willen.","Ik wil een koffie zouden.","Ik zal een koffie."], a:0, why:"zou graag … willen."},
+  {q:"«На твоєму місці…»:", o:["Als ik jou was…","Als ik jij ben…","Als jou ik was…"], a:0, why:"Стала фраза."},
+  {q:"Wat ___ jij doen?", o:["zou","zouden","zul"], a:0, why:"jij zou."},
+  {q:"Als het mooi weer was, ___ we naar zee gaan.", o:["zouden","zou","zullen"], a:0, why:"we zouden."},
+  {q:"Правильне речення:", o:["Ik zou een huis kopen.","Ik zou kopen een huis.","Ik kopen zou een huis."], a:0, why:"Інфінітив у кінці."}
+ ],
+ storyTitle:"Als ik een miljoen had",
+ hl:["zou","zouden","als","was","had"],
+ story:[
+  ["Soms droom ik over een miljoen euro.","Іноді я мрію про мільйон євро."],
+  ["Als ik een miljoen had, zou ik een huis aan zee kopen.","Якби в мене був мільйон, я купив би будинок біля моря."],
+  ["Ik zou er een muziekstudio bouwen.","Я б збудував там музичну студію."],
+  ["Als ik niet hoefde te werken, zou ik de hele dag muziek maken.","Якби не треба було працювати, я б цілий день писав музику."],
+  ["Ik zou mijn familie en vrienden helpen.","Я б допоміг родині й друзям."],
+  ["Een deel zou ik aan een kinderziekenhuis geven.","Частину я б віддав дитячій лікарні."],
+  ["Als ik jonger was, zou ik de wereld rond reizen.","Якби я був молодший, я б поїхав навколо світу."],
+  ["Maar misschien zou geld me niet gelukkiger maken.","Але, можливо, гроші не зробили б мене щасливішим."],
+  ["Wat zou jij doen als je rijk was?","А що зробив би ти, якби був багатим?"],
+  ["Ik zou in elk geval Nederlands blijven leren!","Я б у будь-якому разі й далі вчив нідерландську!"]
+ ],
+ vocab:[["dromen","мріяти"],["het miljoen","мільйон"],["bouwen","будувати"],["hoeven","бути потрібним (з запереченням)"],["het deel","частина"],["het ziekenhuis","лікарня"],["jong","молодий"],["rond reizen","подорожувати навколо"],["gelukkig","щасливий"],["in elk geval","у будь-якому разі"],["rijk","багатий"]]
+});
+
+/* 35 */ LESSONS.push({
+ id:"indir", mod:"b1", short:"Непряма мова", sub:"Hij zegt dat…, ik vraag of…",
+ title:"Він каже, що: <em>Hij zegt dat…</em>", lead:"Як переказати чужі слова і поставити непряме питання.",
+ ruleTitle:"dat, of і питальні слова",
+ blocks:[
+  {t:"table", head:["Пряма мова","Непряма мова"], say:[0,1], rows:[
+   ["'Ik ben moe.'","Hij zegt dat hij moe ==is==."],["'Ik kom morgen.'","Ze zei dat ze morgen ==kwam==."],["'Ben je klaar?'","Hij vraagt ==of== ik klaar ben."],["'Waar woon je?'","Ze vraagt ==waar== ik woon."]]},
+  {t:"p", x:"Непряма мова — підрядне речення: ==дієслово в кінці==. Так/ні-питання → **of**, решта — через питальне слово."},
+  {t:"tip", x:"Якщо головне речення в минулому, часто зсуваємо час: **Hij zei dat hij ziek ==was==.**"}
+ ],
+ quiz:[
+  {q:"'Ik ben moe.' → Hij zegt dat hij moe ___.", o:["is","ben","is hij"], a:0, why:"hij is; дієслово в кінці."},
+  {q:"'Ben je klaar?' → Hij vraagt ___ ik klaar ben.", o:["of","dat","als"], a:0, why:"Так/ні-питання — of."},
+  {q:"'Waar woon je?' → Ze vraagt waar ik ___.", o:["woon","woon ik","woont"], a:0, why:"Дієслово в кінці."},
+  {q:"'Ik kom morgen.' → Ze zei dat ze morgen ___.", o:["kwam","komt ze","kom"], a:0, why:"Зсув часу після zei."},
+  {q:"Правильне речення:", o:["Ik weet niet of hij komt.","Ik weet niet of komt hij.","Ik weet niet dat komt hij."], a:0, why:"of + дієслово в кінці."},
+  {q:"zeggen у минулому:", o:["zei","zegde","gezegd"], a:0, why:"zeggen → zei."},
+  {q:"Hij vroeg ___ laat het was.", o:["hoe","of","dat"], a:0, why:"hoe laat."},
+  {q:"vragen означає…", o:["питати","казати","відповідати"], a:0, why:"vragen — питати."}
+ ],
+ storyTitle:"Het telefoongesprek",
+ hl:["zei","vertelde","vroeg","dat","of","waar","wanneer","wat"],
+ story:[
+  ["Gisteren belde mijn broer me op.","Учора мені подзвонив брат."],
+  ["Hij zei dat hij in Rotterdam was.","Він сказав, що він у Роттердамі."],
+  ["Hij vertelde dat hij een nieuwe baan had gevonden.","Він розповів, що знайшов нову роботу."],
+  ["Hij zei dat het bedrijf heel groot was.","Він сказав, що компанія дуже велика."],
+  ["Ik vroeg of hij de stad leuk vond.","Я спитав, чи подобається йому місто."],
+  ["Hij zei dat hij het geweldig vond, maar dat hij thuis miste.","Він сказав, що йому дуже подобається, але він сумує за домом."],
+  ["Ik vroeg wanneer hij terugkwam.","Я спитав, коли він повернеться."],
+  ["Hij vertelde dat hij in december zou komen.","Він сказав, що приїде в грудні."],
+  ["Hij zei ook dat hij cadeautjes voor de kinderen meenam.","Ще сказав, що привезе дітям подарунки."],
+  ["Mijn moeder vroeg wat hij allemaal had gezegd.","Мама спитала, що він усе сказав."]
+ ],
+ vocab:[["zeggen","казати"],["vertellen","розповідати"],["vragen","питати"],["de baan","робота, посада"],["vinden","знаходити; вважати"],["missen","сумувати за"],["terugkomen","повертатися"],["december","грудень"],["het cadeautje","подарунок"],["allemaal","усе, всі"],["het gesprek","розмова"]]
+});
+
+/* 36 */ LESSONS.push({
+ id:"aanhet", mod:"b1", short:"Ik ben aan het…", sub:"Дія саме зараз; zitten te lezen",
+ title:"Саме зараз: <em>ik ben aan het koken</em>", lead:"Нідерландський спосіб сказати «я зараз готую».",
+ ruleTitle:"zijn + aan het + інфінітив",
+ blocks:[
+  {t:"p", x:"Щоб наголосити, що дія ==відбувається саме зараз==: **Ik ==ben aan het koken==.** — Я саме готую."},
+  {t:"table", head:["Конструкція","Значення","Приклад"], say:[2], rows:[["zijn + aan het + інфінітив","саме зараз","We zijn aan het eten."],["zitten + te + інфінітив","сидить і…","Ze zit te lezen."],["staan + te + інфінітив","стоїть і…","Hij staat te wachten."],["liggen + te + інфінітив","лежить і…","De kat ligt te slapen."],["lopen + te + інфінітив","ходить і…","Hij loopt te bellen."]]},
+  {t:"tip", x:"У минулому: **Ik was aan het koken toen je belde.** — Я саме готував, коли ти подзвонив."}
+ ],
+ quiz:[
+  {q:"«Я саме готую»:", o:["Ik ben aan het koken.","Ik ben koken.","Ik kook aan het."], a:0, why:"zijn + aan het + інфінітив."},
+  {q:"Ze zit ___ lezen.", o:["te","aan het","om"], a:0, why:"zitten + te."},
+  {q:"De kat ligt te ___.", o:["slapen","slaapt","geslapen"], a:0, why:"Інфінітив."},
+  {q:"We ___ aan het eten.", o:["zijn","hebben","worden"], a:0, why:"zijn aan het."},
+  {q:"«Я саме готував, коли ти подзвонив»:", o:["Ik was aan het koken toen je belde.","Ik ben aan het koken toen je belt.","Ik had aan het koken."], a:0, why:"was aan het."},
+  {q:"Hij staat op de bus te ___.", o:["wachten","wacht","gewacht"], a:0, why:"staan + te + інфінітив."},
+  {q:"Wat ben je aan het ___?", o:["doen","doet","gedaan"], a:0, why:"Інфінітив."},
+  {q:"toen означає…", o:["коли (у минулому)","тоді як зараз","якщо"], a:0, why:"toen — коли, одноразово в минулому."}
+ ],
+ storyTitle:"Zaterdagochtend",
+ hl:["aan","het","te","zit","staat","ligt","loopt","ben","is","zijn"],
+ story:[
+  ["Het is zaterdagochtend.","Суботній ранок."],
+  ["Ik zit in de keuken te ontbijten.","Я сиджу на кухні й снідаю."],
+  ["Mijn moeder is pannenkoeken aan het bakken.","Мама пече млинці."],
+  ["Mijn vader zit de krant te lezen.","Тато сидить і читає газету."],
+  ["Mijn zusjes zijn tekenfilms aan het kijken.","Сестрички дивляться мультики."],
+  ["De hond ligt onder de tafel te slapen.","Собака лежить під столом і спить."],
+  ["Buiten is het aan het regenen.","Надворі йде дощ."],
+  ["Mijn telefoon ligt te trillen.","Мій телефон лежить і вібрує."],
+  ["Mijn vriend Max staat voor de deur te wachten.","Мій друг Макс стоїть під дверима й чекає."],
+  ["Hij is al tien minuten aan het bellen! Ik kom eraan!","Він дзвонить уже десять хвилин! Іду!"]
+ ],
+ vocab:[["ontbijten","снідати"],["de pannenkoek","млинець"],["bakken","пекти, смажити"],["de krant","газета"],["de tekenfilm","мультфільм"],["trillen","вібрувати"],["wachten","чекати"],["de minuut","хвилина"],["eraan komen","іти, наближатися"],["toen","коли (у минулому)"],["liggen","лежати"],["staan","стояти"]]
+});
+
+AUDIO={"A is van appel.": "001.mp3", "B is van boek.": "002.mp3", "G is van geld.": "003.mp3", "H is van huis.": "004.mp3", "Hallo! Ik heet Max.": "005.mp3", "M, A, X.": "006.mp3", "Hoe heet jij?": "007.mp3", "Ik heet Eva.": "008.mp3", "E, V, A.": "009.mp3", "Dank je, Eva!": "010.mp3", "Ik heet Max. M, A, X.": "011.mp3", "Hoe spel je dat?": "012.mp3", "Dit is mijn huis.": "013.mp3", "Het huis is oud.": "014.mp3", "Ik lees een boek.": "015.mp3", "Mijn fiets is blauw.": "016.mp3", "De trein is laat.": "017.mp3", "Ik eet een ijs.": "018.mp3", "De maan is mooi.": "019.mp3", "Mijn neus is koud.": "020.mp3", "De school is groot.": "021.mp3", "We gaan naar zee!": "022.mp3", "Goedemorgen! Ik heet Ihor.": "023.mp3", "Hoi Ihor! Ik heet Sanne.": "024.mp3", "Waar kom je vandaan?": "025.mp3", "Ik kom uit Oekraïne.": "026.mp3", "Leuk je te ontmoeten!": "027.mp3", "Hoe gaat het?": "028.mp3", "Goed, dank je. En met jou?": "029.mp3", "Ook goed!": "030.mp3", "Tot morgen, Sanne!": "031.mp3", "Doei!": "032.mp3", "Hoe heet je?": "033.mp3", "Ik heet Ihor.": "034.mp3", "Tot ziens!": "035.mp3", "Tot morgen!": "036.mp3", "Ik heet Ben.": "037.mp3", "Ik ben elf jaar.": "038.mp3", "Mijn zus is vijftien.": "039.mp3", "Mijn vader is tweeënveertig.": "040.mp3", "Mijn moeder is negenendertig.": "041.mp3", "Ons huis is nummer achttien.": "042.mp3", "Mijn nummer is nul, zes, zeven, drie.": "043.mp3", "Twee en twee is vier.": "044.mp3", "Een ijsje kost twee euro.": "045.mp3", "Tien, twintig, dertig, veertig!": "046.mp3", "Hallo! Ik ben Anna.": "047.mp3", "Ik ben twintig jaar.": "048.mp3", "Ik ben student.": "049.mp3", "Mijn broer is dokter.": "050.mp3", "Hij is heel aardig.": "051.mp3", "Mijn moeder is lerares.": "052.mp3", "Zij is vandaag op school.": "053.mp3", "Mijn ouders zijn blij.": "054.mp3", "Wij zijn een grote familie.": "055.mp3", "Onze hond is klein, maar hij is heel snel.": "056.mp3", "Ik ben Ihor.": "057.mp3", "Zij is mijn zus.": "058.mp3", "Wij zijn vrienden.": "059.mp3", "Het is koud.": "060.mp3", "Ben jij student?": "061.mp3", "Nee, ik ben chauffeur.": "062.mp3", "Is je auto nieuw?": "063.mp3", "Nee, hij is niet nieuw. Hij is oud.": "064.mp3", "Zijn je vrienden uit Kyiv?": "065.mp3", "Ja, ze zijn uit Kyiv.": "066.mp3", "Is het koud vandaag?": "067.mp3", "Nee, het is niet koud. Het is warm.": "068.mp3", "Ik ben niet moe.": "069.mp3", "Wij zijn niet laat!": "070.mp3", "Hij is niet thuis.": "071.mp3", "Het is niet duur.": "072.mp3", "Ben je klaar?": "073.mp3", "Is zij lerares?": "074.mp3", "Zijn jullie thuis?": "075.mp3", "Dit is een klein dorp.": "076.mp3", "Het dorp is oud en stil.": "077.mp3", "Er is een school en een kerk.": "078.mp3", "De kerk is wit.": "079.mp3", "Hier is een molen.": "080.mp3", "De molen is heel oud.": "081.mp3", "Het meisje heeft een rode fiets.": "082.mp3", "De fiets staat bij het huis.": "083.mp3", "Mijn vriend is een kunstenaar.": "084.mp3", "Hij woont in een groot huis.": "085.mp3", "de fiets": "086.mp3", "het boek": "087.mp3", "het meisje": "088.mp3", "een kopje koffie": "089.mp3", "Mijn straat is lang.": "090.mp3", "De huizen zijn rood.": "091.mp3", "De bomen zijn hoog.": "092.mp3", "De kinderen spelen buiten.": "093.mp3", "Er staan veel fietsen.": "094.mp3", "Er zijn weinig auto's.": "095.mp3", "Twee katten slapen in de zon.": "096.mp3", "Overal staan bloemen.": "097.mp3", "De tulpen zijn geel en oranje.": "098.mp3", "De mensen zijn vriendelijk.": "099.mp3", "Welkom in mijn kamer!": "100.mp3", "Dit is mijn bed.": "101.mp3", "Deze boeken zijn van mij.": "102.mp3", "Dat is mijn bureau.": "103.mp3", "Die foto's zijn uit Oekraïne.": "104.mp3", "Wat is dit?": "105.mp3", "Dit is een gitaar.": "106.mp3", "En wat is dat?": "107.mp3", "Dat is mijn nieuwe koptelefoon.": "108.mp3", "Deze kamer is klein, maar gezellig.": "109.mp3", "Deze appel is lekker.": "110.mp3", "Die mensen zijn aardig.": "111.mp3", "Dit is een foto van mijn familie.": "112.mp3", "Mijn vader heet Ivan.": "113.mp3", "Zijn werk is interessant.": "114.mp3", "Mijn moeder heet Olena.": "115.mp3", "Haar ogen zijn blauw.": "116.mp3", "Ons huis staat bij de rivier.": "117.mp3", "Mijn opa en oma zijn er ook.": "118.mp3", "Hun tuin is prachtig.": "119.mp3", "Onze kat heet Moertsjyk.": "120.mp3", "Is jouw familie groot?": "121.mp3", "de fiets van Tom": "122.mp3", "Dat is van mij.": "123.mp3", "Annas tas": "124.mp3", "Ik heb een grote familie.": "125.mp3", "Ik heb twee broers en een zus.": "126.mp3", "Mijn zus heeft lang haar.": "127.mp3", "Mijn broers hebben elk een fiets.": "128.mp3", "Wij hebben geen auto.": "129.mp3", "Maar we hebben wel een hond.": "130.mp3", "Hij heeft grote oren.": "131.mp3", "Heb jij een huisdier?": "132.mp3", "Mijn vriendin heeft drie vissen.": "133.mp3", "Ik heb honger. Wie heeft er koekjes?": "134.mp3", "Ik heb een broer.": "135.mp3", "Zij heeft blauwe ogen.": "136.mp3", "Heb jij een auto?": "137.mp3", "We hebben geen tijd.": "138.mp3", "Welkom in mijn stad!": "139.mp3", "Er is een groot plein in het centrum.": "140.mp3", "Er zijn veel winkels en cafés.": "141.mp3", "Er is een gracht bij het park.": "142.mp3", "Er zijn tien bruggen.": "143.mp3", "Er is geen bioscoop.": "144.mp3", "Er zijn geen hoge gebouwen.": "145.mp3", "Is er een museum?": "146.mp3", "Ja, er is een oud museum.": "147.mp3", "Zijn er goede restaurants? Natuurlijk!": "148.mp3", "Er is een bakker in mijn straat.": "149.mp3", "Er zijn drie slaapkamers.": "150.mp3", "Is er hier een supermarkt?": "151.mp3", "Ik heet Kateryna.": "152.mp3", "Ik kom uit Poltava.": "153.mp3", "Waar woon je nu?": "154.mp3", "Ik woon in Den Haag.": "155.mp3", "Wanneer ben je jarig?": "156.mp3", "In juni.": "157.mp3", "Wie is je beste vriend?": "158.mp3", "Waarom leer je Nederlands? Omdat ik hier woon!": "159.mp3", "Ik heet Mark en ik woon in Utrecht.": "160.mp3", "Ik sta elke dag om zeven uur op.": "161.mp3", "Ik drink koffie en fiets naar mijn werk.": "162.mp3", "Ik werk bij een IT-bedrijf.": "163.mp3", "Mijn vrouw geeft muziekles.": "164.mp3", "Zij werkt op een school.": "165.mp3", "Onze zoon gaat naar de opvang.": "166.mp3", "Hij speelt de hele dag met vriendjes.": "167.mp3", "'s Avonds eten we samen.": "168.mp3", "Mijn vrouw leest en ik kijk een film.": "169.mp3", "Ik woon in Rotterdam.": "170.mp3", "Zij werkt in een ziekenhuis.": "171.mp3", "Wij spreken Oekraïens.": "172.mp3", "Lees jij veel?": "173.mp3", "Vandaag is het zondag.": "174.mp3", "Ik werk vandaag niet.": "175.mp3", "Ik heb geen haast.": "176.mp3", "Ik drink geen koffie, maar thee.": "177.mp3", "Het regent niet.": "178.mp3", "Het is niet warm, maar ook niet koud.": "179.mp3", "Mijn buurman heeft geen tuin.": "180.mp3", "Dus hij zit graag in onze tuin.": "181.mp3", "We hebben geen plannen.": "182.mp3", "Perfect, toch?": "183.mp3", "Ik heb een fiets. → Ik heb geen fiets.": "184.mp3", "Ik drink koffie. → Ik drink geen koffie.": "185.mp3", "Ik zie de bus. → Ik zie de bus niet.": "186.mp3", "Op maandag ga ik naar mijn werk.": "187.mp3", "Meestal fiets ik door het park.": "188.mp3", "Om negen uur begint mijn dag.": "189.mp3", "Om twaalf uur eet ik een broodje.": "190.mp3", "Op woensdag speel ik voetbal.": "191.mp3", "Op vrijdag drinken we iets met collega's.": "192.mp3", "In het weekend bezoeken we mijn ouders.": "193.mp3", "Op zondag sta ik laat op.": "194.mp3", "'s Avonds kijk ik een serie.": "195.mp3", "Zo ben ik altijd tevreden.": "196.mp3", "Ik werk vandaag thuis.": "197.mp3", "Vandaag werk ik thuis.": "198.mp3", "Om acht uur begint de les.": "199.mp3", "Mijn broertje is zeven jaar.": "200.mp3", "Hij kan al lezen en schrijven.": "201.mp3", "Hij kan heel snel fietsen.": "202.mp3", "Maar hij kan nog niet zwemmen.": "203.mp3", "Hij wil het deze zomer leren.": "204.mp3", "Hij moet elke week naar zwemles.": "205.mp3", "Na de les mag hij een ijsje.": "206.mp3", "Kun jij zwemmen?": "207.mp3", "Ik wil ook beter leren zwemmen.": "208.mp3", "Zullen we samen gaan? Dat moeten we doen!": "209.mp3", "Ik wil Nederlands leren.": "210.mp3", "Je moet hier stoppen.": "211.mp3", "Mag ik binnenkomen?": "212.mp3", "Kun je me helpen?": "213.mp3", "Ik sta om half zeven op.": "214.mp3", "Ik neem mijn lunch mee.": "215.mp3", "Mijn trein komt om acht uur aan.": "216.mp3", "Mijn baas belt me om negen uur op.": "217.mp3", "Ik maak mijn werk om vijf uur af.": "218.mp3", "Dan kom ik terug naar huis.": "219.mp3", "Ik ruim de keuken op.": "220.mp3", "Mijn vrienden nodigen me uit.": "221.mp3", "We gaan vanavond uit.": "222.mp3", "Ik zie er echt naar uit!": "223.mp3", "Waar is mijn telefoon?": "224.mp3", "Hij ligt niet op de tafel.": "225.mp3", "Hij zit ook niet in mijn tas.": "226.mp3", "Misschien ligt hij onder de bank?": "227.mp3", "Nee, daar ligt alleen de kat.": "228.mp3", "Mijn jas hangt aan de deur.": "229.mp3", "De telefoon zit in mijn jas!": "230.mp3", "Nu ga ik snel naar mijn werk.": "231.mp3", "Mijn kantoor is naast het station.": "232.mp3", "Het staat tussen een bakker en een bank.": "233.mp3", "De sleutels liggen op de tafel.": "234.mp3", "Het schilderij hangt aan de muur.": "235.mp3", "Ik ga naar de supermarkt.": "236.mp3", "Hoe laat is het?": "237.mp3", "Het is half acht.": "238.mp3", "Ik sta elke dag om zes uur op.": "239.mp3", "Om kwart over zeven ga ik de deur uit.": "240.mp3", "Ik werk van negen tot vijf.": "241.mp3", "Op maandag en donderdag heb ik Nederlandse les.": "242.mp3", "De les begint om kwart voor zeven.": "243.mp3", "Op zaterdag ben ik vrij.": "244.mp3", "Op zondag bel ik mijn moeder.": "245.mp3", "Om elf uur ga ik slapen.": "246.mp3", "Vorige zomer heb ik bij mijn oom gelogeerd.": "247.mp3", "We hebben elke dag in de tuin gewerkt.": "248.mp3", "Ik heb hem met de appels geholpen.": "249.mp3", "'s Avonds hebben we gepraat en gelachen.": "250.mp3", "Mijn oom heeft vis gekookt.": "251.mp3", "Een keer heeft het de hele dag geregend.": "252.mp3", "Toen hebben we kaart gespeeld.": "253.mp3", "We hebben ook veel gefietst.": "254.mp3", "Ik heb echt genoten.": "255.mp3", "Op de laatste dag heb ik een beetje gehuild.": "256.mp3", "Ik heb gisteren gewerkt.": "257.mp3", "Wij hebben voetbal gespeeld.": "258.mp3", "Heb je al betaald?": "259.mp3", "Vorig weekend ben ik naar Amsterdam gegaan.": "260.mp3", "Ik ben om zeven uur vertrokken.": "261.mp3", "Ik heb het Rijksmuseum gezien.": "262.mp3", "Daarna hebben we langs de grachten gelopen.": "263.mp3", "We hebben koffie gedronken op een terras.": "264.mp3", "Ik heb haring gegeten. Lekker!": "265.mp3", "Ik heb een boek over Amsterdam gekocht.": "266.mp3", "'s Avonds heb ik een kaartje aan mijn moeder geschreven.": "267.mp3", "Ik ben pas laat thuisgekomen.": "268.mp3", "En ik heb als een baby geslapen.": "269.mp3", "Er was eens een kleine molenaar.": "270.mp3", "Hij woonde in een oude molen bij de zee.": "271.mp3", "Hij had een kat en een hond.": "272.mp3", "Elke dag werkte hij hard.": "273.mp3", "Op een dag ging hij naar de markt.": "274.mp3", "Daar zag hij een meisje met rode tulpen.": "275.mp3", "Ze kwam naar hem toe en vroeg: 'Hoeveel kost je meel?'": "276.mp3", "Hij zei: 'Voor jou is het gratis!'": "277.mp3", "Ze lachten allebei.": "278.mp3", "En ze bleven altijd goede vrienden.": "279.mp3", "Deze zomer ga ik naar Zeeland.": "280.mp3", "We gaan een huisje aan zee huren.": "281.mp3", "Mijn broer gaat ook mee.": "282.mp3", "We gaan elke dag zwemmen.": "283.mp3", "Ik ga leren surfen!": "284.mp3", "Ik zal veel foto's maken.": "285.mp3", "Het zal vast mooi weer zijn.": "286.mp3", "Zullen we samen fietsen huren?": "287.mp3", "Ik beloof het: ik zal je een kaartje sturen.": "288.mp3", "Jij zult het geweldig vinden!": "289.mp3", "We hebben een nieuw huis.": "290.mp3", "Het is een oud huis met een grote tuin.": "291.mp3", "De voordeur is groen.": "292.mp3", "In de tuin staan rode tulpen.": "293.mp3", "De keuken is klein, maar licht.": "294.mp3", "Mijn kamer heeft witte muren.": "295.mp3", "Ik heb een mooie, grote kast.": "296.mp3", "Mijn zusje heeft de kleine kamer.": "297.mp3", "De oude buurvrouw is heel lief.": "298.mp3", "Het is een gezellige straat.": "299.mp3", "Dit zijn mijn honden, Rex en Bim.": "300.mp3", "Rex is ouder dan Bim.": "301.mp3", "Bim is kleiner, maar sneller.": "302.mp3", "Rex is rustiger dan Bim.": "303.mp3", "Bim is de grappigste hond van de straat.": "304.mp3", "Rex is de grootste hond van de straat.": "305.mp3", "De oren van Bim zijn langer.": "306.mp3", "Wie is beter? Moeilijke vraag!": "307.mp3", "Voor mij zijn het de beste honden van de wereld.": "308.mp3", "Maar mijn kat vindt zichzelf het liefst.": "309.mp3", "Ik word om zeven uur wakker.": "310.mp3", "Ik voel me vandaag heel goed.": "311.mp3", "Ik was me en kleed me aan.": "312.mp3", "Mijn broer haast zich, want hij is laat.": "313.mp3", "Hij vergist zich in de tijd.": "314.mp3", "Het is pas half acht!": "315.mp3", "We lachen en ontspannen ons.": "316.mp3", "Herinner je je ons eerste ontbijt hier?": "317.mp3", "Ik verheug me op het weekend.": "318.mp3", "Niemand verveelt zich in dit huis!": "319.mp3", "Ik voel me goed.": "320.mp3", "Hij vergist zich.": "321.mp3", "Wij haasten ons.": "322.mp3", "Ik leer Nederlands, omdat ik in Nederland woon.": "323.mp3", "Ik denk dat het een mooie taal is.": "324.mp3", "Als ik Nederlands spreek, lachen de mensen.": "325.mp3", "Ze zeggen dat ik een leuk accent heb.": "326.mp3", "Ik luister naar podcasts terwijl ik fiets.": "327.mp3", "Wanneer ik een woord niet ken, vraag ik het.": "328.mp3", "Soms weet ik niet of ik het goed zeg.": "329.mp3", "Maar dat is niet erg, want ik leer elke dag.": "330.mp3", "Mijn buurvrouw zegt dat ik snel beter word.": "331.mp3", "Als je oefent, lukt het altijd!": "332.mp3", "Ik heb een nieuwe fiets. Ik ben er heel blij mee.": "333.mp3", "Mijn oude fiets? Ik heb er tien jaar op gereden.": "334.mp3", "In Nederland zijn er meer fietsen dan mensen.": "335.mp3", "Hoeveel fietsen heb jij? Ik heb er twee.": "336.mp3", "Mijn fietsenmaker woont om de hoek. Ik ga er vaak heen.": "337.mp3", "Hij weet er alles van.": "338.mp3", "Een goed slot is belangrijk. Denk eraan!": "339.mp3", "Mijn tas past er ook op.": "340.mp3", "Ik heb er zin in om naar het strand te fietsen.": "341.mp3", "Praat je er graag over? Ik wel!": "342.mp3", "Goedemiddag! Kom maar binnen.": "343.mp3", "Ga maar zitten, hoor.": "344.mp3", "Wat wilt u drinken?": "345.mp3", "Mag ik een cappuccino, alstublieft?": "346.mp3", "Wil je ook iets eten?": "347.mp3", "Ja, graag een tosti.": "348.mp3", "Wacht even, ik pak de menukaart.": "349.mp3", "Zou u het raam dicht kunnen doen?": "350.mp3", "Mag ik de rekening?": "351.mp3", "Dank u wel en tot ziens!": "352.mp3", "Ik woon in een buurt die heel gezellig is.": "353.mp3", "Mijn buurvrouw is een vrouw die viool speelt.": "354.mp3", "Ze heeft een zoon die piloot wil worden.": "355.mp3", "Op de hoek is een bakker waar ik elke ochtend brood koop.": "356.mp3", "De bakker die daar werkt, lacht altijd.": "357.mp3", "Hij maakt taarten die op kunstwerken lijken.": "358.mp3", "Er is ook een park waar kinderen voetballen.": "359.mp3", "Het bankje dat onder de oude boom staat, is mijn favoriete plek.": "360.mp3", "Mijn vriend, met wie ik daar vaak zit, woont ernaast.": "361.mp3", "Is er een plek waar jij graag bent?": "362.mp3", "Vorig jaar besloot ik iets nieuws te proberen.": "363.mp3", "Ik ging naar een muziekschool om gitaar te leren spelen.": "364.mp3", "In het begin was het moeilijk om de akkoorden te onthouden.": "365.mp3", "Mijn vingers deden pijn, maar ik bleef proberen te oefenen.": "366.mp3", "Mijn leraar zei: vergeet niet elke dag te spelen.": "367.mp3", "Nu is het leuk om met vrienden te spelen.": "368.mp3", "Ik spaar geld om een betere gitaar te kopen.": "369.mp3", "Ik hoop op mijn verjaardag iets te spelen.": "370.mp3", "Ik denk erover na om in een band te gaan.": "371.mp3", "Heb jij ooit geprobeerd een instrument te leren?": "372.mp3", "Amsterdam werd in de dertiende eeuw gesticht.": "373.mp3", "De stad is genoemd naar een dam in de rivier de Amstel.": "374.mp3", "In de zeventiende eeuw werden de grachten gegraven.": "375.mp3", "Veel huizen werden door rijke handelaren gebouwd.": "376.mp3", "Het Rijksmuseum werd in 1885 geopend.": "377.mp3", "De Nachtwacht is door Rembrandt geschilderd.": "378.mp3", "De stad wordt elk jaar door miljoenen toeristen bezocht.": "379.mp3", "Er wordt hier meer gefietst dan gereden.": "380.mp3", "Stroopwafels worden overal verkocht.": "381.mp3", "Er wordt gezegd dat Amsterdam nooit slaapt.": "382.mp3", "Soms droom ik over een miljoen euro.": "383.mp3", "Als ik een miljoen had, zou ik een huis aan zee kopen.": "384.mp3", "Ik zou er een muziekstudio bouwen.": "385.mp3", "Als ik niet hoefde te werken, zou ik de hele dag muziek maken.": "386.mp3", "Ik zou mijn familie en vrienden helpen.": "387.mp3", "Een deel zou ik aan een kinderziekenhuis geven.": "388.mp3", "Als ik jonger was, zou ik de wereld rond reizen.": "389.mp3", "Maar misschien zou geld me niet gelukkiger maken.": "390.mp3", "Wat zou jij doen als je rijk was?": "391.mp3", "Ik zou in elk geval Nederlands blijven leren!": "392.mp3", "Als ik meer tijd had, zou ik piano leren.": "393.mp3", "Ik zou graag een koffie willen.": "394.mp3", "Wat zou jij doen?": "395.mp3", "Gisteren belde mijn broer me op.": "396.mp3", "Hij zei dat hij in Rotterdam was.": "397.mp3", "Hij vertelde dat hij een nieuwe baan had gevonden.": "398.mp3", "Hij zei dat het bedrijf heel groot was.": "399.mp3", "Ik vroeg of hij de stad leuk vond.": "400.mp3", "Hij zei dat hij het geweldig vond, maar dat hij thuis miste.": "401.mp3", "Ik vroeg wanneer hij terugkwam.": "402.mp3", "Hij vertelde dat hij in december zou komen.": "403.mp3", "Hij zei ook dat hij cadeautjes voor de kinderen meenam.": "404.mp3", "Mijn moeder vroeg wat hij allemaal had gezegd.": "405.mp3", "Het is zaterdagochtend.": "406.mp3", "Ik zit in de keuken te ontbijten.": "407.mp3", "Mijn moeder is pannenkoeken aan het bakken.": "408.mp3", "Mijn vader zit de krant te lezen.": "409.mp3", "Mijn zusjes zijn tekenfilms aan het kijken.": "410.mp3", "De hond ligt onder de tafel te slapen.": "411.mp3", "Buiten is het aan het regenen.": "412.mp3", "Mijn telefoon ligt te trillen.": "413.mp3", "Mijn vriend Max staat voor de deur te wachten.": "414.mp3", "Hij is al tien minuten aan het bellen! Ik kom eraan!": "415.mp3", "appel": "416.mp3", "boek": "417.mp3", "dag": "418.mp3", "fiets": "419.mp3", "geld": "420.mp3", "huis": "421.mp3", "kat": "422.mp3", "melk": "423.mp3", "water": "424.mp3", "zon": "425.mp3", "spellen": "426.mp3", "oud": "427.mp3", "blauw": "428.mp3", "trein": "429.mp3", "ijs": "430.mp3", "maan": "431.mp3", "mooi": "432.mp3", "neus": "433.mp3", "koud": "434.mp3", "school": "435.mp3", "groot": "436.mp3", "zee": "437.mp3", "hallo": "438.mp3", "goedemorgen": "439.mp3", "goedenavond": "440.mp3", "heten": "441.mp3", "hoe": "442.mp3", "goed": "443.mp3", "dank je": "444.mp3", "alsjeblieft": "445.mp3", "tot ziens": "446.mp3", "morgen": "447.mp3", "ook": "448.mp3", "Oekraïne": "449.mp3", "een": "450.mp3", "twee": "451.mp3", "drie": "452.mp3", "tien": "453.mp3", "twaalf": "454.mp3", "twintig": "455.mp3", "honderd": "456.mp3", "jaar": "457.mp3", "zus": "458.mp3", "vader": "459.mp3", "moeder": "460.mp3", "kosten": "461.mp3", "hoeveel": "462.mp3", "ik": "463.mp3", "jij": "464.mp3", "hij": "465.mp3", "zij": "466.mp3", "wij": "467.mp3", "jullie": "468.mp3", "broer": "469.mp3", "dokter": "470.mp3", "aardig": "471.mp3", "ouders": "472.mp3", "blij": "473.mp3", "familie": "474.mp3", "hond": "475.mp3", "snel": "476.mp3", "niet": "477.mp3", "nee": "478.mp3", "ja": "479.mp3", "moe": "480.mp3", "thuis": "481.mp3", "klaar": "482.mp3", "duur": "483.mp3", "chauffeur": "484.mp3", "auto": "485.mp3", "nieuw": "486.mp3", "warm": "487.mp3", "laat": "488.mp3", "de man": "489.mp3", "het huis": "490.mp3", "het dorp": "491.mp3", "stil": "492.mp3", "de kerk": "493.mp3", "wit": "494.mp3", "de molen": "495.mp3", "rood": "496.mp3", "de kunstenaar": "497.mp3", "wonen": "498.mp3", "de straat": "499.mp3", "lang": "500.mp3", "de boom": "501.mp3", "hoog": "502.mp3", "het kind": "503.mp3", "spelen": "504.mp3", "buiten": "505.mp3", "veel": "506.mp3", "weinig": "507.mp3", "slapen": "508.mp3", "de bloem": "509.mp3", "de tulp": "510.mp3", "geel": "511.mp3", "vriendelijk": "512.mp3", "de kamer": "513.mp3", "het bed": "514.mp3", "het bureau": "515.mp3", "de foto": "516.mp3", "de gitaar": "517.mp3", "de koptelefoon": "518.mp3", "de tas": "519.mp3", "de sleutel": "520.mp3", "lekker": "521.mp3", "gezellig": "522.mp3", "welkom": "523.mp3", "mijn": "524.mp3", "jouw": "525.mp3", "zijn": "526.mp3", "haar": "527.mp3", "ons, onze": "528.mp3", "hun": "529.mp3", "het werk": "530.mp3", "interessant": "531.mp3", "de ogen": "532.mp3", "de rivier": "533.mp3", "opa en oma": "534.mp3", "de tuin": "535.mp3", "prachtig": "536.mp3", "hebben": "537.mp3", "het haar": "538.mp3", "elk": "539.mp3", "het oor, de oren": "540.mp3", "het huisdier": "541.mp3", "de vriendin": "542.mp3", "de vis": "543.mp3", "de honger": "544.mp3", "de dorst": "545.mp3", "de tijd": "546.mp3", "het koekje": "547.mp3", "de stad": "548.mp3", "het plein": "549.mp3", "het centrum": "550.mp3", "de winkel": "551.mp3", "de gracht": "552.mp3", "de brug": "553.mp3", "de bioscoop": "554.mp3", "het gebouw": "555.mp3", "het museum": "556.mp3", "de bakker": "557.mp3", "natuurlijk": "558.mp3", "wat": "559.mp3", "wie": "560.mp3", "waar": "561.mp3", "wanneer": "562.mp3", "waarom": "563.mp3", "omdat": "564.mp3", "welke": "565.mp3", "jarig zijn": "566.mp3", "leren": "567.mp3", "nu": "568.mp3", "de kleur": "569.mp3", "werken": "570.mp3", "drinken": "571.mp3", "fietsen": "572.mp3", "het bedrijf": "573.mp3", "de vrouw": "574.mp3", "de zoon": "575.mp3", "eten": "576.mp3", "samen": "577.mp3", "lezen": "578.mp3", "kijken": "579.mp3", "spreken": "580.mp3", "geen": "581.mp3", "vandaag": "582.mp3", "de zondag": "583.mp3", "de haast": "584.mp3", "de thee": "585.mp3", "regenen": "586.mp3", "de buurman": "587.mp3", "graag": "588.mp3", "het plan": "589.mp3", "kennen": "590.mp3", "toch": "591.mp3", "maandag": "592.mp3", "woensdag": "593.mp3", "vrijdag": "594.mp3", "meestal": "595.mp3", "het broodje": "596.mp3", "voetbal": "597.mp3", "de collega": "598.mp3", "bezoeken": "599.mp3", "het weekend": "600.mp3", "altijd": "601.mp3", "tevreden": "602.mp3", "kunnen": "603.mp3", "willen": "604.mp3", "moeten": "605.mp3", "mogen": "606.mp3", "schrijven": "607.mp3", "zwemmen": "608.mp3", "al": "609.mp3", "nog niet": "610.mp3", "de zomer": "611.mp3", "helpen": "612.mp3", "roken": "613.mp3", "binnenkomen": "614.mp3", "opstaan": "615.mp3", "meenemen": "616.mp3", "aankomen": "617.mp3", "opbellen": "618.mp3", "afmaken": "619.mp3", "terugkomen": "620.mp3", "opruimen": "621.mp3", "uitnodigen": "622.mp3", "uitgaan": "623.mp3", "de baas": "624.mp3", "de keuken": "625.mp3", "de paraplu": "626.mp3", "in": "627.mp3", "op": "628.mp3", "aan": "629.mp3", "naar": "630.mp3", "bij": "631.mp3", "onder": "632.mp3", "naast": "633.mp3", "tussen": "634.mp3", "de muur": "635.mp3", "de doos": "636.mp3", "de jas": "637.mp3", "het kantoor": "638.mp3", "misschien": "639.mp3", "het uur": "640.mp3", "half": "641.mp3", "het kwart": "642.mp3", "over": "643.mp3", "voor": "644.mp3", "hoe laat": "645.mp3", "dinsdag": "646.mp3", "donderdag": "647.mp3", "zaterdag": "648.mp3", "zondag": "649.mp3", "vrij": "650.mp3", "de les": "651.mp3", "vorige zomer": "652.mp3", "logeren": "653.mp3", "de oom": "654.mp3", "praten": "655.mp3", "lachen": "656.mp3", "koken": "657.mp3", "een keer": "658.mp3", "toen": "659.mp3", "genieten": "660.mp3", "huilen": "661.mp3", "betalen": "662.mp3", "gaan": "663.mp3", "vertrekken": "664.mp3", "zien": "665.mp3", "lopen": "666.mp3", "het terras": "667.mp3", "de haring": "668.mp3", "kopen": "669.mp3", "het kaartje": "670.mp3", "pas": "671.mp3", "thuiskomen": "672.mp3", "daarna": "673.mp3", "blijven": "674.mp3", "er was eens": "675.mp3", "de molenaar": "676.mp3", "de markt": "677.mp3", "het meel": "678.mp3", "vragen": "679.mp3", "zeggen": "680.mp3", "gratis": "681.mp3", "allebei": "682.mp3", "hard": "683.mp3", "op een dag": "684.mp3", "toe": "685.mp3", "zullen": "686.mp3", "huren": "687.mp3", "het huisje": "688.mp3", "meegaan": "689.mp3", "surfen": "690.mp3", "vast": "691.mp3", "het weer": "692.mp3", "beloven": "693.mp3", "sturen": "694.mp3", "geweldig": "695.mp3", "het strand": "696.mp3", "klein": "697.mp3", "groen": "698.mp3", "licht": "699.mp3", "de voordeur": "700.mp3", "de kast": "701.mp3", "het zusje": "702.mp3", "de buurvrouw": "703.mp3", "lief": "704.mp3", "zwart": "705.mp3", "ouder": "706.mp3", "rustig": "707.mp3", "grappig": "708.mp3", "beter": "709.mp3", "best": "710.mp3", "meer": "711.mp3", "minder": "712.mp3", "liever": "713.mp3", "dan": "714.mp3", "moeilijk": "715.mp3", "de wereld": "716.mp3", "zich voelen": "717.mp3", "zich wassen": "718.mp3", "zich aankleden": "719.mp3", "zich haasten": "720.mp3", "zich vergissen": "721.mp3", "zich ontspannen": "722.mp3", "zich herinneren": "723.mp3", "zich verheugen op": "724.mp3", "zich vervelen": "725.mp3", "wakker worden": "726.mp3", "het ontbijt": "727.mp3", "niemand": "728.mp3", "want": "729.mp3", "dat": "730.mp3", "als": "731.mp3", "of": "732.mp3", "terwijl": "733.mp3", "de taal": "734.mp3", "denken": "735.mp3", "luisteren naar": "736.mp3", "soms": "737.mp3", "erg": "738.mp3", "oefenen": "739.mp3", "lukken": "740.mp3", "er": "741.mp3", "blij met": "742.mp3", "rijden": "743.mp3", "de fietsenmaker": "744.mp3", "om de hoek": "745.mp3", "vaak": "746.mp3", "heen": "747.mp3", "het slot": "748.mp3", "belangrijk": "749.mp3", "denken aan": "750.mp3", "zin hebben in": "751.mp3", "passen": "752.mp3", "even": "753.mp3", "maar": "754.mp3", "zitten": "755.mp3", "alstublieft": "756.mp3", "de tosti": "757.mp3", "pakken": "758.mp3", "de menukaart": "759.mp3", "het raam": "760.mp3", "dichtdoen": "761.mp3", "de rekening": "762.mp3", "tekenen": "763.mp3", "de buurt": "764.mp3", "de viool": "765.mp3", "de piloot": "766.mp3", "worden": "767.mp3", "de hoek": "768.mp3", "het brood": "769.mp3", "de taart": "770.mp3", "het kunstwerk": "771.mp3", "lijken op": "772.mp3", "het bankje": "773.mp3", "favoriet": "774.mp3", "de plek": "775.mp3"};
+</script>
+<script>
+/* ======================= SPEECH ======================= */
+const synth = window.speechSynthesis;
+let voice=null, rate=1, queueToken=0, curAudio=null;
+function pickVoice(){
+  if(!synth) return;
+  const vs=synth.getVoices();
+  voice = vs.find(v=>/nl[-_]NL/i.test(v.lang)&&/Google/i.test(v.name)) || vs.find(v=>/^nl[-_]NL/i.test(v.lang)) || vs.find(v=>/^nl/i.test(v.lang)) || null;
+  document.getElementById("noVoice").hidden = !!voice || vs.length===0 || Object.keys(AUDIO).length>0;
+}
+if(synth){ pickVoice(); synth.onvoiceschanged=pickVoice; }
+const normKey = t => String(t).trim().replace(/\s+/g," ");
+function speak(text,onend){
+  const key=normKey(text), file=AUDIO[key];
+  if(file){
+    try{
+      curAudio=new Audio("audio/"+file); curAudio.playbackRate=rate;
+      curAudio.onended=()=>{ if(onend) onend(); };
+      curAudio.onerror=()=>{ curAudio=null; ttsSpeak(text,onend); };
+      const p=curAudio.play(); if(p&&p.catch) p.catch(()=>{ ttsSpeak(text,onend); });
+      return;
+    }catch(e){}
+  }
+  ttsSpeak(text,onend);
+}
+function ttsSpeak(text,onend){
+  if(!synth){ if(onend) onend(); return; }
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=voice?voice.lang:"nl-NL"; if(voice) u.voice=voice;
+  u.rate=rate*0.92; if(onend) u.onend=onend;
+  synth.speak(u);
+}
+function stopAll(){ queueToken++; if(synth) synth.cancel(); if(curAudio){ try{curAudio.pause();}catch(e){} curAudio=null; } clearActive(); }
+function say(text){ stopAll(); speak(text); }
+const isNl = s => /^[A-Za-zÀ-ÿ0-9 ,.'’?!\-—:;()]+$/.test(s.trim()) && /[A-Za-z]/.test(s);
+
+/* ======================= STATE ======================= */
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const prog=store.get("igCourse")||{};
+const save=()=>store.set("igCourse",prog);
+const P=id=>(prog[id] ||= {});
+const isDone=id=>!!(prog[id]&&prog[id].test&&prog[id].text);
+let L=null;
+const playIcon='<svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z"/></svg>';
+const md=s=>String(s).replace(/==(.+?)==/g,'<span class="mark">$1</span>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+const plain=s=>String(s).replace(/==|\*\*/g,"").replace(/\[.*?\]/g,"").replace(/\(.*?\)/g,"").trim();
+const clean=t=>t.replace(/[.,!?;:"«»()]/g,"");
+const wordsWord=n=>{const a=n%10,b=n%100;return a===1&&b!==11?"слово":a>=2&&a<=4&&(b<12||b>14)?"слова":"слів";};
+function hlMatch(tok,hl){
+  const raw=clean(tok), t=raw.toLowerCase().replace(/’/g,"'");
+  if(!t) return false;
+  return (hl||[]).some(h=>{
+    if(h==="#letter") return /^[A-Z]$/.test(raw);
+    if(h.startsWith("*")) return t.endsWith(h.slice(1))&&t.length>h.length;
+    if(h.endsWith("*")) return t.startsWith(h.slice(0,-1));
+    return t===h;
+  });
+}
+const hlText=(s,hl)=>s.split(" ").map(tok=>hlMatch(tok,hl)?`<span class="mark">${tok}</span>`:tok).join(" ");
+/* streak */
+function today(){ const d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
+function touchStreak(){
+  const s=store.get("igStreak")||{n:0,last:null}, t=today();
+  if(s.last===t) return;
+  const y=new Date(); y.setDate(y.getDate()-1);
+  const yk=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();
+  s.n = s.last===yk ? s.n+1 : 1; s.last=t; store.set("igStreak",s);
+}
+function streakN(){
+  const s=store.get("igStreak")||{n:0,last:null}; const t=today();
+  const y=new Date(); y.setDate(y.getDate()-1);
+  const yk=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();
+  return (s.last===t||s.last===yk)?s.n:0;
+}
+const daysWord=n=>{ const a=n%10,b=n%100; return (a===1&&b!==11)?"день":(a>=2&&a<=4&&(b<12||b>14))?"дні":"днів"; };
+function toast(msg){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
+
+/* ======================= ROUTING ======================= */
+function showScreen(id){ ["home","lesson","dict"].forEach(s=>document.getElementById(s).hidden=s!==id); }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function modTest(modId){
+  const pool=shuffle(LESSONS.filter(l=>l.mod===modId).flatMap(l=>l.quiz.map(q=>({...q,from:l.short}))));
+  const m=MODS.find(m=>m.id===modId);
+  return {id:"mt-"+modId,mod:modId,isTest:true,short:"Тест рівня",eyebrow:m.lv+" · "+m.name+" · підсумок",
+    title:`Тест рівня <em>${m.lv}</em>`,lead:"15 випадкових питань з усіх уроків рівня.",quiz:pool.slice(0,15)};
+}
+function route(){
+  const id=(location.hash||"").slice(1);
+  stopAll();
+  if(id.startsWith("mt-")&&MODS.some(m=>"mt-"+m.id===id)) return openLesson(modTest(id.slice(3)));
+  const l=LESSONS.find(x=>x.id===id);
+  if(l) return openLesson(l);
+  if(id==="dict") return showDict();
+  showHome();
+}
+window.addEventListener("hashchange",route);
+document.querySelectorAll("[data-home]").forEach(b=>b.onclick=()=>{ location.hash="home"; });
+document.getElementById("toDict").onclick=()=>{ location.hash="dict"; };
+
+/* ======================= HOME ======================= */
+function showHome(){
+  showScreen("home");
+  document.getElementById("toDict").textContent=`Словник · ${DICT.length} слів`;
+  const doneN=LESSONS.filter(l=>isDone(l.id)).length;
+  document.getElementById("pCount").textContent=`${doneN} / ${LESSONS.length}`;
+  document.getElementById("pBar").style.width=(doneN/LESSONS.length*100)+"%";
+  const sn=streakN(); document.getElementById("streakN").textContent=`${sn} ${daysWord(sn)}`;
+  const nextL=LESSONS.find(l=>!isDone(l.id))||LESSONS[LESSONS.length-1];
+  const ni=LESSONS.indexOf(nextL)+1;
+  const cBtn=document.getElementById("continue");
+  cBtn.textContent = doneN===0?`Почати: Урок 1 · ${nextL.short}`:doneN===LESSONS.length?`Курс пройдено! Повторити урок ${LESSONS.length}`:`Продовжити: Урок ${ni} · ${nextL.short}`;
+  cBtn.onclick=()=>{ location.hash=nextL.id; };
+  const box=document.getElementById("mods"); box.innerHTML="";
+  MODS.forEach(m=>{
+    const sec=document.createElement("div"); sec.className="mod";
+    sec.innerHTML=`<h2><span class="lv">${m.lv}</span>${m.name}</h2><p class="sub">${m.desc}</p>`;
+    const ol=document.createElement("ol"); ol.className="list";
+    LESSONS.filter(l=>l.mod===m.id).forEach(l=>{
+      const i=LESSONS.indexOf(l)+1,p=prog[l.id]||{},d=isDone(l.id);
+      const li=document.createElement("li");
+      const b=document.createElement("button"); b.className="lrow"+(d?" done":"")+(l===nextL&&!d?" next":"");
+      b.innerHTML=`<span class="no">${d?"✓":i}</span><span class="tx"><b>${l.short}</b><small>${l.sub||""}</small></span><span class="st">${d?(p.score!=null?p.score+"/"+l.quiz.length:"✓"):(l===nextL?"далі →":"")}</span>`;
+      b.onclick=()=>{ location.hash=l.id; };
+      li.appendChild(b); ol.appendChild(li);
+    });
+    const tp=prog["mt-"+m.id];
+    const li=document.createElement("li");
+    const b=document.createElement("button"); b.className="lrow mt"+(tp&&tp.test?" done":"");
+    b.innerHTML=`<span class="no">${tp&&tp.test?"✓":"★"}</span><span class="tx"><b>Підсумковий тест ${m.lv}</b><small>15 питань з усіх уроків рівня</small></span><span class="st">${tp&&tp.best!=null?"найкраще "+tp.best+"/15":""}</span>`;
+    b.onclick=()=>{ location.hash="mt-"+m.id; };
+    li.appendChild(b); ol.appendChild(li);
+    sec.appendChild(ol); box.appendChild(sec);
+  });
+  window.scrollTo({top:0});
+}
+
+/* ======================= LESSON ======================= */
+function openLesson(l){
+  L=l; showScreen("lesson"); touchStreak();
+  const i=LESSONS.indexOf(L), m=MODS.find(m=>m.id===L.mod);
+  document.getElementById("eyebrow").textContent=L.isTest?L.eyebrow:`Урок ${i+1} з ${LESSONS.length} · ${m.lv} ${m.name}`;
+  document.getElementById("title").innerHTML=L.title;
+  document.getElementById("lead").textContent=L.lead;
+  document.getElementById("stepsNav").hidden=!!L.isTest;
+  document.getElementById("toText").hidden=!!L.isTest;
+  document.getElementById("testTitle").textContent=L.isTest?"Підсумковий тест":"Тест";
+  document.getElementById("testLead").textContent=L.isTest?"Відповідь і пояснення видно одразу. Над кожним питанням указано урок, з якого воно.":
+    (L.quiz.some(q=>q.say)?`${L.quiz.length} питань. Де є ▶, спочатку послухайте.`:`${L.quiz.length} питань. Відповідь і пояснення видно одразу.`);
+  document.querySelectorAll("#testNext .dyn").forEach(x=>x.remove());
+  if(!L.isTest){ renderRule(); renderStory(); }
+  renderQuiz();
+  go(L.isTest?"test":"rule");
+}
+function go(id){
+  ["rule","test","text"].forEach(s=>{
+    document.getElementById(s).hidden=s!==id;
+    const t=document.getElementById("tab-"+s);
+    t.setAttribute("aria-current",s===id?"step":"false");
+    t.classList.toggle("done",!!(prog[L.id]&&prog[L.id][s])&&s!==id);
+  });
+  if(!L.isTest&&id!=="rule"){ P(L.id).rule=true; save(); }
+  stopAll(); window.scrollTo({top:0});
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]"); if(b) go(b.dataset.go);});
+
+function exBox(items,hl){
+  const box=document.createElement("div"); box.className="ex";
+  items.forEach(([nl,ua])=>{
+    const b=document.createElement("button"); b.className="say"; b.type="button";
+    b.innerHTML=`<span class="play" aria-hidden="true">${playIcon}</span><span><span class="en">${hlText(nl,hl)}</span><br><span class="ua">${ua}</span></span>`;
+    b.setAttribute("aria-label","Слухати: "+nl);
+    b.onclick=()=>say(nl);
+    box.appendChild(b);
+  });
+  return box;
+}
+function renderRule(){
+  const sec=document.getElementById("rule"); sec.innerHTML="";
+  const h=document.createElement("h2"); h.textContent=L.ruleTitle; sec.appendChild(h);
+  L.blocks.forEach(b=>{
+    let el;
+    if(b.t==="p"){ el=document.createElement("p"); el.innerHTML=md(b.x); }
+    else if(b.t==="h3"){ el=document.createElement("h3"); el.textContent=b.x; }
+    else if(b.t==="tip"){ el=document.createElement("div"); el.className="tip"; el.innerHTML=md(b.x); }
+    else if(b.t==="ex"){ el=exBox(b.items,L.hl); }
+    else if(b.t==="table"){
+      el=document.createElement("div"); el.className="tw";
+      const tb=document.createElement("table");
+      tb.innerHTML=`<tr>${b.head.map(x=>`<th>${x}</th>`).join("")}</tr>`;
+      b.rows.forEach(r=>{
+        const tr=document.createElement("tr");
+        r.forEach((c,ci)=>{
+          const td=document.createElement("td");
+          if((b.say||[]).includes(ci)&&c){
+            const btn=document.createElement("button"); btn.className="cs"; btn.type="button";
+            btn.innerHTML=`<span>${md(c)}</span>`;
+            btn.onclick=()=>say(plain(c).replace(/\s*\/\s*/g,", ").replace(/→/g,", "));
+            td.appendChild(btn);
+          } else td.innerHTML=md(c);
+          tr.appendChild(td);
+        });
+        tb.appendChild(tr);
+      });
+      el.appendChild(tb);
+    }
+    else if(b.t==="abc"){
+      el=document.createElement("div"); el.className="abc";
+      ABC.forEach(([Lt,nm,wd,ua])=>{
+        const t=document.createElement("button"); t.className="tile"; t.type="button";
+        t.innerHTML=`<span class="L">${Lt}<i>${Lt.toLowerCase()}</i></span><span class="nm">${nm}</span><span class="wd">${wd} — ${ua}</span>`;
+        t.setAttribute("aria-label",`Літера ${Lt}, ${wd}`);
+        t.onclick=()=>{ say(`${Lt}. ${wd}.`); el.querySelectorAll(".hit").forEach(x=>x.classList.remove("hit")); t.classList.add("hit"); };
+        el.appendChild(t);
+      });
+    }
+    if(el) sec.appendChild(el);
+  });
+  const nx=document.createElement("div"); nx.className="next";
+  nx.innerHTML=`<button class="btn primary" data-go="test">До тесту →</button>`;
+  sec.appendChild(nx);
+}
+
+/* ---------- quiz ---------- */
+const qBox=document.getElementById("quiz"), scoreBox=document.getElementById("score"), retry=document.getElementById("retry");
+let answered=0, correct=0;
+function speakAnswer(item){
+  if(item.say) return say(item.say);
+  const ans=item.o[item.a];
+  if(item.q.includes("___")){
+    const full=item.q.replace(/\s*\(.*?\)/g,"").replace("___",ans);
+    if(isNl(full)) return say(full);
+  }
+  if(isNl(ans)) say(ans);
+}
+function renderQuiz(){
+  qBox.innerHTML=""; answered=0; correct=0; scoreBox.hidden=true; retry.hidden=true;
+  L.quiz.forEach((item,i)=>{
+    const d=document.createElement("div"); d.className="q";
+    d.innerHTML=`${item.from?`<span class="from">${item.from}</span>`:""}<p class="qt"><span class="num">${i+1}.</span></p><div class="opts"></div><p class="fb" hidden></p>`;
+    const qt=d.querySelector(".qt");
+    if(item.say){
+      const pb=document.createElement("button"); pb.className="play"; pb.type="button"; pb.innerHTML=playIcon;
+      pb.setAttribute("aria-label","Послухати"); pb.onclick=()=>say(item.say); qt.appendChild(pb);
+    }
+    const qs=document.createElement("span"); qs.innerHTML=md(item.q); qt.appendChild(qs);
+    const os=d.querySelector(".opts"), fb=d.querySelector(".fb");
+    const order=item.o.map((_,j)=>j); for(let k=order.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[order[k],order[r]]=[order[r],order[k]];}
+    order.forEach(j=>{ const o=item.o[j];
+      const b=document.createElement("button"); b.className="opt"; b.type="button"; b.textContent=o; b.dataset.j=j;
+      b.onclick=()=>{
+        os.querySelectorAll("button").forEach(x=>{x.disabled=true; if(+x.dataset.j===item.a) x.classList.add("right");});
+        const ok=j===item.a; if(!ok) b.classList.add("wrong");
+        fb.hidden=false; fb.innerHTML=(ok?'<b class="ok">Правильно.</b> ':'<b class="no">Ні.</b> ')+md(item.why);
+        answered++; if(ok) correct++;
+        speakAnswer(item);
+        if(answered===L.quiz.length) showScore();
+      };
+      os.appendChild(b);
+    });
+    qBox.appendChild(d);
+  });
+}
+function showScore(){
+  const n=L.quiz.length, pct=correct/n;
+  const msg=pct===1?"Goed zo! Без жодної помилки.":pct>=.75?"Добре. Перегляньте помилки вище.":"Варто ще раз переглянути правило.";
+  scoreBox.innerHTML=`<b>${correct}/${n}</b><span>${msg}</span>`;
+  scoreBox.hidden=false; retry.hidden=false;
+  const p=P(L.id); p.test=true;
+  if(L.isTest) p.best=Math.max(p.best||0,correct); else p.score=Math.max(p.score||0,correct);
+  save();
+  if(L.isTest){
+    const tn=document.getElementById("testNext"); tn.querySelectorAll(".dyn").forEach(x=>x.remove());
+    const h=document.createElement("button"); h.className="btn primary dyn"; h.textContent="До курсу →";
+    h.onclick=()=>{ location.hash="home"; }; tn.appendChild(h);
+  }
+  scoreBox.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
+}
+retry.onclick=()=>{ document.querySelectorAll("#testNext .dyn").forEach(x=>x.remove()); if(L.isTest) Object.assign(L,modTest(L.mod)); renderQuiz(); window.scrollTo({top:0}); };
+
+/* ---------- story ---------- */
+const sBox=document.getElementById("story"), playAllBtn=document.getElementById("playAll");
+const vocabOf=l=>l.vocab||(VOCAB&&VOCAB[l.id])||[];
+const sayWord=w=>say(w.replace(/\s*\/\s*/g,", "));
+function renderStory(){
+  document.getElementById("storyTitle").textContent="Текст: "+L.storyTitle;
+  document.getElementById("storyLegend").innerHTML="Торкніться будь-якого слова, щоб почути його. "+md(L.legend||"==Жовтим== позначено те, що вивчали в цьому уроці.");
+  sBox.innerHTML="";
+  const trOn=document.getElementById("trBtn").getAttribute("aria-pressed")==="true";
+  L.story.forEach(([nl,ua],i)=>{
+    const row=document.createElement("div"); row.className="sent"; row.id="s"+i;
+    const idx=document.createElement("span"); idx.className="idx"; idx.textContent=i+1;
+    const play=document.createElement("button"); play.className="play"; play.type="button"; play.innerHTML=playIcon;
+    play.setAttribute("aria-label","Слухати речення "+(i+1));
+    play.onclick=()=>{ say(nl); markActive(i); };
+    const body=document.createElement("div"); body.className="body";
+    const words=document.createElement("div"); words.className="words";
+    nl.split(" ").forEach(tok=>{
+      const c=clean(tok);
+      const w=document.createElement("button"); w.className="w"; w.type="button"; w.textContent=tok;
+      if(hlMatch(tok,L.hl)) w.classList.add("g");
+      w.onclick=()=>{ say(/^[A-Z]$/.test(c)?c+".":c); w.classList.add("speaking"); setTimeout(()=>w.classList.remove("speaking"),700); };
+      words.appendChild(w);
+    });
+    const tr=document.createElement("div"); tr.className="tr"; tr.textContent=ua; tr.hidden=!trOn;
+    body.append(words,tr); row.append(idx,play,body); sBox.appendChild(row);
+  });
+  const vb=document.getElementById("vocab"); vb.innerHTML="";
+  const vs=vocabOf(L);
+  if(vs.length){
+    vb.innerHTML=`<div class="vhead"><h3>Слова уроку · ${vs.length}</h3><button class="btn ghost sm" id="vTrain">Тренувати на картках</button></div>`;
+    vb.querySelector("#vTrain").onclick=()=>{
+      const li=LESSONS.indexOf(L);
+      pendingDeck=shuffle(vs.map(([nl,ua])=>({nl,ua,lesson:L,n:li+1,mod:L.mod})));
+      location.hash="dict";
+    };
+    const g=document.createElement("div"); g.className="vgrid";
+    vs.forEach(([nl,ua])=>{
+      const b=document.createElement("button"); b.className="vchip"+(known[nl]?" known":""); b.type="button";
+      b.innerHTML=`<b>${nl}</b><span>${ua}</span>`; b.onclick=()=>sayWord(nl);
+      g.appendChild(b);
+    });
+    vb.appendChild(g);
+  }
+  const nx=document.getElementById("storyNext"); nx.innerHTML="";
+  const i=LESSONS.indexOf(L), nextL=LESSONS[i+1];
+  const back=document.createElement("button"); back.className="btn ghost"; back.textContent="← Правило"; back.dataset.go="rule"; nx.appendChild(back);
+  const f=document.createElement("button"); f.className="btn primary"; f.id="finishLesson";
+  const lastOfMod=!nextL||nextL.mod!==L.mod;
+  f.textContent=lastOfMod?`Підсумковий тест ${MODS.find(m=>m.id===L.mod).lv} →`:`Урок ${i+2}: ${nextL.short} →`;
+  f.onclick=()=>{ P(L.id).text=true; save(); if(isDone(L.id)) toast("Урок пройдено! Goed gedaan!"); location.hash=lastOfMod?"mt-"+L.mod:nextL.id; };
+  nx.appendChild(f);
+}
+function clearActive(){ document.querySelectorAll(".sent.active").forEach(e=>e.classList.remove("active")); if(playAllBtn){ playAllBtn.dataset.on="0"; playAllBtn.textContent="▶ Слухати весь текст"; } }
+function markActive(i){ document.querySelectorAll(".sent.active").forEach(e=>e.classList.remove("active")); document.getElementById("s"+i).classList.add("active"); }
+playAllBtn.onclick=()=>{
+  if(playAllBtn.dataset.on==="1"){ stopAll(); return; }
+  stopAll();
+  const token=queueToken; playAllBtn.dataset.on="1"; playAllBtn.textContent="■ Зупинити";
+  P(L.id).text=true; save();
+  const run=i=>{
+    if(token!==queueToken) return;
+    if(i>=L.story.length){ clearActive(); return; }
+    markActive(i);
+    document.getElementById("s"+i).scrollIntoView({block:"nearest",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    speak(L.story[i][0],()=>setTimeout(()=>run(i+1),450));
+  };
+  run(0);
+};
+document.querySelectorAll("[data-rate]").forEach(b=>b.onclick=()=>{
+  rate=parseFloat(b.dataset.rate);
+  document.querySelectorAll("[data-rate]").forEach(x=>x.setAttribute("aria-pressed",x===b));
+});
+document.getElementById("trBtn").onclick=function(){
+  const on=this.getAttribute("aria-pressed")!=="true";
+  this.setAttribute("aria-pressed",on);
+  document.querySelectorAll(".tr").forEach(t=>t.hidden=!on);
+};
+
+/* ======================= DICTIONARY ======================= */
+const known=store.get("igKnown")||{};
+const saveKnown=()=>store.set("igKnown",known);
+const DICT=(()=>{
+  const seen=new Set(), out=[];
+  LESSONS.forEach((l,i)=>vocabOf(l).forEach(([nl,ua])=>{
+    const k=nl.toLowerCase(); if(seen.has(k)) return; seen.add(k);
+    out.push({nl,ua,lesson:l,n:i+1,mod:l.mod});
+  }));
+  return out;
+})();
+let dLevel="all", dShow="all", dLimit=60, dDir="nl", deck=[], deckI=0, deckRes={good:0,bad:0}, pendingDeck=null;
+function dFiltered(){
+  const q=document.getElementById("dQ").value.trim().toLowerCase();
+  return DICT.filter(w=>(dLevel==="all"||w.mod===dLevel)&&(dShow==="all"||!known[w.nl])&&(!q||w.nl.toLowerCase().includes(q)||w.ua.toLowerCase().includes(q)));
+}
+function setCardMode(on){
+  document.getElementById("dListView").hidden=on; document.getElementById("dCardView").hidden=!on;
+  document.getElementById("dict").classList.toggle("cards",on);
+}
+function showDict(){
+  showScreen("dict"); stopAll();
+  document.getElementById("dTitle").innerHTML=`Словник: <em>${DICT.length} слів</em>`;
+  const lv=document.getElementById("dLevel");
+  if(!lv.children.length){
+    [["all","Усі"],...MODS.map(m=>[m.id,m.lv])].forEach(([id,t])=>{
+      const b=document.createElement("button"); b.textContent=t; b.setAttribute("aria-pressed",id===dLevel);
+      b.onclick=()=>{ dLevel=id; lv.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); dLimit=60; renderDict(); };
+      lv.appendChild(b);
+    });
+  }
+  if(pendingDeck){ startDeck(pendingDeck); pendingDeck=null; return; }
+  setCardMode(false); renderDict(); window.scrollTo({top:0});
+}
+function renderDictCount(list){
+  const pool=DICT.filter(w=>dLevel==="all"||w.mod===dLevel);
+  const kn=pool.filter(w=>known[w.nl]).length;
+  document.getElementById("dCount").textContent=`Вивчено ${kn} з ${pool.length}${list&&list.length!==pool.length?` · показано ${list.length}`:""}`;
+}
+function renderDict(){
+  const list=dFiltered(), box=document.getElementById("dList"); box.innerHTML="";
+  renderDictCount(list);
+  const toLearn=list.filter(w=>!known[w.nl]).length;
+  const tb=document.getElementById("dTrain");
+  tb.textContent=toLearn?`Тренувати картки · ${Math.min(toLearn,20)} ${wordsWord(Math.min(toLearn,20))}`:"Повторити вивчені на картках";
+  tb.disabled=list.length===0;
+  if(!list.length){ box.innerHTML=`<p class="empty">Нічого не знайдено. Спробуйте інше слово або зніміть фільтр.</p>`; return; }
+  list.slice(0,dLimit).forEach(w=>{
+    const r=document.createElement("div"); r.className="dword";
+    const p=document.createElement("button"); p.className="play"; p.type="button"; p.innerHTML=playIcon; p.setAttribute("aria-label","Слухати "+w.nl);
+    p.onclick=()=>sayWord(w.nl);
+    const tx=document.createElement("div"); tx.className="tx";
+    tx.innerHTML=`<b>${w.nl}</b><span>${w.ua}</span><small>Урок ${w.n} · ${w.lesson.short}</small>`;
+    const k=document.createElement("button"); k.className="knowb"; k.type="button";
+    const upd=()=>{ k.setAttribute("aria-pressed",!!known[w.nl]); k.textContent=known[w.nl]?"✓ Знаю":"Знаю"; };
+    k.onclick=()=>{ if(known[w.nl]) delete known[w.nl]; else known[w.nl]=1; saveKnown(); upd(); renderDictCount(); };
+    upd(); r.append(p,tx,k); box.appendChild(r);
+  });
+  if(list.length>dLimit){
+    const m=document.createElement("button"); m.className="btn ghost more"; m.textContent=`Показати ще (${list.length-dLimit})`;
+    m.onclick=()=>{ dLimit+=120; renderDict(); }; box.appendChild(m);
+  }
+}
+document.getElementById("dQ").addEventListener("input",()=>{ dLimit=60; renderDict(); });
+document.querySelectorAll("[data-show]").forEach(b=>b.onclick=()=>{
+  dShow=b.dataset.show; document.querySelectorAll("[data-show]").forEach(x=>x.setAttribute("aria-pressed",x===b)); dLimit=60; renderDict();
+});
+document.querySelectorAll("[data-dir]").forEach(b=>b.onclick=()=>{
+  dDir=b.dataset.dir; document.querySelectorAll("[data-dir]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderCard();
+});
+function startDeck(d){ deck=d; deckI=0; deckRes={good:0,bad:0}; setCardMode(true); renderCard(); window.scrollTo({top:0}); }
+document.getElementById("dTrain").onclick=()=>{
+  const list=dFiltered(), fresh=list.filter(w=>!known[w.nl]);
+  startDeck(shuffle((fresh.length?fresh:list).slice()).slice(0,20));
+};
+document.getElementById("dStop").onclick=()=>{ stopAll(); setCardMode(false); renderDict(); window.scrollTo({top:0}); };
+function renderCard(){
+  const wrap=document.getElementById("cardWrap"); wrap.innerHTML="";
+  if(deckI>=deck.length){
+    wrap.innerHTML=`<div class="card flipped" style="cursor:default"><div class="front">${deckRes.good} / ${deck.length}</div><div class="back">Знаю: ${deckRes.good} · Ще вчу: ${deckRes.bad}</div></div>`;
+    const b=document.createElement("div"); b.className="cbtns";
+    const a=document.createElement("button"); a.className="btn ghost"; a.textContent="До словника"; a.onclick=()=>document.getElementById("dStop").click();
+    const m=document.createElement("button"); m.className="btn primary"; m.textContent="Ще раунд"; m.onclick=()=>document.getElementById("dTrain").click();
+    b.append(a,m); wrap.appendChild(b); return;
+  }
+  const w=deck[deckI];
+  const pr=document.createElement("div"); pr.className="cprog";
+  pr.innerHTML=`<span>Картка ${deckI+1} з ${deck.length}</span><span>Урок ${w.n} · ${w.lesson.short}</span>`;
+  const c=document.createElement("button"); c.className="card"; c.type="button";
+  const front=dDir==="nl"?w.nl:w.ua, back=dDir==="nl"?w.ua:w.nl;
+  c.innerHTML=`<div class="front">${front}</div><div class="back" hidden>${back}</div><div class="hint">Торкніться, щоб побачити переклад</div>`;
+  const btns=document.createElement("div"); btns.className="cbtns"; btns.hidden=true;
+  const bad=document.createElement("button"); bad.className="btn bad"; bad.textContent="Ще вчу";
+  const good=document.createElement("button"); good.className="btn good"; good.textContent="Знаю ✓";
+  bad.onclick=()=>{ deckRes.bad++; delete known[w.nl]; saveKnown(); deckI++; renderCard(); };
+  good.onclick=()=>{ deckRes.good++; known[w.nl]=1; saveKnown(); deckI++; renderCard(); };
+  btns.append(bad,good);
+  c.onclick=()=>{
+    if(c.classList.contains("flipped")){ sayWord(w.nl); return; }
+    c.classList.add("flipped"); c.querySelector(".back").hidden=false;
+    c.querySelector(".hint").textContent="Торкніться ще раз, щоб почути";
+    btns.hidden=false; if(dDir==="ua") sayWord(w.nl);
+  };
+  wrap.append(pr,c,btns);
+  if(dDir==="nl") sayWord(w.nl);
+}
+
+route();
+</script>
+
+<script>if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));</script>
